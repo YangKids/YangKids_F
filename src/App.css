@@ -2,71 +2,51 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.Body {
+  
+  background: linear-gradient(to bottom, #ffffff 20%, #9eecff);
+  /* background-image: url('/public/img/bonobono.png'); */
+  background-attachment: fixed;
+  /* background-color: black; */
+  display: flex;
+  flex-direction: column;
+
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.Quotation {
+  width: 1200px;
+  height: 250px;
+  align-self: center;
+  margin: 20px;
+  border-radius: 20px;
 }
 
-.App-header {
-  background-color: white;
-  margin-top: 50px;
-  min-height: 50px;
+.SearchBox {
+  display: flex;
+  width: 500px;
+  align-self: center;
+  justify-content: center;
+  margin: 40px;
+  height: 40px;
+}
+
+
+/* .SearchBar{
+  display: flex;
+  width: 500px;
+  align-self: center;
+  margin: 20px;
+  height: 40px;
+  border-radius: 20px ;
+} */
+
+.CardBox {
   display: flex;
   flex-direction: row;
-  align-items: center;
-  justify-content: center;
+  width: 1200px;
+  height: 1420px;
   align-self: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-  border: 1px solid GRAY;
-  border-radius: 10px;
-  width: 80%;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-.ProfileBox{
-
-  display: flex;
-  flex-grow: 1;
-  align-content: center;
-  justify-content: center ;
-}
-
-.Yangkids{
-  display: flex;
-  flex-grow: 8;
-  color: black;
   justify-content: center;
-}
-
-.LoginBox{
-  display: flex;
-  flex-grow: 1;
-  color: black;
-  font-size: medium;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-
-.site-layout-content {
-  min-height: 280px;
-  padding: 24px;
-  background-color: red;
+  /* border: 1px solid black; */
+  margin-bottom: 40px;
 }

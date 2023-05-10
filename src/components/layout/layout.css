@@ -1,0 +1,16 @@
+
+  .Footer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 150px;
+    color: white;
+    /* text-shadow: -1px 0px yellow, 0px 1px yellow, 1px 0px yellow, 0px -1px yellow; */
+    font-size: larger;
+    font-weight: bolder;
+    /* background-image: url('/public/img/bonobono.png') ; */
+    background-size: 150px 150px;
+    text-align: center;
+  }
+
+  

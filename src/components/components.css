@@ -1,0 +1,172 @@
+.ListBox{
+  width: 580px;
+  height: 1410px;
+  
+  justify-content: space-evenly;
+
+}
+
+
+.List{
+  display: flex;
+  width: 580px  ;
+  height: 600px;
+  align-items: center;
+  justify-content: center;
+  justify-self: center;
+  font-size:x-large;
+  font-weight: bolder;
+  background-color: white;
+  box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+}
+
+
+
+
+.MovingList{
+  position: fixed;
+  top: 120px;
+  left : 215px;
+  display: flex;
+  width: 580px;
+  height: 600px;
+  align-items: center;
+  justify-content: center;
+  justify-self: center;
+  font-size:x-large;
+  font-weight: bolder;
+  background-color: white;
+  box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+}
+
+
+.FixedList{
+  position : absolute;
+  left : 215px;
+  top : 1330px;
+  display: flex;
+  width: 580px;
+  height: 600px;
+  align-items: center;
+  justify-content: center;
+  justify-self: center;
+  font-size:x-large;
+  font-weight: bolder;
+  background-color: white;
+  box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+}
+
+
+.YangchelinBox{
+  display: flex;
+  width: 580px  ;
+  height: 600px;
+  align-items: center;
+  justify-content: center;
+  justify-self: center;
+  font-size:x-large;
+  font-weight: bolder;
+  background-color: white;
+  box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+}
+
+.MovingYangchelinBox{
+  position: fixed;
+  top: 120px;
+  right : 215px;
+  display: flex;
+  width: 580px;
+  height: 600px;
+  align-items: center;
+  justify-content: center;
+  justify-self: center;
+  font-size:x-large;
+  font-weight: bolder;
+  background-color: white;
+  box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+}
+
+.FixedYangchelinBox{
+  position : absolute;
+  right : 215px;
+  top :  2790px;
+  display: flex;
+  width: 580px;
+  height: 600px;
+  align-items: center;
+  justify-content: center;
+  justify-self: center;
+  font-size:x-large;
+  font-weight: bolder;
+  background-color: white;
+  box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+}
+
+.FreeBoardContents{
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  width: 530px;
+  height: 550px;
+}
+
+.Title{
+  padding :0px 25px 0px 25px;
+  font-size: larger;
+  font-weight: bolder;
+}
+
+.Articles{
+  padding: 25px;
+}
+
+.CardnewsBox{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 400px;
+  align-items: center;
+  /* justify-content: start; */
+  justify-self: center;
+  font-size:x-large;
+  font-weight: bolder;
+  background-color: white;
+  box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  margin-right : 40px;
+  margin-bottom: 40px;
+  
+}
+
+.Thumbnail{
+  width: 100%;
+  height: 200px;
+}
+
+.ArticleSummary{
+  margin : 10px;
+}
+
+.SmallCardBox{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 200px;
+  align-items: center;
+  /* justify-content: start; */
+  justify-self: center;
+  font-size:x-large;
+  font-weight: bolder;
+  background-color: white;
+  box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  margin-right : 40px;
+  margin-bottom: 40px;
+}
+

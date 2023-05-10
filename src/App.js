@@ -1,50 +1,44 @@
-
+import React from 'react';
 import './App.css';
-import { Breadcrumb, Layout, Menu, theme } from 'antd';
-import MiniProfile from './MiniProfile';
-const { Header, Content, Footer } = Layout;
+import Navbar from './components/layout/header/Header';
+import FreeBoard from './components/FreeBoard';
+import Footer from './components/layout/Footer';
+import HotArticle from './components/HotArticle';
+import Quot from './components/carousel';
+import SearchBar from './components/SearchBar';
+import YangchelinGuide from './components/YangchelinGuide';
+
+
 const App = () => {
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
   return (
-    <Layout className="layout">
-      <div className='App-header'>
-        <div className='ProfileBox'><MiniProfile/></div>
-        <div className='Yangkids'>Yangkids</div>
-        <div className='LoginBox'>로그인</div>
-      </div>
-      <Content
-        style={{
-          padding: '0 50px',
-        }}
-      >
-        <Breadcrumb
-          style={{
-            margin: '16px 0',
-          }}
-        >
-          <Breadcrumb.Item>Home</Breadcrumb.Item>
-          <Breadcrumb.Item>List</Breadcrumb.Item>
-          <Breadcrumb.Item>App</Breadcrumb.Item>
-        </Breadcrumb>
-        <div
-          className="site-layout-content"
-          style={{
-            background: colorBgContainer,
-          }}
-        >
-          Content
+    <div>
+      <div className='Body'>
+        <div style={{ height: '100px', display: 'flex', justifyContent: "center", alignContent: "center" }}>
+          <Navbar />
         </div>
-      </Content>
-      <Footer
-        style={{
-          textAlign: 'center',
-        }}
-      >
-        Ant Design ©2023 Created by Ant UED
-      </Footer>
-    </Layout>
-  );
+
+        <div className='Quotation'><Quot /></div>
+
+        <div className='SearchBox'><SearchBar /></div>
+
+        <div className='CardBox'>
+          <FreeBoard />
+          <div style={{ minWidth: '40px', height: '1410px'}}></div>
+          <HotArticle />
+        </div>
+
+        <div className='CardBox'>
+        <HotArticle />
+        <div style={{ minWidth: '40px', height: '1410px'}}></div>
+          <YangchelinGuide/>
+        </div>
+        <Footer />
+      </div>
+
+
+    </div>
+
+
+  )
 };
 export default App;
