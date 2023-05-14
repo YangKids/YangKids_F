@@ -1,30 +1,40 @@
 
 import { Dropdown} from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
 
 const items = [
   {
     key: '1',
     label: (
-      <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
+      <Link to='/Board/FreeBoard'>
         자유게시판
-      </a>
+      </Link>
     ),
   },
   {
     key: '2',
     label: (
-      <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
+      <Link to='/Board/QuestionBoard'>
         질문게시판
-      </a>
+      </Link>
     ),
   },
   {
     key: '3',
     label: (
-      <a target="_blank" rel="noopener noreferrer" href="https://www.luohanacademy.com">
-        맛집추천
-      </a>
+      <Link to='/Board/InfoBoard'>
+        정보공유게시판
+      </Link>
+    ),
+  },
+
+  {
+    key: '4',
+    label: (
+      <Link to='/Board/YangchelinBoard'>
+        양슐랭가이드
+      </Link>
     ),
   },
 ];

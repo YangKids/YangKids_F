@@ -1,44 +1,34 @@
-import React from 'react';
-import './App.css';
-import Navbar from './components/layout/header/Header';
-import FreeBoard from './components/FreeBoard';
-import Footer from './components/layout/Footer';
-import HotArticle from './components/HotArticle';
-import Quot from './components/carousel';
-import SearchBar from './components/SearchBar';
-import YangchelinGuide from './components/YangchelinGuide';
-
+import React from "react";
+import "./App.css";
+import Header from "./components/layout/header/Header";
+import Footer from "./components/layout/footer/Footer";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import MainPage from "./components/main/MainPage";
+import Quot from "./components/layout/Carousel";
+import BoardPage from "./components/board/BoardPage";
+import FreeBoard from "./components/board/FreeBoard";
+import QuestionBoard from "./components/board/QuestionBoard";
+import YangchelinBoard from "./components/board/YangchelinBoard";
+import InfoBoard from "./components/board/InfoBoard";
 
 const App = () => {
   return (
-    <div>
-      <div className='Body'>
-        <div style={{ height: '100px', display: 'flex', justifyContent: "center", alignContent: "center" }}>
-          <Navbar />
-        </div>
-
-        <div className='Quotation'><Quot /></div>
-
-        <div className='SearchBox'><SearchBar /></div>
-
-        <div className='CardBox'>
-          <FreeBoard />
-          <div style={{ minWidth: '40px', height: '1410px'}}></div>
-          <HotArticle />
-        </div>
-
-        <div className='CardBox'>
-        <HotArticle />
-        <div style={{ minWidth: '40px', height: '1410px'}}></div>
-          <YangchelinGuide/>
-        </div>
+    <div className="App">
+      <BrowserRouter>
+        <Header />
+        <Quot />
+        <Routes>
+          <Route path="/" element={<MainPage />}></Route>
+          <Route path="/Board" element={<BoardPage />}>
+            <Route path="Freeboard" element={<FreeBoard />} />
+            <Route path="QuestionBoard" element={<QuestionBoard />}></Route>
+            <Route path="InfoBoard" element={<InfoBoard />}></Route>
+            <Route path="YangchelinBoard" element={<YangchelinBoard />}></Route>
+          </Route>
+        </Routes>
         <Footer />
-      </div>
-
-
+      </BrowserRouter>
     </div>
-
-
-  )
+  );
 };
 export default App;

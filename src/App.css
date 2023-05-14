@@ -1,52 +1,6 @@
 .App {
-  text-align: center;
-}
-
-.Body {
-  
-  background: linear-gradient(to bottom, #ffffff 20%, #9eecff);
-  /* background-image: url('/public/img/bonobono.png'); */
+  /* text-align: center; */
+  background: linear-gradient(to bottom, #ffffff 30%, #c7d3ef);
   background-attachment: fixed;
-  /* background-color: black; */
-  display: flex;
-  flex-direction: column;
-
 }
 
-.Quotation {
-  width: 1200px;
-  height: 250px;
-  align-self: center;
-  margin: 20px;
-  border-radius: 20px;
-}
-
-.SearchBox {
-  display: flex;
-  width: 500px;
-  align-self: center;
-  justify-content: center;
-  margin: 40px;
-  height: 40px;
-}
-
-
-/* .SearchBar{
-  display: flex;
-  width: 500px;
-  align-self: center;
-  margin: 20px;
-  height: 40px;
-  border-radius: 20px ;
-} */
-
-.CardBox {
-  display: flex;
-  flex-direction: row;
-  width: 1200px;
-  height: 1420px;
-  align-self: center;
-  justify-content: center;
-  /* border: 1px solid black; */
-  margin-bottom: 40px;
-}
