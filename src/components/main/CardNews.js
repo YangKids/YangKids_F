@@ -1,5 +1,5 @@
 import { Card } from 'antd';
-import './components.css';
+import './MainComponents.css';
 const { Meta } = Card;
 
 const CardNews = () => (

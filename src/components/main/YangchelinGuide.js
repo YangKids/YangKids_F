@@ -1,5 +1,5 @@
 import React from 'react';
-import './components.css'
+import './MainComponents.css'
 import { useState, useEffect } from 'react';
 import ArticleList from './ArticleList';
 
@@ -32,7 +32,7 @@ const YangchelinGuide = () => {
 
         <div className='ListBox'>
 
-            <div className={ScrollY > 2670? 'FixedYangchelinBox' : ScrollY > 1850 ? 'MovingYangchelinBox' : 'YangchelinBox'}>
+            <div className={ScrollY > 2680? 'FixedYangchelinBox' : ScrollY > 1860 ? 'MovingYangchelinBox' : 'YangchelinBox'}>
                 <div className='FreeBoardContents'>
                     <div className='Title'>
                         양슐랭 가이드

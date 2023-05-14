@@ -1,5 +1,5 @@
 import React from 'react';
-import './components.css'
+import './MainComponents.css'
 import CardNews from './CardNews';
 import SmallCard from './SmallCard';
 

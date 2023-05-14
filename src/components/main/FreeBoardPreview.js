@@ -1,11 +1,12 @@
 import React from 'react';
-import './components.css'
+import './MainComponents.css'
 import { useState, useEffect } from 'react';
 import ArticleList from './ArticleList';
+import { Link } from 'react-router-dom';
 
 
 
-const FreeBoard = () => {
+const FreeBoardPreview = () => {
 
 
     const [ScrollY, setScrollY] = useState(0); // window 의 pageYOffset값을 저장
@@ -29,13 +30,13 @@ const FreeBoard = () => {
 
 
     return (
-
+        
         <div className='ListBox'>
 
-            <div className={ScrollY > 1210 ? 'FixedList' : ScrollY > 380 ? 'MovingList' : 'List'}>
+            <div className={ScrollY > 1220 ? 'FixedList' : ScrollY > 397 ? 'MovingList' : 'List'}>
                 <div className='FreeBoardContents'>
                     <div className='Title'>
-                        자유게시판
+                        <Link to='/Board/FreeBoard' style={{textDecoration : 'none', color : 'black'}}>자유게시판</Link>
                     </div>
                     <div className='Articles'>
                         <ArticleList/>
@@ -54,4 +55,4 @@ const FreeBoard = () => {
 
 }
 
-export default FreeBoard;
+export default FreeBoardPreview;
