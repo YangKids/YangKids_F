@@ -1,0 +1,26 @@
+.Enterance {
+  display: flex;
+  flex-direction: column;
+  height: 750px;
+  align-items: center;
+  justify-content: center;
+}
+
+.Ganpan {
+  height: 200px;
+  font-size: 70px;
+  font-weight: 900;
+
+  background: radial-gradient(
+    circle at 30% 107%,
+    #FFFFFF 0%,
+    #F6E7FF 5%,
+    #b9bfff 45%,
+    #82cfed 70%,
+    #84abf9 90%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+}
