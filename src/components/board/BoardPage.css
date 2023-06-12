@@ -44,3 +44,7 @@
     font-weight: 300;
     margin-bottom: 25px;
 }
+
+.ant-menu-title-content{
+    margin-inline-start: 5px !important;
+}

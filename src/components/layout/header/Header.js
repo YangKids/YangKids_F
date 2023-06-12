@@ -2,10 +2,10 @@ import "./Header.css";
 import MiniProfile from "./MiniProfile";
 
 import Menu from "./Menu";
-import Alarm from "./Alarm";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import LoginButton from "./LoginButton";
+// import LoginButton from "./LoginButton";
+import AlarmButton from "./AlarmButton";
 // import SearchBar from "../../main/SearchBar";
 
 const Header = () => {
@@ -44,7 +44,7 @@ const Header = () => {
 
   let localStorage = window.localStorage;
   localStorage.setItem('user', user);
-  console.log(localStorage.getItem('user'))
+  // console.log(localStorage.getItem('user'))
 
 
   return (
@@ -59,19 +59,22 @@ const Header = () => {
       <div className={ScrollActive ? "MovingHeader" : "Header"}>
         <div className="ProfileBox" >
           {/* {sessionStorage.getItem()?<MiniProfile />:<LoginButton/>} */}
-          {localStorage.getItem('user') == null?<MiniProfile />:<LoginButton/>}
+          {/* {localStorage.getItem('user') == null?<MiniProfile />:<LoginButton/>} */}
+          <MiniProfile></MiniProfile>
         </div>
 
         <div className="Yangkids">
           <Link to="/" className="DaeMoon">
-            Yangkids
+            YangKids
           </Link>
           {/* {window.scrollY > 500? <SearchBar/>:<div></div>}  */}
         </div>
 
         <div style={{display:'flex', flexDirection:'row', minWidth : '140px'}}>
-          <div className="AlarmBox">
-            <Alarm />
+          <div className="AlarmButtonBox">
+            <Link to="/Alarm">
+            <AlarmButton />
+            </Link>
           </div>
           <div className="MenuBox">
             <Menu />

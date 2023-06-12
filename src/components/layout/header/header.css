@@ -47,7 +47,7 @@
     justify-content: center ;
   }
 
-  .AlarmBox{
+  .AlarmButtonBox{
     display: flex;
     flex-grow: 0.5;
     flex-wrap: wrap;
@@ -78,7 +78,17 @@
 
   .DaeMoon{
     text-decoration-line: none;
-    color: black;
+    background: radial-gradient(
+    circle at 30% 107%,
+    #FFFFFF 0%,
+    #F6E7FF 5%,
+    #b9bfff 30%,
+    #82cfed 60%,
+    #84abf9 80%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
   }
   .ProfileImg{
     border : 1px solid black;
