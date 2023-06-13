@@ -11,7 +11,14 @@ const SearchBar = () => {
     // console.log(event.target.value);
   };
 
+  const onClick = () => {
+    navigate("/Board/SearchResult", {
+      state: { keyowrd: keyword },
+    })
+  };
+
   const navigate = useNavigate();
+
   return (
     <div style={{ display: "flex", flexDirection: "row", width: "100%" }}>
       <Input
@@ -19,6 +26,13 @@ const SearchBar = () => {
         placeholder="검색어를 입력하세요."
         onChange={onChange}
         style={{ width: "100%", borderRadius: "20px 0 0 20px" }}
+        onKeyUp={(event) => {
+          if (event.key === "Enter") {
+            navigate("/Board/SearchResult", {
+              state: { keyowrd: keyword },
+            });
+          }
+        }}
       />
       <Button
         style={{
@@ -26,11 +40,12 @@ const SearchBar = () => {
           height: "40px",
           borderRadius: "0 20px 20px 0",
         }}
-        onClick={()=>{navigate("/Board/SearchResult", {state:{keyowrd: keyword}})}}
+        onClick={onClick}
       >
         <SearchOutlined />
       </Button>
     </div>
   );
 };
+
 export default SearchBar;
