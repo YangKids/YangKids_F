@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { LikeOutlined, MessageOutlined } from "@ant-design/icons";
+import { EyeOutlined, LikeOutlined, MessageOutlined } from "@ant-design/icons";
 import { Avatar, List, Space } from "antd";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -72,11 +72,11 @@ const BoardArticleList = ({ boardId }) => {
             >
               제목
             </div>
-            <div style={{ display: "flex", width: "200px" }}>
+            <div style={{ display: "flex", width: "220px" }}>
               <div
                 style={{
                   display: "flex",
-                  width: "90px",
+                  width: "80px",
                   justifyContent: "center",
                 }}
               >
@@ -85,7 +85,16 @@ const BoardArticleList = ({ boardId }) => {
               <div
                 style={{
                   display: "flex",
-                  width: "65px",
+                  width: "55px",
+                  justifyContent: "center",
+                }}
+              >
+                조회수
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  width: "55px",
                   justifyContent: "center",
                 }}
               >
@@ -117,14 +126,19 @@ const BoardArticleList = ({ boardId }) => {
             actions={[
               <div>{regDate(article.regDate)}</div>,
               <IconText
+                icon={EyeOutlined}
+                text={article.viewCnt}
+                key="view"
+              />,
+              <IconText
                 icon={LikeOutlined}
-                text="156"
-                key="list-vertical-like-o"
+                text={article.likeCnt}
+                key="like"
               />,
               <IconText
                 icon={MessageOutlined}
-                text="2"
-                key="list-vertical-message"
+                text={article.commentCnt+article.recommentCnt}
+                key="comment"
               />,
             ]}
           >
@@ -135,7 +149,7 @@ const BoardArticleList = ({ boardId }) => {
                   // src={article.writerImg}
                 />
               }
-              title={<Link to={article.href}>{article.title}</Link>}
+              title={<Link to={`/Board/${article.articleId}`}>{article.title}</Link>}
               description={article.name}
             />
           </List.Item>

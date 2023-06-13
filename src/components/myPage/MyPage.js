@@ -8,7 +8,7 @@ const MyPage = () => {
       <Header />
 
       <div className="MyPageTitle">
-      <i class="fa-solid fa-id-card"></i>
+      <i className="fa-solid fa-id-card"></i>
         <div className="ExplainText">
           마이페이지 <br />
           솔직하게 작성하도록.
