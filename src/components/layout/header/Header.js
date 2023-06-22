@@ -4,7 +4,7 @@ import MiniProfile from "./MiniProfile";
 import Menu from "./Menu";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-// import LoginButton from "./LoginButton";
+import LoginButton from "./LoginButton";
 import AlarmButton from "./AlarmButton";
 // import SearchBar from "../../main/SearchBar";
 
@@ -33,19 +33,6 @@ const Header = () => {
     }; //  window 에서 스크롤을 감시를 종료
   });
 
-  // let sessionStorage = window.sessionStorage;
-  // sessionStorage.setItem(userId)
-
-  const user ={
-    id : '1',
-    userId : 'jjwoong1733',
-    name : '정재웅'
-  }
-
-  let localStorage = window.localStorage;
-  localStorage.setItem('user', user);
-  // console.log(localStorage.getItem('user'))
-
 
   return (
     <div
@@ -58,9 +45,7 @@ const Header = () => {
     >
       <div className={ScrollActive ? "MovingHeader" : "Header"}>
         <div className="ProfileBox" >
-          {/* {sessionStorage.getItem()?<MiniProfile />:<LoginButton/>} */}
-          {/* {localStorage.getItem('user') == null?<MiniProfile />:<LoginButton/>} */}
-          <MiniProfile></MiniProfile>
+          {sessionStorage.getItem('loginUser') == null? <LoginButton/>:<MiniProfile />}
         </div>
 
         <div className="Yangkids">

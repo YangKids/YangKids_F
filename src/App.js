@@ -12,8 +12,9 @@ import EnterancePage from "./components/entrance/EnterancePage";
 import MyPage from "./components/myPage/MyPage";
 import AlarmPage from "./components/alarm/AlarmPage";
 import ArticleDetail from "./components/board/ArticleDetail";
-import { useState } from "react";
 import SearchResult from "./components/board/SearchResult";
+import ArticleWirteForm from "./components/board/ArticleWriteForm";
+import { useState } from "react";
 
 
 
@@ -44,6 +45,7 @@ const App = () => {
             <Route path="YangchelinBoard" element={<YangchelinBoard />}></Route>
             <Route path=":articleId" element={<ArticleDetail/>}></Route>
             <Route path="SearchResult" element={<SearchResult/>}></Route>
+            <Route path="Write" element={<ArticleWirteForm/>}></Route>
           </Route>
         </Routes>
         <Footer />

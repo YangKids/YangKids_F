@@ -1,30 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { EyeOutlined, LikeOutlined, MessageOutlined } from "@ant-design/icons";
-import { Avatar, List, Space } from "antd";
-import { Link } from "react-router-dom";
+import { EditOutlined, EyeOutlined, LikeOutlined, MessageOutlined } from "@ant-design/icons";
+import { Avatar, Button, List, Space } from "antd";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import SearchBar from "../main/SearchBar";
 
-// 이런식으로 하면 밑에 const data 필요 없을듯??
 
-// const getArticles = async ()=> {
-//   const json = await(
-//     await fetch(`http://localhost:9999/board-api/board/${boardId}`)
-//   ).json();
-// }
-
-// const articles = Array.from({
-//   length: 23,
-// }).map((_, i) => ({
-//   href: `http://localhost:3000/Board/${i}`,
-//   title: `게시글도 DB에서 받아와서 띄워줄테니까 ${i}`,
-//   avatar: `https://xsgames.co/randomusers/avatar.php?g=pixel&key=${i}`,
-//   description: "액시오스 가져와아아아아악",
-//   regDate: "2023-06-12",
-//   writer: "정재웅",
-//   content:
-//     "오늘 저녁은 뭐먹지... 뷰 시험 공부도 해야하는데 ㅎㅎ 큰일났다.살려줘... 아니야 그냥 죽여줘.. ",
-// }));
 
 const IconText = ({ icon, text }) => (
   <Space>
@@ -43,6 +24,8 @@ function regDate(date) {
   );
 }
 
+
+
 const BoardArticleList = ({ boardId }) => {
   const [articles, setArticles] = useState([]);
   useEffect(() => {
@@ -54,12 +37,18 @@ const BoardArticleList = ({ boardId }) => {
       setArticles(res.data);
       // } catch (e) {}
     };
+
     getArticles();
     // console.log(articles);
-  }, []);
+  }, [boardId]);
+
+  const navigate = useNavigate();
 
   return (
     <>
+    <Button icon={<EditOutlined />} style={{alignSelf : "end", marginBottom:"10px", marginRight : "10px"}} onClick={()=> navigate("/Board/Write", 
+    {state: { boardId : boardId}}
+      )}>글쓰기</Button>
       <List
         header={
           <div style={{ display: "flex", flexDirection: "row" }}>
@@ -103,7 +92,7 @@ const BoardArticleList = ({ boardId }) => {
               <div
                 style={{
                   display: "flex",
-                  width: "45px",
+                  width: "50px",
                   justifyContent: "center",
                 }}
               >
@@ -125,11 +114,7 @@ const BoardArticleList = ({ boardId }) => {
           <List.Item
             actions={[
               <div>{regDate(article.regDate)}</div>,
-              <IconText
-                icon={EyeOutlined}
-                text={article.viewCnt}
-                key="view"
-              />,
+              <IconText icon={EyeOutlined} text={article.viewCnt} key="view" />,
               <IconText
                 icon={LikeOutlined}
                 text={article.likeCnt}
@@ -137,7 +122,7 @@ const BoardArticleList = ({ boardId }) => {
               />,
               <IconText
                 icon={MessageOutlined}
-                text={article.commentCnt+article.recommentCnt}
+                text={article.commentCnt}
                 key="comment"
               />,
             ]}
@@ -149,8 +134,10 @@ const BoardArticleList = ({ boardId }) => {
                   // src={article.writerImg}
                 />
               }
-              title={<Link to={`/Board/${article.articleId}`}>{article.title}</Link>}
-              description={article.name}
+              title={
+                <Link to={`/Board/${article.articleId}`}>{article.title}</Link>
+              }
+              description={article.isAnonymous === 0? article.writerName: "익명"}
             />
           </List.Item>
         )}
