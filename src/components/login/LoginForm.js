@@ -2,11 +2,13 @@ import { Button, Checkbox, Form, Input } from "antd";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const USER_REST_API = "http://localhost:9999/api-user";
+
+const USER_REST_API = "http://localhost:8080/api-user";
 
 const LoginForm = () => {
-  const sessionStorage = window.sessionStorage;
   const navigate = useNavigate();
+  const sessionStorage = window.sessionStorage;
+
   const onFinish = (values) => {
     console.log("Success:", values);
     axios
@@ -28,7 +30,9 @@ const LoginForm = () => {
           );
           sessionStorage.setItem("access-token", response.data["access-token"]);
           // 메인페이지로 이동
-          navigate("/");
+
+          navigate('/Main');
+
         } else {
           // 로그인 실패
           alert(
@@ -110,4 +114,6 @@ const LoginForm = () => {
     </Form>
   );
 };
+
 export default LoginForm;
+

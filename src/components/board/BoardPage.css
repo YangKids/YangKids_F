@@ -25,8 +25,9 @@
 .BoardBox {
     
     display: flex;
+    flex-direction: column;
     top: 100px;
-    width: 1150px;
+    width: 1120px;
     align-items: center;
     justify-content: center;
     justify-self: center;
@@ -35,16 +36,50 @@
     background-color: white;
     box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.2);
     border-radius: 20px;
-    padding: 25px;
+    padding: 40px;
 }
 
 .Description{
     text-align: center;
     font-size: large;
     font-weight: 300;
-    margin-bottom: 25px;
+    margin-bottom: 40px;
 }
 
 .ant-menu-title-content{
     margin-inline-start: 5px !important;
+}
+
+.ant-menu-item-selected::after{
+    border-bottom-color: white !important;
+}
+.ant-menu-item-selected {
+    color:#84abf9 !important;
+}
+
+.ant-menu-item:hover{
+    color: #b9bfff !important;
+}
+
+.ant-menu-item-active::after{
+    border-bottom-color: white !important;
+}
+
+.Search{
+    margin-top: 25px;
+    width: 500px;
+}
+
+.FormBox {   
+    top: 100px;
+    width: 1120px;
+    align-items: center;
+    justify-content: center;
+    justify-self: center;
+    font-size: x-large;
+    font-weight: bolder;
+    background-color: white;
+    box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    padding: 40px;
 }

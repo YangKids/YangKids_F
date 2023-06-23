@@ -2,7 +2,7 @@ import React from "react";
 import "./MainPage.css";
 import FreeBoardPreview from "./FreeBoardPreview";
 import HotArticle from "./HotArticle";
-import SearchBar from "./SearchBar";
+import SearchBar from "../layout/SearchBar";
 import YangchelinGuide from "./YangchelinGuide";
 import Header from "../layout/header/Header";
 import Quot from "../layout/Carousel";
