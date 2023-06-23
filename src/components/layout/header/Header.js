@@ -4,7 +4,6 @@ import MiniProfile from "./MiniProfile";
 import Menu from "./Menu";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import LoginButton from "./LoginButton";
 import AlarmButton from "./AlarmButton";
 // import SearchBar from "../../main/SearchBar";
 
@@ -45,11 +44,11 @@ const Header = () => {
     >
       <div className={ScrollActive ? "MovingHeader" : "Header"}>
         <div className="ProfileBox" >
-          {sessionStorage.getItem('loginUser') == null? <LoginButton/>:<MiniProfile />}
+          <MiniProfile />
         </div>
 
         <div className="Yangkids">
-          <Link to="/" className="DaeMoon">
+          <Link to="/Main" className="DaeMoon">
             YangKids
           </Link>
           {/* {window.scrollY > 500? <SearchBar/>:<div></div>}  */}

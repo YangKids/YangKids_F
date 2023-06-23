@@ -3,7 +3,7 @@ import { EditOutlined, EyeOutlined, LikeOutlined, MessageOutlined } from "@ant-d
 import { Avatar, Button, List, Space } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import SearchBar from "../main/SearchBar";
+import SearchBar from "../layout/SearchBar";
 
 
 
@@ -130,7 +130,7 @@ const BoardArticleList = ({ boardId }) => {
             <List.Item.Meta
               avatar={
                 <Avatar
-                  src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`}
+                  src={article.writerImg? article.writerImg : `https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`}
                   // src={article.writerImg}
                 />
               }
