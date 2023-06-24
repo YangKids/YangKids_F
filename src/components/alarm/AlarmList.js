@@ -8,11 +8,11 @@ import Swal from "sweetalert2";
 const AlarmList = () => {
   const [alarms, setAlarms] = useState([]);
   const getAlarms = async () => {
-    //const loginUser = sessionStorage.getItem("loginUser");
+    const loginUser = sessionStorage.getItem("loginUser");
 
     const response = await axios.get("http://localhost:8080/api-alarm/alarm", {
       params: {
-        userId: "yudaeng",
+        userId: loginUser,
       },
     });
     console.log(response);
