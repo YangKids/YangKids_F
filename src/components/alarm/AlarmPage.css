@@ -10,7 +10,6 @@
   box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.2);
   border-radius: 20px;
   padding: 40px;
-  margin-top: 40px;
 }
 
 .AlarmTitle {
@@ -19,23 +18,29 @@
   font-weight: bold;
   width: 1200px;
   text-align: left;
-  margin-top: 100px;
-  margin-bottom: 80px;
+  margin-top: 80px;
+  margin-bottom: 50px;
   /* border: 1px solid black */
 }
 
-.ExplainText {
+.TitleText {
   white-space: pre-line;
   color: #444444;
+}
+
+.SubText {
+  white-space: pre-line;
+  color: #444444;
+  font-size: 25px;
 }
 
 .fa-bell {
   align-items: center;
   justify-content: center;
   font-size: 80px;
-  margin : 10px;
+  margin: 10px;
   display: block;
-background: radial-gradient(
+  background: radial-gradient(
     circle at 30% 107%,
     #ffffff 0%,
     #f6e7ff 5%,
@@ -48,5 +53,3 @@ background: radial-gradient(
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-
-
