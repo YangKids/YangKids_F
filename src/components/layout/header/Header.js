@@ -34,14 +34,13 @@ const Header = () => {
   });
 
   const [uncheckedAlarms, setUncheckedAlarms] = useState(0);
-  const loginUser = sessionStorage.getItem("loginUser");
   const countAlarms = async () => {
     try {
       const response = await axios.get(
         "http://localhost:8080/api-alarm/alarm",
         {
           params: {
-            userId: loginUser,
+            userId: JSON.parse(sessionStorage.getItem("loginUser")).id,
           },
         }
       );
