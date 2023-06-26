@@ -1,17 +1,15 @@
 import "./Header.css";
 import MiniProfile from "./MiniProfile";
-
 import Menu from "./Menu";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import AlarmButton from "./AlarmButton";
 // import SearchBar from "../../main/SearchBar";
+import axios from "axios";
 
 const Header = () => {
   const [ScrollActive, setScrollActive] = useState(false);
-
   const [ScrollY, setScrollY] = useState(0); // window 의 pageYOffset값을 저장
-
   function handleScroll() {
     if (ScrollY > 35) {
       setScrollY(window.pageYOffset);
@@ -20,7 +18,7 @@ const Header = () => {
       setScrollY(window.pageYOffset);
       setScrollActive(false);
     }
-  };
+  }
 
   useEffect(() => {
     function scrollListener() {
@@ -32,6 +30,31 @@ const Header = () => {
     }; //  window 에서 스크롤을 감시를 종료
   });
 
+  const [uncheckedAlarms, setUncheckedAlarms] = useState(0);
+
+  const countAlarms = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:8080/api-alarm/alarm",
+        {
+          params: {
+            userId: JSON.parse(sessionStorage.getItem("loginUser")).id,
+          },
+        }
+      );
+      console.log(response);
+      const uncheckedCount = response.data.filter(
+        (alarm) => alarm.isChecked === 0
+      ).length;
+      setUncheckedAlarms(uncheckedCount);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    countAlarms();
+  }, []);
 
   return (
     <div
@@ -43,21 +66,23 @@ const Header = () => {
       }}
     >
       <div className={ScrollActive ? "MovingHeader" : "Header"}>
-        <div className="ProfileBox" >
+        <div className="ProfileBox">
           <MiniProfile />
         </div>
 
         <div className="Yangkids">
-          <Link to="/Main" className="DaeMoon">
+          <Link to="/" className="DaeMoon">
             YangKids
           </Link>
           {/* {window.scrollY > 500? <SearchBar/>:<div></div>}  */}
         </div>
 
-        <div style={{display:'flex', flexDirection:'row', minWidth : '140px'}}>
+        <div
+          style={{ display: "flex", flexDirection: "row", minWidth: "140px" }}
+        >
           <div className="AlarmButtonBox">
             <Link to="/Alarm">
-            <AlarmButton />
+              <AlarmButton cnt={uncheckedAlarms} />
             </Link>
           </div>
           <div className="MenuBox">
@@ -68,5 +93,4 @@ const Header = () => {
     </div>
   );
 };
-
 export default Header;

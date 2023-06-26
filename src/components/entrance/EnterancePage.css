@@ -1,16 +1,17 @@
 .Enterance {
   display: flex;
   flex-direction: column;
-  height: 750px;
+  height: 100%;
   align-items: center;
   justify-content: center;
 }
 
 .Ganpan {
-  height: 200px;
+  margin-top: 100px;
+  height: 100px;
   font-size: 70px;
   font-weight: 900;
-
+  
   background: radial-gradient(
     circle at 30% 107%,
     #FFFFFF 0%,
