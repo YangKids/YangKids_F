@@ -5,6 +5,7 @@ import { Avatar, Button, Form, List, Input, Card, Space } from "antd";
 import axios from "axios";
 import { LikeFilled, LikeOutlined, CommentOutlined } from "@ant-design/icons";
 import ReCommentSection from "./ReCommentSection";
+
 const CommentSection = ({ boardId, isAnonymous, loginUser }) => {
   // console.log("안녕? 렌더링 폭발?");
   const { articleId } = useParams();
@@ -511,7 +512,7 @@ const CommentSection = ({ boardId, isAnonymous, loginUser }) => {
               }
             />
           </List.Item>
-          {comment.recommentCnt>0 ? <RecommentSection/>: null} 
+          {/* {comment.recommentCnt>0 ? <ReCommentSection/>: null}  */}
           </div>
         )}
       />

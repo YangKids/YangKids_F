@@ -4,6 +4,7 @@ import { HeartTwoTone } from '@ant-design/icons';
 import { Card, Button } from "antd";
 import "./EnterancePage.css";
 import { Link } from "react-router-dom";
+import { faVolumeHigh } from "@fortawesome/free-solid-svg-icons";
 
 const EnterancePage = () => {
   return (
@@ -15,7 +16,7 @@ const EnterancePage = () => {
         style={{
           width: 400,
           textAlign: "center",
-          marginTop: "100px"
+          marginTop : "50px"
         }}
       >
         <LoginForm></LoginForm>

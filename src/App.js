@@ -34,7 +34,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <div style={{minHeight: "85%"}}>
+      <div style={{minHeight: "85vh"}}>
         <Routes>
           <Route
             path="/Alarm"
