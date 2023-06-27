@@ -2,30 +2,28 @@ import {
   HeartOutlined,
   HeartFilled,
   EyeOutlined,
-  CommentOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import { useNavigate, useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
-import { Button, Avatar } from "antd";
+import { Button, Avatar, Image } from "antd";
 import "./BoardPage.css";
 import axios from "axios";
 import CommentSection from "./CommentSection";
 import EditArticle from "./EditArticle";
 
-function ArticleDetail() {
+const ArticleDetail = () => {
+  // console.log("여기는 ArticleDetail");
   const navigate = useNavigate();
   const articleId = useParams().articleId;
 
-  console.log("재실행");
   const [article, setArticle] = useState([]);
   const [boardName, setBoardName] = useState("");
   const [hovered, setHovered] = useState(false);
   const [liked, setLiked] = useState(false);
   const [totalLikeCnt, setTotalLikeCnt] = useState(0);
-  const [totalCommentCnt, setTotalCommentCnt] = useState(0);
-  const [isAnonymous, setIsAnonymous] = useState(0);
-
+  // comment가 동적으로 처리 안된다. 하위 컴포넌트에서 commentCnt 가져와야해
+  const [visible, setVisible] = useState(false);
   const [editMode, setEditMode] = useState(false);
 
   // 마우스 hover 적용 함수
@@ -37,21 +35,31 @@ function ArticleDetail() {
     setHovered(false);
   };
 
+  // 현재 로그인한 유저 가져오가
+  const loginUserId = JSON.parse(sessionStorage.getItem("loginUser")).id;
+
   // 게시글 삭제하기 댓글 삭제와 방식이 다르다. 어.. 이유가..음? 뭐더라?
-  const handleDelete = async () => {
+  const handleDelete = async (articleId) => {
     if (window.confirm("정말로 삭제하시겠습니까?")) {
       try {
-        const updateArticle = await fetch(
-          `http://localhost:8080/api-article/delete/${article.articleId}`,
-          {
-            method: "DELETE",
-          }
-        )
-          .then((data) => {
-            console.log(data);
+        await axios({
+          method: "DELETE",
+          url: `http://localhost:8080/api-article/delete`,
+          params: { articleId: articleId },
+        })
+          .then(() => {
             alert("삭제완료");
-            // 경로 바꿔줘야해
-            navigate("/board/freeboard");
+            // 게시판 이름 설정
+            // console.log(article.boardId);
+            if (article.boardId === 1) {
+              navigate("/Board/FreeBoard");
+            } else if (article.boardId === 2) {
+              navigate("/Board/QuestionBoard");
+            } else if (article.boardId === 3) {
+              navigate("/Board/InfoBoard");
+            } else {
+              navigate("/Board/YangchelinBoard");
+            }
           })
           .catch((error) =>
             console.error("게시글 삭제 중 오류가 발생했습니다: ", error)
@@ -98,12 +106,9 @@ function ArticleDetail() {
     }
   };
 
-  // 댓글 개수를 하위컴포넌트로 부터 가지고 오기 위한 함수인데 이게 처음 랜더링 될때 왜 안뜨지..?
-  // 댓글 form에 뭔가를 작성해야 값이 나타나ㅎㅎㅎㅎㅎ 하하하하
-
   // article 수정 위한 코드, 모르게써....ㅠㅠ
   const handleUpdate = (articleId, content) => {
-    console.log(articleId, content);
+    // console.log(articleId, content);
   };
 
   const handleEdit = () => {
@@ -120,7 +125,6 @@ function ArticleDetail() {
         ).json(); // 서버 API로부터 게시글 정보를 가져옴
         setArticle(json); // 가져온 게시글 정보를 상태 변수에 저장
         setTotalLikeCnt(json.likeCnt);
-        setTotalCommentCnt(json.commentCnt);
         // 게시판 이름 설정
         if (json.boardId === 1) {
           setBoardName("자유게시판");
@@ -137,8 +141,6 @@ function ArticleDetail() {
     };
     // 게시글 정보를 가져오는 비동기 함수 호출
     fetchArticle();
-
-
   }, [articleId]);
 
   useEffect(() => {
@@ -160,8 +162,6 @@ function ArticleDetail() {
         }
       }
     };
-
-    setIsAnonymous(article.isAnonymous);
     axiosLike();
   }, [article]);
 
@@ -173,36 +173,46 @@ function ArticleDetail() {
     <div className="BoardBox">
       <div className="ArticleBox">
         <div style={{ display: "flex", alignItems: "center", height: "50px" }}>
-          <h3 style={{ width: "150px", color: "#3BC5F9" }}>{boardName}</h3>
-          <h2
+          <h5 style={{ width: "150px", color: "#3BC5F9" }}>{boardName}</h5>
+          <h3
             style={{
               width: "550px",
               fontWeight: "bolder",
             }}
           >
             {article.title}
-          </h2>
-          <div style={{ marginLeft: "100px" }}>
-            <Button type="dashed" onClick={handleEdit}>
-              수정하기
-            </Button>
-            <Button
-              type="primary"
-              danger
-              onClick={() => handleDelete(article.articleId)}
-            >
-              삭제하기
-            </Button>
-          </div>
+          </h3>
+          {article.writerId === loginUserId ? (
+            <div style={{ marginLeft: "100px" }}>
+              <Button
+                type="dashed"
+                onClick={() =>
+                  navigate("/Board/Edit", {
+                    state: { articleId: articleId },
+                  })
+                }
+              >
+                수정하기
+              </Button>
+              <Button
+                type="primary"
+                danger
+                onClick={() => handleDelete(article.articleId)}
+              >
+                삭제하기
+              </Button>
+            </div>
+          ) : null}
         </div>
         <div style={{ display: "flex", alignItems: "center" }}>
-          <Avatar icon={<UserOutlined />} style={{ marginRight: "10px" }} />
-          {/*  <Avatar
-               src={article.writerImg}
-                /> */}
+          {article.writerImg === null ? (
+            <Avatar icon={<UserOutlined />} style={{ marginRight: "10px" }} />
+          ) : (
+            <Avatar src={article.writerImg} style={{ marginRight: "10px" }} />
+          )}
           <div style={{ flexGrow: 1, textAlign: "left" }}>
-            <span style={{ fontSize: "20px", fontWeight: 500 }}>
-              {isAnonymous === 0? article.writerName : "익명"}
+            <span style={{ fontSize: "18px", fontWeight: 500 }}>
+              {article.isAnonymous === 0 ? article.writerName : "익명"}
             </span>
             {article.regDate !== article.updateDate ? (
               <React.Fragment>
@@ -248,13 +258,35 @@ function ArticleDetail() {
               {liked ? <HeartFilled /> : <HeartOutlined />}
               {totalLikeCnt}
             </span>
-            <span>
-              <CommentOutlined />
-              {totalCommentCnt}
-            </span>
           </div>
         </div>
         <hr />
+        {article.img ? (
+          <React.Fragment>
+            <Image
+              preview={{
+                visible: false,
+              }}
+              width={200}
+              src={article.img}
+              onClick={() => setVisible(true)}
+            />
+            <div
+              style={{
+                display: "none",
+              }}
+            >
+              <Image.PreviewGroup
+                preview={{
+                  visible,
+                  onVisibleChange: (vis) => setVisible(vis),
+                }}
+              >
+                <Image src={article.img} />
+              </Image.PreviewGroup>
+            </div>
+          </React.Fragment>
+        ) : null}
         <div className="articleContent">{article.content}</div>
         <hr />
         <div
@@ -277,16 +309,14 @@ function ArticleDetail() {
         </div>
       </div>
       <div className="CommentBox">
-        {/* 넘길 데이터 지정해줘야해 articleId={article.articleId} writerId={article.writerId} */}
         <CommentSection
-          articleId={articleId}
           boardId={article.boardId}
-          writerId={"ssafy9yangkids"}
-          commentCount={totalCommentCnt}
+          isAnonymous={article.isAnonymous}
+          loginUser={loginUserId}
         />
       </div>
     </div>
   );
-}
+};
 
 export default ArticleDetail;
