@@ -1,6 +1,5 @@
 import "./Header.css";
 import MiniProfile from "./MiniProfile";
-
 import Menu from "./Menu";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -10,9 +9,7 @@ import axios from "axios";
 
 const Header = () => {
   const [ScrollActive, setScrollActive] = useState(false);
-
   const [ScrollY, setScrollY] = useState(0); // window 의 pageYOffset값을 저장
-
   function handleScroll() {
     if (ScrollY > 35) {
       setScrollY(window.pageYOffset);
@@ -34,6 +31,7 @@ const Header = () => {
   });
 
   const [uncheckedAlarms, setUncheckedAlarms] = useState(0);
+
   const countAlarms = async () => {
     try {
       const response = await axios.get(
@@ -70,7 +68,7 @@ const Header = () => {
         </div>
 
         <div className="Yangkids">
-          <Link to="/Main" className="DaeMoon">
+          <Link to="/" className="DaeMoon">
             YangKids
           </Link>
           {/* {window.scrollY > 500? <SearchBar/>:<div></div>}  */}
@@ -92,5 +90,4 @@ const Header = () => {
     </div>
   );
 };
-
 export default Header;

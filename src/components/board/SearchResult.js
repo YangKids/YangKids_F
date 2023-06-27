@@ -37,10 +37,7 @@ const SearchResult = () => {
 
       const data = { key: location.state.key, word: location.state.word };
       console.log(data)
-      const res = await axios.get(
-        `http://localhost:8080/api-article/search`,
-        data
-      );
+      const res = await axios.get("http://localhost:8080/api-article/search",{params:{key:data.key,word: data.word },});
       setResults(res.data);
       // } catch (e) {}
     };

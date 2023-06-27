@@ -21,5 +21,4 @@ const AlarmPage = () => {
     </div>
   );
 };
-
 export default AlarmPage;

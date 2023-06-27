@@ -2,5 +2,7 @@
   /* text-align: center; */
   background: linear-gradient(to bottom, #ffffff 30%, #c7d3ef);
   background-attachment: fixed;
+  min-height: 100vh;
 }
+
 
