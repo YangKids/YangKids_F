@@ -10,12 +10,12 @@ import { Button, Avatar, Image } from "antd";
 import "./BoardPage.css";
 import axios from "axios";
 import CommentSection from "./CommentSection";
-import EditArticle from "./EditArticle";
 
 const ArticleDetail = () => {
   // console.log("여기는 ArticleDetail");
   const navigate = useNavigate();
   const articleId = useParams().articleId;
+  console.log(articleId+"get 보내기")
   const [article, setArticle] = useState([]);
   const [boardName, setBoardName] = useState("");
   const [hovered, setHovered] = useState(false);
@@ -187,7 +187,7 @@ const ArticleDetail = () => {
                 type="dashed"
                 onClick={() =>
                   navigate("/Board/Edit", {
-                    state: { articleId: articleId },
+                    state: { article: article },
                   })
                 }
               >
