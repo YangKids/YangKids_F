@@ -3,6 +3,7 @@ import {
   HeartFilled,
   EyeOutlined,
   UserOutlined,
+  DeleteOutlined,
 } from "@ant-design/icons";
 import { useNavigate, useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
@@ -24,6 +25,8 @@ const ArticleDetail = () => {
   // comment가 동적으로 처리 안된다. 하위 컴포넌트에서 commentCnt 가져와야해
   const [visible, setVisible] = useState(false);
   const [editMode, setEditMode] = useState(false);
+  //삭제된 게시글 여부
+  const [deleted, setDeleted] = useState(false);
 
   // 마우스 hover 적용 함수
   const handleMouseEnter = () => {
@@ -34,7 +37,7 @@ const ArticleDetail = () => {
     setHovered(false);
   };
 
-  // 현재 로그인한 유저 가져오가
+  // 현재 로그인한 유저 가져오기
   const loginUserId = JSON.parse(sessionStorage.getItem("loginUser")).id;
 
   // 게시글 삭제하기 댓글 삭제와 방식이 다르다. 어.. 이유가..음? 뭐더라?
@@ -124,6 +127,10 @@ const ArticleDetail = () => {
         ).json(); // 서버 API로부터 게시글 정보를 가져옴
         setArticle(json); // 가져온 게시글 정보를 상태 변수에 저장
         setTotalLikeCnt(json.likeCnt);
+        //삭제된 게시글이면 삭제표시해줌
+        if (json.deletedAt !== null) {
+          setDeleted(true);
+        }
         // 게시판 이름 설정
         if (json.boardId === 1) {
           setBoardName("자유게시판");
@@ -166,6 +173,19 @@ const ArticleDetail = () => {
 
   if (!article) {
     return <div>Loading...</div>; // 게시글 정보가 로드되지 않은 경우 로딩 표시
+  }
+
+  //삭제된 게시글인 경우
+  if (deleted) {
+    return (
+      <div className="BoardBox">
+        <DeleteOutlined style={{ fontSize: "50px", color: "gray" }} />
+        <br />
+        <div style={{ fontSize: "20px", color: "gray" }}>
+          삭제된 게시글입니다.
+        </div>
+      </div>
+    );
   }
 
   return (
