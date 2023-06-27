@@ -31,7 +31,7 @@ const LoginForm = () => {
           sessionStorage.setItem("access-token", response.data["access-token"]);
           // 메인페이지로 이동
 
-          navigate('/Main');
+          navigate('/');
 
         } else {
           // 로그인 실패

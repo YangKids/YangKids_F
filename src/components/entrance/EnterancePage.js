@@ -2,10 +2,8 @@ import React from "react";
 import LoginForm from "../login/LoginForm";
 import { Card } from "antd";
 import "./EnterancePage.css";
-import { useNavigate } from "react-router-dom";
 
 const EnterancePage = () => {
-  const navigate = useNavigate();
   return (
     <div className="Enterance">
       <div className="Ganpan">YangKids</div>
@@ -15,6 +13,7 @@ const EnterancePage = () => {
         style={{
           width: 400,
           textAlign: "center",
+          marginTop: "100px"
         }}
       >
         <LoginForm></LoginForm>

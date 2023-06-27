@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import "./App.css";
 import Footer from "./components/layout/footer/Footer";
-import {Route, Routes, Navigate } from "react-router-dom";
-import EnterancePage from "./components/entrance/EnterancePage"
+import { Route, Routes, Navigate } from "react-router-dom";
+import EnterancePage from "./components/entrance/EnterancePage";
 import MainPage from "./components/main/MainPage";
 import BoardPage from "./components/board/BoardPage";
 import FreeBoard from "./components/board/FreeBoard";
@@ -16,32 +16,41 @@ import SearchResult from "./components/board/SearchResult";
 import ArticleWirteForm from "./components/board/ArticleWriteForm";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
+import EditArticle from "./components/board/EditArticle";
 
 const App = () => {
-
   const [isLogedin, setIsLogedin] = useState(false);
 
   const location = useLocation();
-  useEffect( () => { 
-    if(sessionStorage.getItem("loginUser") !== null){
+  useEffect(() => {
+    if (sessionStorage.getItem("loginUser") !== null) {
       setIsLogedin(true);
-    }else{
+    } else {
       setIsLogedin(false);
     }
-  },[location.pathname])
+  }, [location.pathname]);
 
   return (
     <div className="App">
+      <div style={{minHeight: "85%"}}>
         <Routes>
           <Route
             path="/Alarm"
             element={isLogedin ? <AlarmPage /> : <Navigate to="/Enterance" />}
           />
-          <Route path="/MyPage" element={<MyPage />}/>
-          <Route path="/Enterance" element={isLogedin? <Navigate to ="/Main"/>: <EnterancePage/>}/>
-          <Route path="/" element= {isLogedin? <MainPage /> : <Navigate to="/Enterance" />}/>
-          <Route path="/Main" element={isLogedin ? <MainPage /> : <Navigate to="/Enterance" />}/>
-          <Route path="/Board" element={isLogedin ? <BoardPage /> : <Navigate to="/Enterance"/>}>
+          <Route path="/MyPage" element={<MyPage />} />
+          <Route
+            path="/Enterance"
+            element={isLogedin ? <Navigate to="/" /> : <EnterancePage />}
+          />
+          <Route
+            path="/"
+            element={isLogedin ? <MainPage /> : <Navigate to="/Enterance" />}
+          />
+          <Route
+            path="/Board"
+            element={isLogedin ? <BoardPage /> : <Navigate to="/Enterance" />}
+          >
             <Route path="Freeboard" element={<FreeBoard />} />
             <Route path="QuestionBoard" element={<QuestionBoard />}></Route>
             <Route path="InfoBoard" element={<InfoBoard />}></Route>
@@ -49,9 +58,11 @@ const App = () => {
             <Route path=":articleId" element={<ArticleDetail />}></Route>
             <Route path="SearchResult" element={<SearchResult />}></Route>
             <Route path="Write" element={<ArticleWirteForm />}></Route>
+            <Route path="Edit" element={<EditArticle />}></Route>
           </Route>
         </Routes>
-        <Footer />
+      </div>
+      <Footer />
     </div>
   );
 };

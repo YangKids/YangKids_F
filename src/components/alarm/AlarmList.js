@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 
 const AlarmList = () => {
   const [alarms, setAlarms] = useState([]);
+
   const getAlarms = async () => {
 
     const response = await axios.get("http://localhost:8080/api-alarm/alarm", {
@@ -14,7 +15,7 @@ const AlarmList = () => {
         userId: JSON.parse(sessionStorage.getItem("loginUser")).id,
       },
     });
-    console.log(response);
+    console.log("무한루프야?"+response);
     setAlarms(response.data);
   };
 
@@ -57,6 +58,7 @@ const AlarmList = () => {
           timer: 1000,
         });
       }
+      getAlarms();
     } catch (error) {
       Swal.fire({
         position: "center",
@@ -70,7 +72,7 @@ const AlarmList = () => {
 
   useEffect(() => {
     getAlarms();
-  }, [alarms]);
+  }, []);
 
   return (
     <div>
