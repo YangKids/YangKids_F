@@ -1,11 +1,11 @@
 import React from "react";
 import LoginForm from "../login/LoginForm";
-import { Card } from "antd";
+import { HeartTwoTone } from '@ant-design/icons';
+import { Card, Button } from "antd";
 import "./EnterancePage.css";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const EnterancePage = () => {
-  const navigate = useNavigate();
   return (
     <div className="Enterance">
       <div className="Ganpan">YangKids</div>
@@ -18,7 +18,16 @@ const EnterancePage = () => {
         }}
       >
         <LoginForm></LoginForm>
-        <div>아이디 찾기 | 비밀번호 찾기 | 회원가입</div>
+        <div>
+          <span style={{margin:"15px"}}>
+          <HeartTwoTone twoToneColor="#eb2f96" />
+          <Link to='/Find' style={{color : 'black'}}> 아이디 / 비밀번호 찾기</Link>
+          </span>
+          <span style={{margin:"15px"}}>
+          <HeartTwoTone twoToneColor="#eb2f96" />
+          <Link to='/Signup' style={{color : 'black'}}> 회원가입 </Link>
+          </span>
+        </div>
       </Card>
     </div>
   );
