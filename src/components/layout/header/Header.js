@@ -44,14 +44,11 @@ const Header = () => {
           },
         }
       );
-      console.log(response);
       const uncheckedCount = response.data.filter(
         (alarm) => alarm.isChecked === 0
       ).length;
       setUncheckedAlarms(uncheckedCount);
-    } catch (error) {
-      console.error(error);
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {

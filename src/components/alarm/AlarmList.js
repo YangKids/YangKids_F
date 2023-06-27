@@ -8,31 +8,24 @@ import Swal from "sweetalert2";
 const AlarmList = () => {
   const [alarms, setAlarms] = useState([]);
   const getAlarms = async () => {
-
     const response = await axios.get("http://localhost:8080/api-alarm/alarm", {
       params: {
         userId: JSON.parse(sessionStorage.getItem("loginUser")).id,
       },
     });
-    console.log(response);
     setAlarms(response.data);
   };
 
   const titleClick = async (alarmId) => {
     try {
-      const response = await axios.put(
-        `http://localhost:8080/api-alarm/check/${alarmId}`
-      );
-      console.log(response);
-    } catch (error) {
-      console.error(error);
-    }
+      await axios.put(`http://localhost:8080/api-alarm/check/${alarmId}`);
+    } catch (error) {}
   };
 
   const btnClick = async (alarmId) => {
     try {
       const result = await Swal.fire({
-        title: "알람을 삭제하시겠습니까?",
+        title: "알림을 삭제하시겠습니까?",
         text: "삭제 후에는 복구할 수 없습니다.",
         icon: "warning",
         showCancelButton: true,
@@ -80,12 +73,6 @@ const AlarmList = () => {
         renderItem={(item, index) => (
           <List.Item>
             <List.Item.Meta
-              //아바타는 글 쓴사람 프사?
-              // avatar={
-              //   <Avatar
-              //     src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`}
-              //   />
-              // }
               title={
                 <Link
                   to={`/board/${item.articleId}`}

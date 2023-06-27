@@ -3,6 +3,7 @@ import {
   HeartFilled,
   EyeOutlined,
   UserOutlined,
+  DeleteOutlined,
 } from "@ant-design/icons";
 import { useNavigate, useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
@@ -167,6 +168,19 @@ const ArticleDetail = () => {
 
   if (!article) {
     return <div>Loading...</div>; // 게시글 정보가 로드되지 않은 경우 로딩 표시
+  }
+
+  //삭제된 게시글인 경우
+  if (article.deletedAt !== null) {
+    return (
+      <div className="BoardBox">
+        <DeleteOutlined style={{ fontSize: "50px", color: "gray" }} />
+        <br />
+        <div style={{ fontSize: "20px", color: "gray" }}>
+          삭제된 게시글입니다.
+        </div>
+      </div>
+    );
   }
 
   return (
