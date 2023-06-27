@@ -32,5 +32,4 @@ const EnterancePage = () => {
     </div>
   );
 };
-
 export default EnterancePage;

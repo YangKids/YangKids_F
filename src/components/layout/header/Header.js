@@ -4,9 +4,9 @@ import MiniProfile from "./MiniProfile";
 import Menu from "./Menu";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-// import LoginButton from "./LoginButton";
 import AlarmButton from "./AlarmButton";
 // import SearchBar from "../../main/SearchBar";
+import axios from "axios";
 
 const Header = () => {
   const [ScrollActive, setScrollActive] = useState(false);
@@ -21,7 +21,7 @@ const Header = () => {
       setScrollY(window.pageYOffset);
       setScrollActive(false);
     }
-  };
+  }
 
   useEffect(() => {
     function scrollListener() {
@@ -33,19 +33,30 @@ const Header = () => {
     }; //  window 에서 스크롤을 감시를 종료
   });
 
-  // let sessionStorage = window.sessionStorage;
-  // sessionStorage.setItem(userId)
+  const [uncheckedAlarms, setUncheckedAlarms] = useState(0);
+  const countAlarms = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:8080/api-alarm/alarm",
+        {
+          params: {
+            userId: JSON.parse(sessionStorage.getItem("loginUser")).id,
+          },
+        }
+      );
+      console.log(response);
+      const uncheckedCount = response.data.filter(
+        (alarm) => alarm.isChecked === 0
+      ).length;
+      setUncheckedAlarms(uncheckedCount);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-  const user ={
-    id : '1',
-    userId : 'jjwoong1733',
-    name : '정재웅'
-  }
-
-  let localStorage = window.localStorage;
-  localStorage.setItem('user', user);
-  // console.log(localStorage.getItem('user'))
-
+  useEffect(() => {
+    countAlarms();
+  }, []);
 
   return (
     <div
@@ -57,23 +68,23 @@ const Header = () => {
       }}
     >
       <div className={ScrollActive ? "MovingHeader" : "Header"}>
-        <div className="ProfileBox" >
-          {/* {sessionStorage.getItem()?<MiniProfile />:<LoginButton/>} */}
-          {/* {localStorage.getItem('user') == null?<MiniProfile />:<LoginButton/>} */}
-          <MiniProfile></MiniProfile>
+        <div className="ProfileBox">
+          <MiniProfile />
         </div>
 
         <div className="Yangkids">
-          <Link to="/" className="DaeMoon">
+          <Link to="/Main" className="DaeMoon">
             YangKids
           </Link>
           {/* {window.scrollY > 500? <SearchBar/>:<div></div>}  */}
         </div>
 
-        <div style={{display:'flex', flexDirection:'row', minWidth : '140px'}}>
+        <div
+          style={{ display: "flex", flexDirection: "row", minWidth: "140px" }}
+        >
           <div className="AlarmButtonBox">
             <Link to="/Alarm">
-            <AlarmButton />
+              <AlarmButton cnt={uncheckedAlarms} />
             </Link>
           </div>
           <div className="MenuBox">
