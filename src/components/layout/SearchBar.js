@@ -27,7 +27,7 @@ const SearchBar = () => {
       style={{ height: "100%", width : "80px" }}
     >
       <Option value="title">제목</Option>
-      <Option value="writerName">작성자</Option>
+      <Option value="name">작성자</Option>
       <Option value="content">내용</Option>
     </Select>
   );
