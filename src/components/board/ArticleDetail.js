@@ -16,7 +16,6 @@ const ArticleDetail = () => {
   // console.log("여기는 ArticleDetail");
   const navigate = useNavigate();
   const articleId = useParams().articleId;
-
   const [article, setArticle] = useState([]);
   const [boardName, setBoardName] = useState("");
   const [hovered, setHovered] = useState(false);

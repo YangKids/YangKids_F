@@ -1,10 +1,10 @@
+
 import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Avatar, Button, Form, List, Input, Card, Space } from "antd";
 import axios from "axios";
 import { LikeFilled, LikeOutlined, CommentOutlined } from "@ant-design/icons";
 import ReCommentSection from "./ReCommentSection";
-
 const CommentSection = ({ boardId, isAnonymous, loginUser }) => {
   // console.log("안녕? 렌더링 폭발?");
   const { articleId } = useParams();
@@ -69,6 +69,7 @@ const CommentSection = ({ boardId, isAnonymous, loginUser }) => {
 
   // 댓글 삭제
   const deleteComment = async (commentId) => {
+
     // console.log("deleteComment");
     const response = await axios.delete(
       `http://localhost:8080/api-comment/delete`,
@@ -228,7 +229,6 @@ const CommentSection = ({ boardId, isAnonymous, loginUser }) => {
     // console.log("handleCancelSave");
     setIsEdits(false);
   };
-
   const handleRecomments = (commentId) => {
     // console.log("handleRecomments");
     setCreateRecomment(true);
@@ -239,7 +239,6 @@ const CommentSection = ({ boardId, isAnonymous, loginUser }) => {
     // console.log("useEffect - fetchComments");
     fetchComments();
   }, [articleId, newComment, editComment]);
-
   // 목록가기 위한 navigate
   const navigate = useNavigate();
 
@@ -316,6 +315,7 @@ const CommentSection = ({ boardId, isAnonymous, loginUser }) => {
         itemLayout="horizontal"
         dataSource={comments}
         renderItem={(comment, index) => (
+          <div>
           <List.Item
             actions={[
               comment.deletedAt === null ? (
@@ -511,6 +511,8 @@ const CommentSection = ({ boardId, isAnonymous, loginUser }) => {
               }
             />
           </List.Item>
+          {comment.recommentCnt>0 ? <RecommentSection/>: null} 
+          </div>
         )}
       />
       <hr />
@@ -523,7 +525,11 @@ const CommentSection = ({ boardId, isAnonymous, loginUser }) => {
           width: "100%",
         }}
       >
-        <Button type="primary" size={"large"} onClick={navigateToBoardList}>
+        <Button
+          type="primary"
+          size={"large"}
+          onClick={() => navigateToBoardList}
+        >
           목록으로
         </Button>
       </Space>

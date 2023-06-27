@@ -15,6 +15,7 @@ const EnterancePage = () => {
         style={{
           width: 400,
           textAlign: "center",
+          marginTop: "100px"
         }}
       >
         <LoginForm></LoginForm>
