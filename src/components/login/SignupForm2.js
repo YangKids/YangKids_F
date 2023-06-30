@@ -1,5 +1,8 @@
 import { UploadOutlined } from "@ant-design/icons";
-import { Form, Radio, Select, Upload, Button, Input } from "antd";
+import { Form, Radio, Select, Upload, Button, Input, Space } from "antd";
+import Swal from "sweetalert2";
+import axios from "axios";
+import React from "react";
 
 const SignupForm2 = ({
   setTeacher,
@@ -12,7 +15,9 @@ const SignupForm2 = ({
   setGeneration,
   studentId,
   setStudentId,
+  setStudentIdcheck,
 }) => {
+  const [studentIdStatus, setStudentIdStatus] = React.useState("");
   const handleChange = (value) => {
     console.log(`selected ${value}`);
     setTeacher(value);
@@ -49,6 +54,45 @@ const SignupForm2 = ({
     fileList,
     listType: "picture",
   };
+  const checkStudentId=()=>{
+    if (studentId === "") {
+      Swal.fire({
+        title: "학번을 입력해주세요.",
+        icon: "warning",
+        iconColor: "#ef404a",
+        confirmButtonText: "확인",
+        confirmButtonColor: "#148cff",
+      });
+      return;
+    }
+    axios
+      .get("http://localhost:8080/api-user/checkStudentId", { params: { studentId: studentId } })
+      .then((res) => {
+        console.log(res);
+        if (res.data === "SUCCESS") {
+          setStudentIdcheck(true);
+          setStudentIdStatus("success");
+          Swal.fire({
+            title: "가입 가능한 학번입니다.",
+            icon: "success",
+            iconColor: "#80b463",
+            confirmButtonText: "확인",
+            confirmButtonColor: "#148cff",
+          });
+        } else {
+          setStudentIdcheck(false);
+          setStudentIdStatus("warning");
+          Swal.fire({
+            title: "이미 가입된 학번입니다.",
+            icon: "error",
+            iconColor: "#ef404a",
+            confirmButtonText: "확인",
+            confirmButtonColor: "#148cff",
+          });
+        }
+      });
+  }
+  
   return (
     <>
       <Form
@@ -138,6 +182,7 @@ const SignupForm2 = ({
         <Form.Item
           name="studentId"
           label="학번"
+          validateStatus={studentIdStatus}
           rules={[
             {
               required: true,
@@ -145,10 +190,20 @@ const SignupForm2 = ({
             },
           ]}
         >
-          <Input
-            value={studentId}
-            onChange={(e) => setStudentId(e.target.value)}
-          />
+          <Space>
+            <Input
+              value={studentId}
+              onChange={(e) => setStudentId(e.target.value)}
+            />
+            <Button
+              htmlType="button"
+              type="primary"
+              ghost
+              onClick={checkStudentId}
+            >
+              중복확인
+            </Button>
+          </Space>
         </Form.Item>
         <Form.Item
           name="isEmployed"

@@ -8,6 +8,9 @@ import axios from "axios";
 const USER_REST_API = "http://localhost:8080/api-user";
 const EMAIL_REST_API = "http://localhost:8080/api-email";
 
+// 정규표현식
+const isPW = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
+
 const SignupForm1 = ({
   id,
   setId,
@@ -32,6 +35,16 @@ const SignupForm1 = ({
     if (id === "") {
       Swal.fire({
         title: "아이디를 입력해주세요.",
+        icon: "warning",
+        iconColor: "#ef404a",
+        confirmButtonText: "확인",
+        confirmButtonColor: "#148cff",
+      });
+      return;
+    }
+    if (id.length < 3 || id.length > 10) {
+      Swal.fire({
+        title: "아이디는 3~10글자로 입력해 주세요.",
         icon: "warning",
         iconColor: "#ef404a",
         confirmButtonText: "확인",
@@ -77,6 +90,12 @@ const SignupForm1 = ({
       });
       return;
     }
+    Swal.fire({
+      icon: "info",
+      title: "메일로 인증코드가 발송되었습니다. 메일함을 확인해주세요!",
+      showConfirmButton: false,
+      timer: 4000,
+    });
     axios
       .post(
         `${EMAIL_REST_API}/emailSend`,
@@ -122,7 +141,7 @@ const SignupForm1 = ({
     setBirth(dateString);
   };
   const onRadioChange = (e) => {
-    console.log('radio checked', e.target.value);
+    console.log("radio checked", e.target.value);
     setGender(e.target.value);
   };
   return (
@@ -149,6 +168,20 @@ const SignupForm1 = ({
               required: true,
               message: "아이디를 입력해 주세요.",
             },
+            ({ getFieldValue }) => ({
+              validator(_, value) {
+                if (
+                  !value ||
+                  (getFieldValue("id").length >= 3 &&
+                    getFieldValue("id").length <= 10)
+                ) {
+                  return Promise.resolve();
+                }
+                return Promise.reject(
+                  new Error("아이디는 3~10글자로 입력해 주세요.")
+                );
+              },
+            }),
           ]}
         >
           <Space>
@@ -156,6 +189,7 @@ const SignupForm1 = ({
               type="text"
               value={id}
               onChange={(e) => setId(e.target.value)}
+              placeholder="3~10글자로 입력해 주세요."
             />
             <Button htmlType="button" type="primary" ghost onClick={checkId}>
               중복확인
@@ -165,16 +199,32 @@ const SignupForm1 = ({
         <Form.Item
           name="password"
           label="비밀번호"
+          hasFeedback
           rules={[
             {
               required: true,
               message: "비밀번호를 입력하세요!",
             },
+            ({ getFieldValue }) => ({
+              validator(_, value) {
+                // 유효성 만족
+                if (!value || isPW.test(getFieldValue("password"))) {
+                  return Promise.resolve();
+                }
+                // 유효성 만족하지 않음
+                return Promise.reject(
+                  new Error(
+                    "8~16자 영문 대/소문자, 숫자, 특수문자를 최소 1개씩 포함해야 합니다."
+                  )
+                );
+              },
+            }),
           ]}
-        >
+        >          
           <Input.Password
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            placeholder="8~16자 영문 대/소문자, 숫자, 특수문자 최소 1개씩 포함"
           />
         </Form.Item>
         <Form.Item
@@ -238,6 +288,7 @@ const SignupForm1 = ({
         <Form.Item
           name="email"
           label="이메일"
+          validateStatus={emailStatus}
           rules={[
             {
               type: "email",
