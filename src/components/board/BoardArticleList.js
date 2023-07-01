@@ -45,7 +45,11 @@ const BoardArticleList = ({ boardId }) => {
     const getNotices = async () => {
       // try {
       const res = await axios.get(`http://localhost:8080/api-article/board/0`);
-      setNotices(res.data);
+      if (res.data.length > 3) {
+        setNotices(res.data.slice(0,3));
+      } else {
+        setNotices(res.data);
+      }
       // } catch (e) {}
     };
 
@@ -53,13 +57,6 @@ const BoardArticleList = ({ boardId }) => {
     getNotices();
   }, []);
 
-
-  let everyArticles = []
-  if (notices.length > 0) {
-    everyArticles = notices.concat(articles);
-  } else {
-    everyArticles = articles;
-  }
   const navigate = useNavigate();
 
   return (
@@ -74,56 +71,119 @@ const BoardArticleList = ({ boardId }) => {
         글쓰기
       </Button>
       <List
+        className="articleList"
         header={
-          <div style={{ display: "flex", flexDirection: "row" }}>
-            <div
-              style={{
-                display: "flex",
-                flexGrow: "1",
-                justifyContent: "center",
-              }}
-            >
-              제목
-            </div>
-            <div style={{ display: "flex", width: "220px" }}>
-              <div
-                style={{
-                  display: "flex",
-                  width: "80px",
-                  justifyContent: "center",
-                }}
-              >
-                작성일
+          <List
+            className="noticeList"
+            header={
+              <div style={{ display: "flex", flexDirection: "row" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    flexGrow: "1",
+                    justifyContent: "center",
+                  }}
+                >
+                  제목
+                </div>
+                <div style={{ display: "flex", width: "220px" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      width: "80px",
+                      justifyContent: "center",
+                    }}
+                  >
+                    작성일
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      width: "55px",
+                      justifyContent: "center",
+                    }}
+                  >
+                    조회수
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      width: "55px",
+                      justifyContent: "center",
+                    }}
+                  >
+                    좋아요
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      width: "50px",
+                      justifyContent: "center",
+                    }}
+                  >
+                    댓글
+                  </div>
+                </div>
               </div>
-              <div
-                style={{
-                  display: "flex",
-                  width: "55px",
-                  justifyContent: "center",
-                }}
+            }
+            dataSource={notices}
+            renderItem={(article, index) => (
+              <List.Item
+                actions={[
+                  <div>{regDate(article.regDate)}</div>,
+                  <IconText
+                    icon={EyeOutlined}
+                    text={article.viewCnt}
+                    key="view"
+                  />,
+                  <IconText
+                    icon={LikeOutlined}
+                    text={article.likeCnt}
+                    key="like"
+                  />,
+                  <IconText
+                    icon={MessageOutlined}
+                    text={article.commentCnt}
+                    key="comment"
+                  />,
+                ]}
+                style={
+                  article.boardId === 0
+                    ? {
+                        backgroundColor: "#f1f3f5",
+                        borderBottom: "1px solid #868e96",
+                        paddingLeft: "5px",
+                      }
+                    : { paddingLeft: "5px" }
+                }
               >
-                조회수
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  width: "55px",
-                  justifyContent: "center",
-                }}
-              >
-                좋아요
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  width: "50px",
-                  justifyContent: "center",
-                }}
-              >
-                댓글
-              </div>
-            </div>
-          </div>
+                <List.Item.Meta
+                  avatar={
+                    <Avatar
+                      src={
+                        article.writerImg
+                          ? article.writerImg
+                          : `https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`
+                      }
+                      // src={article.writerImg}
+                    />
+                  }
+                  title={
+                    <Link to={`/Board/${article.articleId}`}>
+                      {article.title}
+                    </Link>
+                  }
+                  description={
+                    article.boardId === 0
+                      ? "관리자"
+                      : article.isAnonymous === 0
+                      ? article.writerName
+                      : "익명"
+                  }
+                />
+              </List.Item>
+            )}
+          ></List>
         }
         style={{
           width: "100%",
@@ -133,7 +193,7 @@ const BoardArticleList = ({ boardId }) => {
           position: "bottom",
           align: "center",
         }}
-        dataSource={everyArticles}
+        dataSource={articles}
         renderItem={(article, index) => (
           <List.Item
             actions={[
@@ -175,7 +235,11 @@ const BoardArticleList = ({ boardId }) => {
                 <Link to={`/Board/${article.articleId}`}>{article.title}</Link>
               }
               description={
-                article.isAnonymous === 0 ? article.writerName : "익명"
+                article.boardId === 0
+                  ? "관리자"
+                  : article.isAnonymous === 0
+                  ? article.writerName
+                  : "익명"
               }
             />
           </List.Item>

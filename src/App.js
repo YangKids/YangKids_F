@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "./App.css";
 import Footer from "./components/layout/footer/Footer";
-import {BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import EnterancePage from "./components/entrance/EnterancePage"
 import MainPage from "./components/main/MainPage";
 import BoardPage from "./components/board/BoardPage";

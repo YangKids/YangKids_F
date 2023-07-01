@@ -33,18 +33,20 @@ const ArticleWirteForm = () => {
   const [isAnonymousData, setIsAnonymousData] = useState(0);
   const [loginUser, setLoginUser] = useState({});
 
-  useEffect(()=>{
-    setLoginUser(JSON.parse(sessionStorage.getItem(loginUser)))
-  },[sessionStorage])
-  
-  console.log(loginUser)
-
+  useEffect(() => {
+    setLoginUser(JSON.parse(sessionStorage.getItem("loginUser")));
+  }, []);
 
   const normFile = (e) => {
     console.log("Upload event:", e);
 
     if (e.fileList.length > 1) {
-      message.warning("이미지는 하나만 업로드 하세요.");
+      Swal.fire({
+        icon: "warning",
+        title: "사진은 하나만 등록 가능합니다.",
+        showConfirmButton: false,
+        timer: 2000,
+      });
     }
 
     let fileList = e.fileList;
@@ -53,17 +55,17 @@ const ArticleWirteForm = () => {
     if (Array.isArray(e)) {
       return e;
     }
-    //e가 true일때 fileist 출력
-    //e가 false일때 e 출력
     return e && fileList;
   };
 
   const uploadProps = {
     onRemove: (file) => {
       const index = fileList.indexOf(file);
+      console.log(index)
       const newFileList = fileList.slice();
       newFileList.splice(index, 1);
       setFileList(newFileList);
+      console.log("onremove", fileList)
     },
 
     beforeUpload: (file) => {
@@ -80,7 +82,7 @@ const ArticleWirteForm = () => {
     if (fileList.length > 0) {
       const formData = new FormData();
       console.log(fileList);
-      formData.append("file", fileList[0]);
+      formData.append("file", fileList[fileList.length-1]);
       formData.append("boardId", article.boardId);
       formData.append(
         "writerId",
@@ -95,6 +97,10 @@ const ArticleWirteForm = () => {
         formData.append("isAnonymous", 0);
       }
 
+      if (article.boardId === 0) {
+        formData.append("isAdmin", 1);
+      }
+
       axios
         .post("http://localhost:8080/api-article/writewithimg", formData, {
           header: { "Content-Type": "multipart/form-data" },
@@ -104,7 +110,7 @@ const ArticleWirteForm = () => {
           Swal.fire({
             icon: "success",
             iconColor: "#80b463",
-            title: "게시글을 성공적으로 등록했습니다.",
+            title: "게시글 등록 완료",
             showConfirmButton: false,
             timer: 1500,
           });
@@ -112,16 +118,15 @@ const ArticleWirteForm = () => {
         .catch(() => {
           Swal.fire({
             icon: "warning",
-            iconColor: "#80b463",
-            title: "게시글을 성공적으로 등록했습니다.",
+            title: "게시글 등록 실패",
             showConfirmButton: false,
             timer: 1500,
           });
         })
         .finally(() => {
-          if(location.state.boardId === 0){
-            navigate(`/Board/NoticeBoard`)
-          }else if (location.state.boardId === 1) {
+          if (location.state.boardId === 0) {
+            navigate(`/Board/NoticeBoard`);
+          } else if (location.state.boardId === 1) {
             navigate(`/Board/FreeBoard`);
           } else if (location.state.boardId === 2) {
             navigate(`/Board/QuestionBoard`);
@@ -152,16 +157,27 @@ const ArticleWirteForm = () => {
           new URLSearchParams(data)
         )
         .then(() => {
-          message.success("게시글 등록이 완료되었습니다.");
+          Swal.fire({
+            icon: "success",
+            iconColor: "#80b463",
+            title: "게시글 등록 완료",
+            showConfirmButton: false,
+            timer: 1500,
+          });
         })
         .catch(() => {
-          message.error("게시글 등록에 실패하였습니다.");
+          Swal.fire({
+            icon: "warning",
+            title: "게시글 등록 실패",
+            showConfirmButton: false,
+            timer: 1500,
+          });
         })
         .finally(() => {
           // navigate(`/Board/`)
-          if(location.state.boardId === 0){
-            navigate(`/Board/NoticeBoard`)
-          }else if (location.state.boardId === 1) {
+          if (location.state.boardId === 0) {
+            navigate(`/Board/NoticeBoard`);
+          } else if (location.state.boardId === 1) {
             navigate(`/Board/FreeBoard`);
           } else if (location.state.boardId === 2) {
             navigate(`/Board/QuestionBoard`);
@@ -184,7 +200,7 @@ const ArticleWirteForm = () => {
         {...formItemLayout}
         onFinish={onFinish}
         initialValues={{
-          boardId: location.state.boardId,  
+          boardId: location.state.boardId,
         }}
         style={{
           maxWidth: 1200,
@@ -206,7 +222,11 @@ const ArticleWirteForm = () => {
           ]}
         >
           <Select placeholder="게시판을 선택하세요">
-            {loginUser? (loginUser.isAdmin === 1? <Option value={0}>공지사항</Option>:null) : null}
+            {loginUser ? (
+              loginUser.isAdmin === 1 ? (
+                <Option value={0}>공지사항</Option>
+              ) : null
+            ) : null}
             <Option value={1}>자유게시판</Option>
             <Option value={2}>질문게시판</Option>
             <Option value={3}>정보공유게시판</Option>
@@ -239,15 +259,16 @@ const ArticleWirteForm = () => {
         >
           <TextArea rows={10} style={{ borderRadius: "6px" }} />
         </Form.Item>
-
-        <Form.Item
-          name="isAnonymous"
-          label="익명"
-          valuePropName="checked"
-          initialValue
-        >
-          <Switch checkedChildren="익명" unCheckedChildren="실명" />
-        </Form.Item>
+        {location.state.boardId === 0 ? null : (
+          <Form.Item
+            name="isAnonymous"
+            label="익명"
+            valuePropName="checked"
+            initialValue
+          >
+            <Switch checkedChildren="익명" unCheckedChildren="실명" />
+          </Form.Item>
+        )}
 
         <Form.Item
           name="img"

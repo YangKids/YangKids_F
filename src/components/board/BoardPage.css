@@ -116,6 +116,11 @@ Button {
   white-space: pre-wrap;
 }
 
-.ant-list-header {
+.articleList > .ant-list-header {
+  border-block-end: 1px solid #868e96 !important;
+  padding : 0px !important;
+}
+
+.noticeList > .ant-list-header{
   border-block-end: 2px solid #868e96 !important;
 }

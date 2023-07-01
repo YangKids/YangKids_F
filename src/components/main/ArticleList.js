@@ -1,6 +1,6 @@
 import { Avatar, List } from 'antd';
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 const ArticleList = ({ boardId }) => {
@@ -17,8 +17,6 @@ const ArticleList = ({ boardId }) => {
     getArticles();
     // console.log(articles);
   }, [boardId]);
-
-  const navigate = useNavigate();
 
   return (
     <List

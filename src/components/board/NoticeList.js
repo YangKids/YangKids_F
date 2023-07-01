@@ -31,6 +31,13 @@ function regDate(date) {
 const NoticeList = ({ boardId }) => {
   const [notices, setNotices] = useState([]);
 
+  const [loginUser, setLoginUser] = useState({});
+
+  useEffect(()=>{
+    setLoginUser(JSON.parse(sessionStorage.getItem("loginUser")))
+    
+  },[])
+
   useEffect(() => {
 
     const getNotices = async () => {
@@ -45,6 +52,7 @@ const NoticeList = ({ boardId }) => {
 
   return (
     <>
+    {loginUser.isAdmin === 1?
       <Button
         icon={<EditOutlined />}
         style={{ alignSelf: "end", marginBottom: "10px", marginRight: "10px" }}
@@ -54,6 +62,7 @@ const NoticeList = ({ boardId }) => {
       >
         글쓰기
       </Button>
+      : null}
       <List
         header={
           <div style={{ display: "flex", flexDirection: "row" }}>
@@ -132,7 +141,6 @@ const NoticeList = ({ boardId }) => {
               />,
             ]}
             style={{
-              borderBottom: "1px solid #868e96",
               paddingLeft: "5px",
             }}
           >
@@ -150,9 +158,7 @@ const NoticeList = ({ boardId }) => {
               title={
                 <Link to={`/Board/${article.articleId}`}>{article.title}</Link>
               }
-              description={
-                article.isAnonymous === 0 ? article.writerName : "익명"
-              }
+              description="관리자"
             />
           </List.Item>
         )}

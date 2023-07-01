@@ -51,7 +51,7 @@ const MyPageForm = () => {
     setEmailcheck(false);
     console.log("이메일 인증여부");
     console.log(emailcheck);
-  }, [email]);
+  }, [email, emailcheck]);
 
   const myBirth = () => {
     const arr = loginUser.birth.split("");

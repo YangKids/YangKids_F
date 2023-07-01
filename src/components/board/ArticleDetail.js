@@ -35,7 +35,7 @@ const ArticleDetail = () => {
   };
 
   // 현재 로그인한 유저 가져오가
-  const loginUserId = JSON.parse(sessionStorage.getItem("loginUser")).id;
+  const loginUser = JSON.parse(sessionStorage.getItem("loginUser"));
 
   // 게시글 삭제하기 댓글 삭제와 방식이 다르다. 어.. 이유가..음? 뭐더라?
   const handleDelete = async (articleId) => {
@@ -204,13 +204,13 @@ const ArticleDetail = () => {
           >
             {article.title}
           </h4> */}
-          {article.writerId === loginUserId ? (
+          {article.writerId === loginUser.id ? (
             <div style={{ marginLeft: "100px" }}>
               <Button
                 type="dashed"
                 onClick={() =>
                   navigate("/Board/Edit", {
-                    state: { articleId: articleId },
+                    state: { article: article},
                   })
                 }
               >
@@ -223,6 +223,16 @@ const ArticleDetail = () => {
               >
                 삭제하기
               </Button>
+            </div>
+          ) : loginUser.isAdmin === 1 ? (
+            <div style={{ marginLeft: "200px" }}>
+            <Button
+              type="primary"
+              danger
+              onClick={() => handleDelete(article.articleId)}
+            >
+              삭제하기
+            </Button>
             </div>
           ) : null}
         </div>
@@ -309,7 +319,9 @@ const ArticleDetail = () => {
             </div>
           </React.Fragment>
         ) : null}
-        <div className="articleContent" style={{whiteSpace:"pre-line"}}>{article.content}</div>
+        <div className="articleContent" style={{ whiteSpace: "pre-line" }}>
+          {article.content}
+        </div>
         <hr />
         <div
           style={{
@@ -334,7 +346,7 @@ const ArticleDetail = () => {
         <CommentSection
           boardId={article.boardId}
           isAnonymous={article.isAnonymous}
-          loginUser={loginUserId}
+          loginUser={loginUser.id}
         />
       </div>
     </div>

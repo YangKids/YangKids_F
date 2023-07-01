@@ -38,7 +38,16 @@ const SearchResult = () => {
       const data = { key: location.state.key, word: location.state.word };
       console.log(data)
       const res = await axios.get("http://localhost:8080/api-article/search",{params:{key:data.key,word: data.word },});
-      setResults(res.data);
+
+      let tmpResult = [];
+      for(let i = 0; i<res.data.length ; i++){
+        if(res.data[i].boardId !== 0){
+          tmpResult.push(res.data[i])
+        }
+      }
+      
+      setResults(tmpResult)
+      
       // } catch (e) {}
     };
 

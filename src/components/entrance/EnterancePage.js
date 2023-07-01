@@ -1,10 +1,9 @@
 import React from "react";
 import LoginForm from "../login/LoginForm";
 import { HeartTwoTone } from '@ant-design/icons';
-import { Card, Button } from "antd";
+import { Card } from "antd";
 import "./EnterancePage.css";
 import { Link } from "react-router-dom";
-import { faVolumeHigh } from "@fortawesome/free-solid-svg-icons";
 
 const EnterancePage = () => {
   return (
