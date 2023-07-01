@@ -2,7 +2,6 @@ import {
   HeartOutlined,
   HeartFilled,
   EyeOutlined,
-  CommentOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import { useNavigate, useParams } from "react-router-dom";
@@ -13,7 +12,8 @@ import axios from "axios";
 import CommentSection from "./CommentSection";
 import EditArticle from "./EditArticle";
 
-function ArticleDetail() {
+const ArticleDetail = () => {
+  // console.log("여기는 ArticleDetail");
   const navigate = useNavigate();
   const articleId = useParams().articleId;
   const [article, setArticle] = useState([]);
@@ -21,10 +21,8 @@ function ArticleDetail() {
   const [hovered, setHovered] = useState(false);
   const [liked, setLiked] = useState(false);
   const [totalLikeCnt, setTotalLikeCnt] = useState(0);
-  const [totalCommentCnt, setTotalCommentCnt] = useState(0);
-  const [isAnonymous, setIsAnonymous] = useState(0);
+  // comment가 동적으로 처리 안된다. 하위 컴포넌트에서 commentCnt 가져와야해
   const [visible, setVisible] = useState(false);
-
   const [editMode, setEditMode] = useState(false);
 
   // 마우스 hover 적용 함수
@@ -36,19 +34,22 @@ function ArticleDetail() {
     setHovered(false);
   };
 
+  // 현재 로그인한 유저 가져오가
+  const loginUser = JSON.parse(sessionStorage.getItem("loginUser"));
+
   // 게시글 삭제하기 댓글 삭제와 방식이 다르다. 어.. 이유가..음? 뭐더라?
   const handleDelete = async (articleId) => {
     if (window.confirm("정말로 삭제하시겠습니까?")) {
       try {
-        const updateArticle = await axios({
+        await axios({
           method: "DELETE",
           url: `http://localhost:8080/api-article/delete`,
           params: { articleId: articleId },
         })
-          .then((data) => {
+          .then(() => {
             alert("삭제완료");
             // 게시판 이름 설정
-            console.log(article.boardId);
+            // console.log(article.boardId);
             if (article.boardId === 1) {
               navigate("/Board/FreeBoard");
             } else if (article.boardId === 2) {
@@ -106,7 +107,7 @@ function ArticleDetail() {
 
   // article 수정 위한 코드, 모르게써....ㅠㅠ
   const handleUpdate = (articleId, content) => {
-    console.log(articleId, content);
+    // console.log(articleId, content);
   };
 
   const handleEdit = () => {
@@ -123,7 +124,6 @@ function ArticleDetail() {
         ).json(); // 서버 API로부터 게시글 정보를 가져옴
         setArticle(json); // 가져온 게시글 정보를 상태 변수에 저장
         setTotalLikeCnt(json.likeCnt);
-        setTotalCommentCnt(json.commentCnt);
         // 게시판 이름 설정
         if (json.boardId === 1) {
           setBoardName("자유게시판");
@@ -161,8 +161,6 @@ function ArticleDetail() {
         }
       }
     };
-
-    setIsAnonymous(article.isAnonymous);
     axiosLike();
   }, [article]);
 
@@ -175,25 +173,59 @@ function ArticleDetail() {
       <div className="ArticleBox">
         <div style={{ display: "flex", alignItems: "center", height: "50px" }}>
           <h5 style={{ width: "150px", color: "#3BC5F9" }}>{boardName}</h5>
-          <h3
+          {article && article.title && (
+            <>
+              {article.title.length > 23 ? (
+                <h4
+                  style={{
+                    width: "550px",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {article.title}
+                </h4>
+              ) : (
+                <h3
+                  style={{
+                    width: "550px",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {article.title}
+                </h3>
+              )}
+            </>
+          )}
+          {/* <h4
             style={{
               width: "550px",
               fontWeight: "bolder",
             }}
           >
             {article.title}
-          </h3>
-          <div style={{ marginLeft: "100px" }}>
-            <Button
-              type="dashed"
-              onClick={() =>
-                navigate("/Board/Edit", {
-                  state: { article: article },
-                })
-              }
-            >
-              수정하기
-            </Button>
+          </h4> */}
+          {article.writerId === loginUser.id ? (
+            <div style={{ marginLeft: "100px" }}>
+              <Button
+                type="dashed"
+                onClick={() =>
+                  navigate("/Board/Edit", {
+                    state: { article: article},
+                  })
+                }
+              >
+                수정하기
+              </Button>
+              <Button
+                type="primary"
+                danger
+                onClick={() => handleDelete(article.articleId)}
+              >
+                삭제하기
+              </Button>
+            </div>
+          ) : loginUser.isAdmin === 1 ? (
+            <div style={{ marginLeft: "200px" }}>
             <Button
               type="primary"
               danger
@@ -201,16 +233,18 @@ function ArticleDetail() {
             >
               삭제하기
             </Button>
-          </div>
+            </div>
+          ) : null}
         </div>
         <div style={{ display: "flex", alignItems: "center" }}>
-          <Avatar icon={<UserOutlined />} style={{ marginRight: "10px" }} />
-          {/*  <Avatar
-               src={article.writerImg}
-                /> */}
+          {article.writerImg === null ? (
+            <Avatar icon={<UserOutlined />} style={{ marginRight: "10px" }} />
+          ) : (
+            <Avatar src={article.writerImg} style={{ marginRight: "10px" }} />
+          )}
           <div style={{ flexGrow: 1, textAlign: "left" }}>
             <span style={{ fontSize: "18px", fontWeight: 500 }}>
-              {isAnonymous === 0 ? article.writerName : "익명"}
+              {article.isAnonymous === 0 ? article.writerName : "익명"}
             </span>
             {article.regDate !== article.updateDate ? (
               <React.Fragment>
@@ -256,10 +290,6 @@ function ArticleDetail() {
               {liked ? <HeartFilled /> : <HeartOutlined />}
               {totalLikeCnt}
             </span>
-            <span>
-              <CommentOutlined />
-              {totalCommentCnt}
-            </span>
           </div>
         </div>
         <hr />
@@ -289,7 +319,9 @@ function ArticleDetail() {
             </div>
           </React.Fragment>
         ) : null}
-        <div className="articleContent">{article.content}</div>
+        <div className="articleContent" style={{ whiteSpace: "pre-line" }}>
+          {article.content}
+        </div>
         <hr />
         <div
           style={{
@@ -311,14 +343,14 @@ function ArticleDetail() {
         </div>
       </div>
       <div className="CommentBox">
-        {/* 넘길 데이터 지정해줘야해 articleId={article.articleId} writerId={article.writerId} */}
         <CommentSection
           boardId={article.boardId}
           isAnonymous={article.isAnonymous}
+          loginUser={loginUser.id}
         />
       </div>
     </div>
   );
-}
+};
 
 export default ArticleDetail;

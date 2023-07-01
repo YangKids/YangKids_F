@@ -5,6 +5,14 @@ import { Link } from 'react-router-dom';
 
 const items = [
   {
+    key: '0',
+    label: (
+      <Link to='/Board/NoticeBoard'>
+        공지사항
+      </Link>
+    ),
+  },
+  {
     key: '1',
     label: (
       <Link to='/Board/FreeBoard'>

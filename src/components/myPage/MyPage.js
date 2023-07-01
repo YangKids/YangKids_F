@@ -17,6 +17,7 @@ const MyPage = () => {
 
       <div className="formBox">
         <MyPageForm></MyPageForm>
+        
       </div>
     </div>
   );

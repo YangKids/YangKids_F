@@ -1,5 +1,5 @@
-import { useLocation } from "react-router";
 import React, { useEffect, useState } from "react";
+import "./BoardPage.css";
 import {
   EditOutlined,
   EyeOutlined,
@@ -28,49 +28,43 @@ function regDate(date) {
   );
 }
 
-const SearchResult = () => {
-  const location = useLocation();
-  const [results, setResults] = useState([]);
+const NoticeList = ({ boardId }) => {
+  const [notices, setNotices] = useState([]);
+
+  const [loginUser, setLoginUser] = useState({});
+
   useEffect(() => {
-    const getResults = async () => {
+    setLoginUser(JSON.parse(sessionStorage.getItem("loginUser")));
+  }, []);
+
+  useEffect(() => {
+    const getNotices = async () => {
       // try {
-
-      const data = { key: location.state.key, word: location.state.word };
-      console.log(data)
-      const res = await axios.get("http://localhost:8080/api-article/search",{params:{key:data.key,word: data.word },});
-
-      let tmpResult = [];
-      for(let i = 0; i<res.data.length ; i++){
-        if(res.data[i].boardId !== 0){
-          tmpResult.push(res.data[i])
-        }
-      }
-      
-      setResults(tmpResult)
-      
+      const res = await axios.get(`http://localhost:8080/api-article/board/0`);
+      setNotices(res.data);
       // } catch (e) {}
     };
-
-    getResults();
-    // console.log(articles);
-  }, [location.state.key, location.state.word]);
-
+    getNotices();
+  }, []);
   const navigate = useNavigate();
 
-
-  console.log(results)
   return (
-    <div className="BoardBox">
-      <h3 style={{ textAlign: "center" }}>검색 결과</h3>
-      <div className="Description">검색 결과입니다.</div>
-
-      <Button
-        icon={<EditOutlined />}
-        style={{ alignSelf: "end", marginBottom: "10px", marginRight: "10px" }}
-        onClick={() => navigate("/Board/Write", { state: { boardId: 1 } })}
-      >
-        글쓰기
-      </Button>
+    <>
+      {loginUser.isAdmin === 1 ? (
+        <Button
+          icon={<EditOutlined />}
+          style={{
+            alignSelf: "end",
+            marginBottom: "10px",
+            marginRight: "10px",
+          }}
+          onClick={() =>
+            navigate("/Board/Write", { state: { boardId: boardId } })
+          }
+        >
+          글쓰기
+        </Button>
+      ) : null}
       <List
         header={
           <div style={{ display: "flex", flexDirection: "row" }}>
@@ -125,13 +119,13 @@ const SearchResult = () => {
         }
         style={{
           width: "100%",
-          borderTop: "2px solid rgba(0, 0, 0, 0.1)",
+          borderTop: "2px solid #868e96",
         }}
         pagination={{
           position: "bottom",
           align: "center",
         }}
-        dataSource={results}
+        dataSource={notices}
         renderItem={(article, index) => (
           <List.Item
             actions={[
@@ -148,24 +142,16 @@ const SearchResult = () => {
                 key="comment"
               />,
             ]}
+            style={{
+              paddingLeft: "5px",
+            }}
           >
             <List.Item.Meta
-              avatar={
-                <Avatar
-                  src={
-                    article.writerImg
-                      ? article.writerImg
-                      : `https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`
-                  }
-                  // src={article.writerImg}
-                />
-              }
+              avatar={<Avatar src={`../img/admin.png`} />}
               title={
                 <Link to={`/Board/${article.articleId}`}>{article.title}</Link>
               }
-              description={
-                article.isAnonymous === 0 ? article.writerName : "익명"
-              }
+              description="관리자"
             />
           </List.Item>
         )}
@@ -173,7 +159,7 @@ const SearchResult = () => {
       <div className="Search">
         <SearchBar />
       </div>
-    </div>
+    </>
   );
 };
-export default SearchResult;
+export default NoticeList;

@@ -1,6 +1,7 @@
 import React from "react";
 import "./MainPage.css";
 import FreeBoardPreview from "./FreeBoardPreview";
+import FreeBoard from "./FreeBoard";
 import HotArticle from "./HotArticle";
 import SearchBar from "../layout/SearchBar";
 import YangchelinGuide from "./YangchelinGuide";
@@ -23,11 +24,11 @@ const MainPage = () => {
         <div className="CardBox">
           <FreeBoardPreview />
           <div style={{ minWidth: "40px", height: "1410px" }}></div>
-          <HotArticle />
+          <HotArticle boardId={1}/>
         </div>
 
         <div className="CardBox">
-          <HotArticle />
+          <FreeBoard boardId={4}/>
           <div style={{ minWidth: "40px", height: "1410px" }}></div>
           <YangchelinGuide />
         </div>

@@ -1,90 +1,126 @@
 .Body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  
-  }
-  
-.BoardCategory{
-    display: flex;
-    width: 1200px;
-    height: 70px;
-    background-color: white;
-    box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.2);
-    border-radius: 20px;
-    margin : 40px;
-    justify-content: center;
-    align-items: center;
-    font: larger bolder;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.BoardCategory {
+  display: flex;
+  width: 1200px;
+  height: 70px;
+  background-color: white;
+  box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  margin: 40px;
+  justify-content: center;
+  align-items: center;
+  font: larger bolder;
 }
 
 /* .BoardCategory a{
-    width: 400px;
-} */
+      width: 400px;
+  } */
 
 .BoardBox {
-    
-    display: flex;
-    flex-direction: column;
-    top: 100px;
-    width: 1120px;
-    align-items: center;
-    justify-content: center;
-    justify-self: center;
-    font-size: x-large;
-    font-weight: bolder;
-    background-color: white;
-    box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.2);
-    border-radius: 20px;
-    padding: 40px;
+  display: flex;
+  flex-direction: column;
+  top: 100px;
+  width: 1120px;
+  align-items: center;
+  justify-content: center;
+  justify-self: center;
+  font-size: x-large;
+  font-weight: bolder;
+  background-color: white;
+  box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  padding: 40px;
 }
 
-.Description{
-    text-align: center;
-    font-size: large;
-    font-weight: 300;
-    margin-bottom: 40px;
+.Description {
+  text-align: center;
+  font-size: large;
+  font-weight: 300;
+  margin-bottom: 40px;
 }
 
-.ant-menu-title-content{
-    margin-inline-start: 5px !important;
+.ant-menu-title-content {
+  margin-inline-start: 5px !important;
 }
 
-.ant-menu-item-selected::after{
-    border-bottom-color: white !important;
+.ant-menu-item-selected::after {
+  border-bottom-color: white !important;
 }
 .ant-menu-item-selected {
-    color:#84abf9 !important;
+  color: #84abf9 !important;
 }
 
-.ant-menu-item:hover{
-    color: #b9bfff !important;
+.ant-menu-item:hover {
+  color: #b9bfff !important;
 }
 
-.ant-menu-item-active::after{
-    border-bottom-color: white !important;
+.ant-menu-item-active::after {
+  border-bottom-color: white !important;
 }
 
-.Search{
-    margin-top: 25px;
-    width: 500px;
+.Search {
+  margin-top: 25px;
+  width: 500px;
 }
 
-.FormBox {   
-    top: 100px;
-    width: 1120px;
-    align-items: center;
-    justify-content: center;
-    justify-self: center;
-    font-size: x-large;
-    font-weight: bolder;
-    background-color: white;
-    box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.2);
-    border-radius: 20px;
-    padding: 40px;
+.FormBox {
+  top: 100px;
+  width: 1120px;
+  align-items: center;
+  justify-content: center;
+  justify-self: center;
+  font-size: x-large;
+  font-weight: bolder;
+  background-color: white;
+  box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  padding: 40px;
 }
 
-.ant-image {
-    margin: 0 20px 20px 230px;
-    border-radius: 6px;
+.ArticleBox {
+  width: 1000px;
+}
+
+.CommentBox {
+  width: 1000px;
+}
+
+.ReCommentBox {
+  margin-left: 50px;
+}
+
+.ViewLikeCommentCnt span {
+  margin-top: 20px;
+  margin-right: 15px;
+  font-size: large;
+}
+
+.articleContent {
+  margin-top: 100px;
+  margin-bottom: 100px;
+  font-size: 20px;
+  font-weight: 100;
+  white-space: pre-line;
+}
+
+Button {
+  margin-right: 5px;
+}
+
+.CommentTextBox {
+  white-space: pre-wrap;
+}
+
+.articleList > .ant-list-header {
+  border-block-end: 1px solid #868e96 !important;
+  padding : 0px !important;
+}
+
+.noticeList > .ant-list-header{
+  border-block-end: 2px solid #868e96 !important;
 }

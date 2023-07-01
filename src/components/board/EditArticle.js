@@ -1,16 +1,12 @@
 import React, { useState } from "react";
 import "./BoardPage.css";
-import { UploadOutlined } from "@ant-design/icons";
 import {
   Button,
   Form,
-  Image,
   Input,
   Select,
   Space,
   Switch,
-  Tooltip,
-  Upload,
   message,
 } from "antd";
 import TextArea from "antd/es/input/TextArea";
