@@ -19,6 +19,7 @@ import ArticleWirteForm from "./components/board/ArticleWriteForm";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import EditArticle from "./components/board/EditArticle";
+import NoticeBoard from "./components/board/NoticeBoard";
 
 const App = () => {
   const [isLogedin, setIsLogedin] = useState(false);
@@ -48,6 +49,7 @@ const App = () => {
           <Route path="/Enterance" element={isLogedin? <Navigate to ="/"/>: <EnterancePage/>}/>
           <Route path="/" element= {isLogedin? <MainPage /> : <Navigate to="/Enterance" />}/>
           <Route path="/Board" element={isLogedin ? <BoardPage /> : <Navigate to="/Enterance"/>}>
+            <Route path="NoticeBoard" element={<NoticeBoard/>}/>
             <Route path="Freeboard" element={<FreeBoard />} />
             <Route path="QuestionBoard" element={<QuestionBoard />}></Route>
             <Route path="InfoBoard" element={<InfoBoard />}></Route>

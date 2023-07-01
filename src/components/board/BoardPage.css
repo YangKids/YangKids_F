@@ -115,3 +115,7 @@ Button {
 .CommentTextBox {
   white-space: pre-wrap;
 }
+
+.ant-list-header {
+  border-block-end: 2px solid #868e96 !important;
+}

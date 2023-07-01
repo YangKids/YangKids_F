@@ -526,7 +526,11 @@ const CommentSection = ({ boardId, isAnonymous, loginUser }) => {
           width: "100%",
         }}
       >
-        <Button type="primary" size={"large"} onClick={navigateToBoardList}>
+        <Button
+          type="primary"
+          size={"large"}
+          onClick={() => navigateToBoardList()}
+        >
           목록으로
         </Button>
       </Space>

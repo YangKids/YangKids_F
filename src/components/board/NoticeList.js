@@ -28,19 +28,10 @@ function regDate(date) {
   );
 }
 
-const BoardArticleList = ({ boardId }) => {
-  const [articles, setArticles] = useState([]);
+const NoticeList = ({ boardId }) => {
   const [notices, setNotices] = useState([]);
 
   useEffect(() => {
-    const getArticles = async () => {
-      // try {
-      const res = await axios.get(
-        `http://localhost:8080/api-article/board/${boardId}`
-      );
-      setArticles(res.data);
-      // } catch (e) {}
-    };
 
     const getNotices = async () => {
       // try {
@@ -48,18 +39,8 @@ const BoardArticleList = ({ boardId }) => {
       setNotices(res.data);
       // } catch (e) {}
     };
-
-    getArticles();
     getNotices();
   }, []);
-
-
-  let everyArticles = []
-  if (notices.length > 0) {
-    everyArticles = notices.concat(articles);
-  } else {
-    everyArticles = articles;
-  }
   const navigate = useNavigate();
 
   return (
@@ -133,7 +114,7 @@ const BoardArticleList = ({ boardId }) => {
           position: "bottom",
           align: "center",
         }}
-        dataSource={everyArticles}
+        dataSource={notices}
         renderItem={(article, index) => (
           <List.Item
             actions={[
@@ -150,15 +131,10 @@ const BoardArticleList = ({ boardId }) => {
                 key="comment"
               />,
             ]}
-            style={
-              article.boardId === 0
-                ? {
-                    backgroundColor: "#f1f3f5",
-                    borderBottom: "1px solid #868e96",
-                    paddingLeft: "5px",
-                  }
-                : { paddingLeft: "5px" }
-            }
+            style={{
+              borderBottom: "1px solid #868e96",
+              paddingLeft: "5px",
+            }}
           >
             <List.Item.Meta
               avatar={
@@ -187,4 +163,4 @@ const BoardArticleList = ({ boardId }) => {
     </>
   );
 };
-export default BoardArticleList;
+export default NoticeList;

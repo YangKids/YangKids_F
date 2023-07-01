@@ -9,7 +9,7 @@ const MiniProfile = () => {
   // 로그인 하고나서 새로고침 안해도 loginUser 정보 새로 가져오도록!
   useEffect(() => {
     loginUser = JSON.parse(sessionStorage.getItem("loginUser"));
-  }, sessionStorage);
+  }, [sessionStorage]);
 
   const name = (
     <span>
