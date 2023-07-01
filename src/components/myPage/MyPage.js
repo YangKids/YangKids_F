@@ -1,5 +1,7 @@
 import Header from "../layout/header/Header";
 import MyPageForm from "./MyPageForm";
+import { Button } from "antd";
+import Swal from "sweetalert2";
 import "./MyPage.css"
 
 const MyPage = () => {
@@ -17,6 +19,7 @@ const MyPage = () => {
 
       <div className="formBox">
         <MyPageForm></MyPageForm>
+        
       </div>
     </div>
   );

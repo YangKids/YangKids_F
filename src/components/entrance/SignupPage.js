@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { PropTypes } from "prop-types";
 import Swal from "sweetalert2";
 import axios from "axios";
+
 const gridStyle = {
   width: "50%",
   textAlign: "center",
@@ -33,7 +34,31 @@ const SignupPage = () => {
   const [fileList, setFileList] = React.useState([]);
   const [generation, setGeneration] = React.useState("");
   const [studentId, setStudentId] = React.useState("");
+  const [studentIdcheck, setStudentIdcheck] = React.useState(false); // 학번 중복확인
   const signup = () => {
+    if (
+      id === "" ||
+      password === "" ||
+      name === "" ||
+      phoneNumber === "" ||
+      email === "" ||
+      birth === "" ||
+      gender === "" ||
+      teacher === "" ||
+      campus === "" ||
+      isEmployed === "" ||
+      studentId === "" ||
+      generation === ""
+    ) {
+      Swal.fire({
+        title: "필수 정보를 입력해 주세요.",
+        icon: "warning",
+        iconColor: "#ef404a",
+        confirmButtonText: "확인",
+        confirmButtonColor: "#148cff",
+      });
+      return;
+    }
     if (idcheck === false) {
       Swal.fire({
         title: "아이디 중복확인을 진행해 주세요.",
@@ -64,22 +89,9 @@ const SignupPage = () => {
       });
       return;
     }
-    if (
-      id === "" ||
-      password === "" ||
-      name === "" ||
-      phoneNumber === "" ||
-      email === "" ||
-      birth === "" ||
-      gender === "" ||
-      teacher === "" ||
-      campus === "" ||
-      isEmployed === "" ||
-      studentId === "" ||
-      generation === ""
-    ) {
+    if (studentIdcheck === false) {
       Swal.fire({
-        title: "필수 정보를 입력해 주세요.",
+        title: "학번 중복확인을 진행해 주세요.",
         icon: "warning",
         iconColor: "#ef404a",
         confirmButtonText: "확인",
@@ -91,7 +103,7 @@ const SignupPage = () => {
     formData.append("file", fileList[0]);
     formData.append("id", id);
     formData.append("password", password);
-    formData.append("name", name);
+    formData.append("name", generation+"기_"+name);
     formData.append("phoneNumber", phoneNumber);
     formData.append("email", email);
     formData.append("birth", birth);
@@ -101,8 +113,9 @@ const SignupPage = () => {
     formData.append("isEmployed", isEmployed);
     formData.append("studentId", studentId);
     formData.append("generation", generation);
+    const url = fileList.length === 0 ? "/signup/noimage" : "/signup";
     axios
-      .post("http://localhost:8080/api-user/signup", formData, {
+      .post(`http://localhost:8080/api-user/${url}`, formData, {
         header: { "Content-Type": "multipart/form-data" },
       })
       .then((res) => {
@@ -189,6 +202,7 @@ const SignupPage = () => {
             setFileList={setFileList}
             studentId={studentId}
             setStudentId={setStudentId}
+            setStudentIdcheck={setStudentIdcheck}
             generation={generation}
             setGeneration={setGeneration}
           ></SignupForm2>
