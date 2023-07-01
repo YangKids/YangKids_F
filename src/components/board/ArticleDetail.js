@@ -3,7 +3,6 @@ import {
   HeartFilled,
   EyeOutlined,
   UserOutlined,
-  DeleteOutlined,
 } from "@ant-design/icons";
 import { useNavigate, useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
@@ -11,12 +10,12 @@ import { Button, Avatar, Image } from "antd";
 import "./BoardPage.css";
 import axios from "axios";
 import CommentSection from "./CommentSection";
+import EditArticle from "./EditArticle";
 
 const ArticleDetail = () => {
   // console.log("여기는 ArticleDetail");
   const navigate = useNavigate();
   const articleId = useParams().articleId;
-  console.log(articleId+"get 보내기")
   const [article, setArticle] = useState([]);
   const [boardName, setBoardName] = useState("");
   const [hovered, setHovered] = useState(false);
@@ -25,8 +24,6 @@ const ArticleDetail = () => {
   // comment가 동적으로 처리 안된다. 하위 컴포넌트에서 commentCnt 가져와야해
   const [visible, setVisible] = useState(false);
   const [editMode, setEditMode] = useState(false);
-  //삭제된 게시글 여부
-  const [deleted, setDeleted] = useState(false);
 
   // 마우스 hover 적용 함수
   const handleMouseEnter = () => {
@@ -37,7 +34,7 @@ const ArticleDetail = () => {
     setHovered(false);
   };
 
-  // 현재 로그인한 유저 가져오기
+  // 현재 로그인한 유저 가져오가
   const loginUserId = JSON.parse(sessionStorage.getItem("loginUser")).id;
 
   // 게시글 삭제하기 댓글 삭제와 방식이 다르다. 어.. 이유가..음? 뭐더라?
@@ -127,10 +124,6 @@ const ArticleDetail = () => {
         ).json(); // 서버 API로부터 게시글 정보를 가져옴
         setArticle(json); // 가져온 게시글 정보를 상태 변수에 저장
         setTotalLikeCnt(json.likeCnt);
-        //삭제된 게시글이면 삭제표시해줌
-        if (json.deletedAt !== null) {
-          setDeleted(true);
-        }
         // 게시판 이름 설정
         if (json.boardId === 1) {
           setBoardName("자유게시판");
@@ -175,39 +168,49 @@ const ArticleDetail = () => {
     return <div>Loading...</div>; // 게시글 정보가 로드되지 않은 경우 로딩 표시
   }
 
-  //삭제된 게시글인 경우
-  if (deleted) {
-    return (
-      <div className="BoardBox">
-        <DeleteOutlined style={{ fontSize: "50px", color: "gray" }} />
-        <br />
-        <div style={{ fontSize: "20px", color: "gray" }}>
-          삭제된 게시글입니다.
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="BoardBox">
       <div className="ArticleBox">
         <div style={{ display: "flex", alignItems: "center", height: "50px" }}>
           <h5 style={{ width: "150px", color: "#3BC5F9" }}>{boardName}</h5>
-          <h3
+          {article && article.title && (
+            <>
+              {article.title.length > 23 ? (
+                <h4
+                  style={{
+                    width: "550px",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {article.title}
+                </h4>
+              ) : (
+                <h3
+                  style={{
+                    width: "550px",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {article.title}
+                </h3>
+              )}
+            </>
+          )}
+          {/* <h4
             style={{
               width: "550px",
               fontWeight: "bolder",
             }}
           >
             {article.title}
-          </h3>
+          </h4> */}
           {article.writerId === loginUserId ? (
             <div style={{ marginLeft: "100px" }}>
               <Button
                 type="dashed"
                 onClick={() =>
                   navigate("/Board/Edit", {
-                    state: { article: article },
+                    state: { articleId: articleId },
                   })
                 }
               >

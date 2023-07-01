@@ -13,7 +13,7 @@ const ReCommentSection = ({
   const [newReComment, setNewReComment] = useState("");
 
   useEffect(() => {
-    // console.log("대댓글 정보 가져오기");
+    console.log("대댓글 정보 가져오기");
     // 댓글 정보를 가져오는 비동기 함수
     const fetchComments = async () => {
       try {
@@ -33,7 +33,7 @@ const ReCommentSection = ({
   };
   // 댓글 등록하기
   const clickRecomment = async () => {
-    // console.log("댓글 등록하기");
+    console.log("댓글 등록하기");
     if (!newReComment) {
       alert("댓글을 입력해주세요");
       return;
@@ -58,7 +58,7 @@ const ReCommentSection = ({
         setRecomments([...recomments, data]);
         setNewReComment("");
       } else {
-        // console.log(response);
+        console.log(response);
         throw new Error("Failed to create comment");
       }
     } catch (error) {

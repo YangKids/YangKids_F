@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Avatar, Button, Form, List, Input, Card, Space } from "antd";
@@ -56,7 +55,7 @@ const CommentSection = ({ boardId, isAnonymous, loginUser }) => {
       });
       if (response.status === 201) {
         const data = response.data;
-        console.log(data);
+        // console.log(data);
         setComments([...comments, data]);
         setNewComment("");
       } else {
@@ -70,7 +69,6 @@ const CommentSection = ({ boardId, isAnonymous, loginUser }) => {
 
   // 댓글 삭제
   const deleteComment = async (commentId) => {
-
     // console.log("deleteComment");
     const response = await axios.delete(
       `http://localhost:8080/api-comment/delete`,
@@ -143,6 +141,7 @@ const CommentSection = ({ boardId, isAnonymous, loginUser }) => {
         } else if (response.status === 200 && response.data !== 1) {
           return false;
         } else {
+          // console.log("Error");
           return false;
         }
       });
@@ -230,6 +229,7 @@ const CommentSection = ({ boardId, isAnonymous, loginUser }) => {
     // console.log("handleCancelSave");
     setIsEdits(false);
   };
+
   const handleRecomments = (commentId) => {
     // console.log("handleRecomments");
     setCreateRecomment(true);
@@ -240,11 +240,12 @@ const CommentSection = ({ boardId, isAnonymous, loginUser }) => {
     // console.log("useEffect - fetchComments");
     fetchComments();
   }, [articleId, newComment, editComment]);
+
   // 목록가기 위한 navigate
   const navigate = useNavigate();
 
   const navigateToBoardList = () => {
-    // console.log("목록가는 네비");
+    // console.log("navigateToBoardList");
     if (boardId === 1) {
       navigate("/Board/FreeBoard");
     } else if (boardId === 2) {
@@ -316,10 +317,9 @@ const CommentSection = ({ boardId, isAnonymous, loginUser }) => {
         itemLayout="horizontal"
         dataSource={comments}
         renderItem={(comment, index) => (
-          <div>
           <List.Item
             actions={[
-              comment.deletedAt === null ? (
+              comment && comment.deletedAt === null ? (
                 isEdits && editCommentId === comment.commentId ? (
                   // div 대신 React.Fragment 사용도 가능
                   // 수정하기 버튼 눌렀을 때 나오는 부분
@@ -339,7 +339,7 @@ const CommentSection = ({ boardId, isAnonymous, loginUser }) => {
                       Cancel
                     </Button>
                   </div>
-                ) : loginUser === comment.writerId ? (
+                ) : comment && loginUser === comment.writerId ? (
                   comment.recommentCnt > 0 ? (
                     <div style={{ marginBottom: "130px" }}>
                       <Button
@@ -387,7 +387,7 @@ const CommentSection = ({ boardId, isAnonymous, loginUser }) => {
           >
             <List.Item.Meta
               avatar={
-                comment.writerImg === null ? (
+                comment && comment.writerImg === null ? (
                   <Avatar
                     src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`}
                   />
@@ -424,7 +424,7 @@ const CommentSection = ({ boardId, isAnonymous, loginUser }) => {
                 </div>
               }
               description={
-                isEdits && editCommentId === comment.commentId ? (
+                comment && isEdits && editCommentId === comment.commentId ? (
                   <>
                     <Form initialValues={{ Modify: comment.content }}>
                       <Form.Item
@@ -457,9 +457,11 @@ const CommentSection = ({ boardId, isAnonymous, loginUser }) => {
                       />
                     </div>
                   </>
-                ) : comment.deletedAt === null ? (
+                ) : comment && comment.deletedAt === null ? (
                   <React.Fragment>
-                    <div>{comment.content}</div>
+                    <div style={{ whiteSpace: "pre-line" }}>
+                      {comment.content}
+                    </div>
                     <div style={{ marginTop: "5px" }}>
                       <span
                         onClick={
@@ -512,8 +514,6 @@ const CommentSection = ({ boardId, isAnonymous, loginUser }) => {
               }
             />
           </List.Item>
-          {/* {comment.recommentCnt>0 ? <ReCommentSection/>: null}  */}
-          </div>
         )}
       />
       <hr />
