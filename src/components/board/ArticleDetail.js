@@ -306,7 +306,7 @@ const ArticleDetail = () => {
             </div>
           </React.Fragment>
         ) : null}
-        <div className="articleContent">{article.content}</div>
+        <div className="articleContent" style={{whiteSpace:"pre-line"}}>{article.content}</div>
         <hr />
         <div
           style={{

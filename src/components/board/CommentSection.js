@@ -529,7 +529,7 @@ const CommentSection = ({ boardId, isAnonymous, loginUser }) => {
         <Button
           type="primary"
           size={"large"}
-          onClick={() => navigateToBoardList}
+          onClick={() => navigateToBoardList()}
         >
           목록으로
         </Button>
