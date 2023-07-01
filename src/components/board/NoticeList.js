@@ -33,13 +33,11 @@ const NoticeList = ({ boardId }) => {
 
   const [loginUser, setLoginUser] = useState({});
 
-  useEffect(()=>{
-    setLoginUser(JSON.parse(sessionStorage.getItem("loginUser")))
-    
-  },[])
+  useEffect(() => {
+    setLoginUser(JSON.parse(sessionStorage.getItem("loginUser")));
+  }, []);
 
   useEffect(() => {
-
     const getNotices = async () => {
       // try {
       const res = await axios.get(`http://localhost:8080/api-article/board/0`);
@@ -52,17 +50,21 @@ const NoticeList = ({ boardId }) => {
 
   return (
     <>
-    {loginUser.isAdmin === 1?
-      <Button
-        icon={<EditOutlined />}
-        style={{ alignSelf: "end", marginBottom: "10px", marginRight: "10px" }}
-        onClick={() =>
-          navigate("/Board/Write", { state: { boardId: boardId } })
-        }
-      >
-        글쓰기
-      </Button>
-      : null}
+      {loginUser.isAdmin === 1 ? (
+        <Button
+          icon={<EditOutlined />}
+          style={{
+            alignSelf: "end",
+            marginBottom: "10px",
+            marginRight: "10px",
+          }}
+          onClick={() =>
+            navigate("/Board/Write", { state: { boardId: boardId } })
+          }
+        >
+          글쓰기
+        </Button>
+      ) : null}
       <List
         header={
           <div style={{ display: "flex", flexDirection: "row" }}>
@@ -145,16 +147,7 @@ const NoticeList = ({ boardId }) => {
             }}
           >
             <List.Item.Meta
-              avatar={
-                <Avatar
-                  src={
-                    article.writerImg
-                      ? article.writerImg
-                      : `https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`
-                  }
-                  // src={article.writerImg}
-                />
-              }
+              avatar={<Avatar src={`../img/admin.png`} />}
               title={
                 <Link to={`/Board/${article.articleId}`}>{article.title}</Link>
               }

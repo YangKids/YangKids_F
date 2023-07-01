@@ -30,7 +30,6 @@ const formItemLayout = {
 const ArticleWirteForm = () => {
   const navigate = useNavigate();
   const [fileList, setFileList] = useState([]);
-  const [isAnonymousData, setIsAnonymousData] = useState(0);
   const [loginUser, setLoginUser] = useState({});
 
   useEffect(() => {
@@ -137,10 +136,11 @@ const ArticleWirteForm = () => {
           }
         });
     } else {
-      if (article.isAnonymous) {
-        setIsAnonymousData(1);
-      }
 
+      let isAnonymousData = 0;
+      if(article.isAnonymous){
+        isAnonymousData = 1;
+      }
       const data = {
         boardId: article.boardId,
         writerId: JSON.parse(sessionStorage.getItem("loginUser")).id,
@@ -201,6 +201,7 @@ const ArticleWirteForm = () => {
         onFinish={onFinish}
         initialValues={{
           boardId: location.state.boardId,
+          isAnonymous : 0,
         }}
         style={{
           maxWidth: 1200,
@@ -264,7 +265,6 @@ const ArticleWirteForm = () => {
             name="isAnonymous"
             label="익명"
             valuePropName="checked"
-            initialValue
           >
             <Switch checkedChildren="익명" unCheckedChildren="실명" />
           </Form.Item>

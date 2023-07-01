@@ -46,7 +46,7 @@ const BoardArticleList = ({ boardId }) => {
       // try {
       const res = await axios.get(`http://localhost:8080/api-article/board/0`);
       if (res.data.length > 3) {
-        setNotices(res.data.slice(0,3));
+        setNotices(res.data.slice(0, 3));
       } else {
         setNotices(res.data);
       }
@@ -55,7 +55,7 @@ const BoardArticleList = ({ boardId }) => {
 
     getArticles();
     getNotices();
-  }, []);
+  }, [boardId]);
 
   const navigate = useNavigate();
 
@@ -158,28 +158,13 @@ const BoardArticleList = ({ boardId }) => {
                 }
               >
                 <List.Item.Meta
-                  avatar={
-                    <Avatar
-                      src={
-                        article.writerImg
-                          ? article.writerImg
-                          : `https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`
-                      }
-                      // src={article.writerImg}
-                    />
-                  }
+                  avatar={<Avatar src={`../img/admin.png`} />}
                   title={
                     <Link to={`/Board/${article.articleId}`}>
                       {article.title}
                     </Link>
                   }
-                  description={
-                    article.boardId === 0
-                      ? "관리자"
-                      : article.isAnonymous === 0
-                      ? article.writerName
-                      : "익명"
-                  }
+                  description={"관리자"}
                 />
               </List.Item>
             )}
@@ -224,9 +209,9 @@ const BoardArticleList = ({ boardId }) => {
               avatar={
                 <Avatar
                   src={
-                    article.writerImg
-                      ? article.writerImg
-                      : `https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`
+                    article.isAnonymous === 1
+                      ? `https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`
+                      : article.writerImg
                   }
                   // src={article.writerImg}
                 />
@@ -235,11 +220,7 @@ const BoardArticleList = ({ boardId }) => {
                 <Link to={`/Board/${article.articleId}`}>{article.title}</Link>
               }
               description={
-                article.boardId === 0
-                  ? "관리자"
-                  : article.isAnonymous === 0
-                  ? article.writerName
-                  : "익명"
+                article.isAnonymous === 0 ? article.writerName : "익명"
               }
             />
           </List.Item>

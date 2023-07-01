@@ -25,7 +25,7 @@ const ArticleList = ({ boardId }) => {
         renderItem={(item, index) => (
           <List.Item>
             <List.Item.Meta
-              avatar={<Avatar src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`} />}
+              avatar={<Avatar src={`../img/admin.png`} />}
               title={<Link to={`/Board/${item.articleId}`}>{item.title}</Link>}
               description={item.content}
             />
