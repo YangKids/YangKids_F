@@ -237,14 +237,16 @@ const ArticleDetail = () => {
           ) : null}
         </div>
         <div style={{ display: "flex", alignItems: "center" }}>
-          {article.writerImg === null ? (
+          {article.boardId === 0?(
+            <Avatar src={`../img/admin.png`} style={{ marginRight: "10px" }} />
+            ): article.writerImg === null ? (
             <Avatar icon={<UserOutlined />} style={{ marginRight: "10px" }} />
           ) : (
             <Avatar src={article.writerImg} style={{ marginRight: "10px" }} />
           )}
           <div style={{ flexGrow: 1, textAlign: "left" }}>
             <span style={{ fontSize: "18px", fontWeight: 500 }}>
-              {article.isAnonymous === 0 ? article.writerName : "익명"}
+              {article.boardId === 0? "관리자" : article.isAnonymous === 0 ? article.writerName : "익명"}
             </span>
             {article.regDate !== article.updateDate ? (
               <React.Fragment>
