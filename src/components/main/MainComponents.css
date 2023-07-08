@@ -138,7 +138,7 @@
   border-radius: 20px;
   margin-right : 40px;
   margin-bottom: 40px;
-  
+  -webkit-line-clamp: 2;
 }
 
 .Thumbnail{
@@ -165,5 +165,9 @@
   border-radius: 20px;
   margin-right : 40px;
   margin-bottom: 40px;
+  
 }
 
+.CardLink{
+  text-decoration-line: none;
+}

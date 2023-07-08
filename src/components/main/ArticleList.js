@@ -18,6 +18,7 @@ const ArticleList = ({ boardId }) => {
     // console.log(articles);
   }, [boardId]);
 
+
   return (
     <List
         itemLayout="horizontal"
