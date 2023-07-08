@@ -12,7 +12,7 @@ const CardNews = ({article}) => {
   },[article])
   console.log(item)
 return (
-  <Link to={item? `/Board/${item.articleId}`:"/Main"}>
+  <Link to={item? `/Board/${item.articleId}`:"/Main"} className="CardLink">
   <Card className='Card'
     hoverable
     style={{
@@ -20,6 +20,7 @@ return (
       height: '380px',
       margin : '0 0 40px 0',
       borderRadius : '20px',
+      overflow : 'hidden'
     }}
     cover={<img alt="IMG" src={item? (item.img? item.img : './img/bonobono.png') : './img/bonobono.png'}  style={{borderRadius : '20px 20px 0 0', height:'200px'}}/>}
   >
