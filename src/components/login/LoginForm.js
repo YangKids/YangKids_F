@@ -1,7 +1,6 @@
-import { Button, Checkbox, Form, Input } from "antd";
+import { Button, Form, Input } from "antd";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
 
 const USER_REST_API = "http://localhost:8080/api-user";
 
@@ -31,7 +30,7 @@ const LoginForm = () => {
           sessionStorage.setItem("access-token", response.data["access-token"]);
           // 메인페이지로 이동
 
-          navigate('/Main');
+          navigate('/');
 
         } else {
           // 로그인 실패
@@ -65,7 +64,7 @@ const LoginForm = () => {
       autoComplete="off"
     >
       <Form.Item
-        label="id"
+        label="아이디"
         name="id"
         rules={[
           {
@@ -78,7 +77,7 @@ const LoginForm = () => {
       </Form.Item>
 
       <Form.Item
-        label="password"
+        label="비밀번호"
         name="password"
         rules={[
           {
@@ -90,7 +89,7 @@ const LoginForm = () => {
         <Input.Password />
       </Form.Item>
 
-      <Form.Item
+      {/* <Form.Item
         name="remember"
         valuePropName="checked"
         wrapperCol={{
@@ -99,7 +98,7 @@ const LoginForm = () => {
         }}
       >
         <Checkbox>Remember me</Checkbox>
-      </Form.Item>
+      </Form.Item> */}
 
       <Form.Item
         wrapperCol={{
@@ -108,7 +107,7 @@ const LoginForm = () => {
         }}
       >
         <Button type="primary" htmlType="submit">
-          Submit
+          YangKids 로그인
         </Button>
       </Form.Item>
     </Form>

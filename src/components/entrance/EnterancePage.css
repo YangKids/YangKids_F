@@ -1,20 +1,21 @@
 .Enterance {
   display: flex;
   flex-direction: column;
-  height: 750px;
+  height: 100%;
   align-items: center;
   justify-content: center;
 }
 
 .Ganpan {
-  height: 200px;
+  height : 200px;
   font-size: 70px;
   font-weight: 900;
-
+  line-height: 200px;
+  margin: 30px;
   background: radial-gradient(
     circle at 30% 107%,
-    #FFFFFF 0%,
-    #F6E7FF 5%,
+    #ffffff 0%,
+    #f6e7ff 5%,
     #b9bfff 45%,
     #82cfed 70%,
     #84abf9 90%
@@ -22,5 +23,19 @@
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+}
 
+.signupBtn {
+  font-size: 17px;
+  font-weight: bolder;
+  background: radial-gradient(
+    circle at 30% 107%,
+    #ffffff 0%,
+    #f6e7ff 5%,
+    #b9bfff 45%,
+    #82cfed 70%,
+    #84abf9 90%
+  );
+  margin: auto;
+  margin-bottom: 15px;
 }

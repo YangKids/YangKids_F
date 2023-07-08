@@ -1,6 +1,7 @@
 import {
   BulbOutlined,
   LikeOutlined,
+  NotificationOutlined,
   ProfileOutlined,
   QuestionOutlined,
 } from "@ant-design/icons";
@@ -8,6 +9,15 @@ import { Menu } from "antd";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 const items = [
+  {
+    label: (
+      <Link to="NoticeBoard" style={{ fontWeight: "bolder" }}>
+        공지사항
+      </Link>
+    ),
+    key: 0,
+    icon: <NotificationOutlined style={{ fontSize: "20px" }} />,
+  },
   {
     label: (
       <Link to="FreeBoard" style={{ fontWeight: "bolder" }}>

@@ -10,7 +10,6 @@ const CardNews = ({article}) => {
   useEffect(()=>{
     setItem(article)
   },[article])
-  console.log(item)
 return (
   <Link to={item? `/Board/${item.articleId}`:"/Main"} className="CardLink">
   <Card className='Card'

@@ -36,10 +36,10 @@ const FreeBoardPreview = () => {
             <div className={ScrollY > 1220 ? 'FixedList' : ScrollY > 397 ? 'MovingList' : 'List'}>
                 <div className='FreeBoardContents'>
                     <div className='Title'>
-                        <Link to='/Board/FreeBoard' style={{textDecoration : 'none', color : 'black'}}>공지사항</Link>
+                        <Link to='/Board/NoticeBoard' style={{textDecoration : 'none', color : 'black'}}>공지사항</Link>
                     </div>
                     <div className='Articles'>
-                        <ArticleList boardId={2}/>
+                        <ArticleList boardId={0}/>
                     </div>
 
                 </div>

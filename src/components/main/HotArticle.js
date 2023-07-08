@@ -4,7 +4,6 @@ import CardNews from "./CardNews";
 import SmallCard from "./SmallCard";
 import { useEffect, useState } from "react";
 import axios from "axios";
-
 const HotArticle = ({boardId}) => {
   const [articles, setArticles] = useState([]);
   useEffect(() => {
