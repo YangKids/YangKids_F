@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 const EnterancePage = () => {
   return (
     <div className="Enterance">
-      <div className="Ganpan">YangKids</div>
+      <div className="Ganpan"><Link to='/Enterance'>YangKids</Link></div>
       <Card
         title="로그인"
         bordered={false}

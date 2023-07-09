@@ -177,6 +177,7 @@ const SignupForm2 = ({
             placeholder="숫자만 입력해 주세요."
             value={generation}
             onChange={(e) => setGeneration(e.target.value)}
+            style={{borderRadius : "6px"}}
           />
         </Form.Item>
         <Form.Item
@@ -194,6 +195,7 @@ const SignupForm2 = ({
             <Input
               value={studentId}
               onChange={(e) => setStudentId(e.target.value)}
+              style={{borderRadius : "6px"}}
             />
             <Button
               htmlType="button"

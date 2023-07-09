@@ -2,6 +2,7 @@ import React from 'react';
 import './MainComponents.css'
 import { useState, useEffect } from 'react';
 import ArticleList from './ArticleList';
+import { Link } from 'react-router-dom';
 
 
 
@@ -35,7 +36,7 @@ const YangchelinGuide = () => {
             <div className={ScrollY > 2680? 'FixedYangchelinBox' : ScrollY > 1860 ? 'MovingYangchelinBox' : 'YangchelinBox'}>
                 <div className='FreeBoardContents'>
                     <div className='Title'>
-                        양슐랭 가이드
+                    <Link to='/Board/YangchelinBoard' style={{textDecoration : 'none', color : 'black'}}>양슐랭가이드</Link>
                     </div>
                     <div className='Articles'>
                         <ArticleList boardId={4}/>
