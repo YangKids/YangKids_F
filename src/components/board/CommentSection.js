@@ -2,11 +2,20 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Avatar, Button, Form, List, Input, Card, Space } from "antd";
 import axios from "axios";
-import { LikeFilled, LikeOutlined, CommentOutlined } from "@ant-design/icons";
+import {
+  LikeFilled,
+  LikeOutlined,
+  CommentOutlined,
+  DeleteOutlined,
+  FormOutlined,
+  ScissorOutlined,
+  CloseOutlined,
+} from "@ant-design/icons";
 import ReCommentSection from "./ReCommentSection";
+import ReCommentInput from "./ReCommentInput";
+import Swal from "sweetalert2";
 
 const CommentSection = ({ boardId, isAnonymous, loginUser }) => {
-  // console.log("안녕? 렌더링 폭발?");
   const { articleId } = useParams();
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
@@ -15,92 +24,165 @@ const CommentSection = ({ boardId, isAnonymous, loginUser }) => {
   const [editComment, setEditComment] = useState("");
   const [likeArray, setLikeArray] = useState([]);
   const [totalLikeCnt, setTotalLikeCnt] = useState([]);
+  const [totalRecommentCnt, setTotalRecommentCnt] = useState(0);
   const [createRecomment, setCreateRecomment] = useState(false);
   const [createCommentId, setCreateCommentId] = useState(0);
 
+  const [reload, setReload] = useState(false);
+
+  const readyForReload = () => {
+    setReload(!reload);
+  };
+  // console.log("코멘트섹션에서의 reload", reload);
+
   // 댓글 정보 전체 가져오기
   const fetchComments = async () => {
-    // console.log("fetchComments");
     try {
       const json = await (
         await fetch(`http://localhost:8080/api-comment/list/${articleId}`)
       ).json(); // 서버 API로부터 댓글 정보를 가져옴
       setComments(json); // 가져온 게시글 정보를 상태 변수에 저장
+      let recommentCntTotal = 0;
+      for (let i = 0; i < json.length; i++) {
+        recommentCntTotal += json[i].recommentCnt;
+      }
+      setTotalRecommentCnt(recommentCntTotal);
     } catch (error) {
-      // 댓글이 하나도 안달렸을때 에러나는데 어떻게 처리할까 그냥 빈배열로 해
       setComments([]);
     }
   };
 
   // 댓글 등록하기
   const createComment = async () => {
-    // console.log("createComment");
     if (!newComment || !articleId || !loginUser) {
-      alert("댓글을 입력해주세요");
+      Swal.fire({ title: "댓글을 입력해주세요", icon: "info" });
       return;
     }
     try {
-      const response = await axios({
-        method: "POST",
-        url: `http://localhost:8080/api-comment/write`,
-        mode: "cors",
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-        },
-        data: {
-          writerId: JSON.parse(sessionStorage.getItem("loginUser")).id,
-          articleId: articleId,
-          content: newComment,
-        },
+      const result = await Swal.fire({
+        title: "댓글을 등록하시겠습니까?",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: "Save",
       });
-      if (response.status === 201) {
-        const data = response.data;
-        // console.log(data);
-        setComments([...comments, data]);
-        setNewComment("");
-      } else {
-        // console.log(response);
-        throw new Error("Failed to create comment");
+      if (result.isConfirmed) {
+        const response = await axios({
+          method: "POST",
+          url: `http://localhost:8080/api-comment/write`,
+          mode: "cors",
+          headers: {
+            "Content-Type": "application/json; charset=utf-8",
+          },
+          data: {
+            writerId: JSON.parse(sessionStorage.getItem("loginUser")).id,
+            articleId: articleId,
+            content: newComment,
+          },
+        });
+        if (response.status === 201) {
+          const data = response.data;
+          Swal.fire("댓글이 등록되었습니다!", "", "success");
+          setComments([...comments, data]);
+          setNewComment("");
+        } else {
+          throw new Error("Failed to create comment");
+        }
       }
     } catch (error) {
-      console.error("Error creating comment:", error);
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "등록에 실패했습니다. 다시 시도해보세요.",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     }
   };
 
   // 댓글 삭제
   const deleteComment = async (commentId) => {
-    // console.log("deleteComment");
-    const response = await axios.delete(
-      `http://localhost:8080/api-comment/delete`,
-      {
-        params: { commentId: commentId },
+    try {
+      const result = await Swal.fire({
+        title: "댓글을 삭제하시겠습니까?",
+        text: "삭제 후에는 복구할 수 없습니다.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "확인",
+        cancelButtonText: "취소",
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        allowOutsideClick: () => !Swal.isLoading(),
+      });
+      if (result.isConfirmed) {
+        const response = await axios.delete(
+          `http://localhost:8080/api-comment/delete`,
+          {
+            params: { commentId: commentId },
+          }
+        );
+        if (response.data === "SUCCESS") {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "댓글이 삭제되었습니다.",
+            showConfirmButton: false,
+            timer: 1000,
+          });
+          fetchComments();
+        }
       }
-    );
-    if (response.data === "SUCCESS") {
-      fetchComments();
+    } catch (error) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "삭제에 실패했습니다. 다시 시도해보세요.",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     }
   };
 
   // 댓글 수정하기
   const updateComment = async () => {
-    // console.log("updateComment");
     if (editComment === "") {
-      alert("뭐라도 입력해봐봐");
+      Swal.fire({ title: "수정할 댓글을 입력해주세요", icon: "info" });
       return;
     }
-    await fetch(`http://localhost:8080/api-comment/update`, {
-      method: "PUT",
-      body: JSON.stringify({ commentId: editCommentId, content: editComment }),
-      headers: { "Content-Type": "application/json" },
-    });
-    const updatedComments = comments.map((comment) =>
-      comment.commentId === editCommentId
-        ? { ...comment, content: editComment }
-        : comment
-    );
-    setComments(updatedComments);
-    setIsEdits(false);
-    setEditComment("");
+    try {
+      const result = await Swal.fire({
+        title: "댓글을 수정하시겠습니까?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Save",
+      });
+      if (result.isConfirmed) {
+        await fetch(`http://localhost:8080/api-comment/update`, {
+          method: "PUT",
+          body: JSON.stringify({
+            commentId: editCommentId,
+            content: editComment,
+          }),
+          headers: { "Content-Type": "application/json" },
+        });
+        const updatedComments = comments.map((comment) =>
+          comment.commentId === editCommentId
+            ? { ...comment, content: editComment }
+            : comment
+        );
+        Swal.fire("댓글이 수정되었습니다!", "", "success");
+        setComments(updatedComments);
+        setIsEdits(false);
+        setEditComment("");
+      }
+    } catch (error) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "수정에 실패했습니다. 다시 시도해보세요.",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
   };
 
   // 좋아요 버튼 누를때마다 자동으로 갯수 counting 되도록 비동기적 처리 위한 likeCnt 설정
@@ -111,14 +193,12 @@ const CommentSection = ({ boardId, isAnonymous, loginUser }) => {
 
   // likeCnt 비동기적으로 처리
   useEffect(() => {
-    // console.log("useEffect - totalLikeCntTest");
     const totalLikeCnt = totalLikeCntTest();
     setTotalLikeCnt(totalLikeCnt);
   }, [totalLikeCntTest]);
 
   // 현재 loginUser가 좋아요 되어있는지 확인하기 위함
   useEffect(() => {
-    // console.log("useEffect - check Like");
     const commentId = comments.map((comment) => comment.commentId);
 
     const axiosLike = async () => {
@@ -129,7 +209,7 @@ const CommentSection = ({ boardId, isAnonymous, loginUser }) => {
           headers: {
             "Content-Type": "application/json;",
           },
-          data: { commentId: id, userId: loginUser },
+          data: { commentId: id, userId: loginUser.id },
         })
       );
       // 비동기 작업 완료될때까지 대기, 요청 성공하면 요청 응답 담은 배열 반환
@@ -141,7 +221,6 @@ const CommentSection = ({ boardId, isAnonymous, loginUser }) => {
         } else if (response.status === 200 && response.data !== 1) {
           return false;
         } else {
-          // console.log("Error");
           return false;
         }
       });
@@ -153,7 +232,6 @@ const CommentSection = ({ boardId, isAnonymous, loginUser }) => {
 
   // likeup 위한 코드
   const handleLike = async (commentId, index) => {
-    // console.log("handleLike");
     try {
       const response = await axios({
         method: "POST",
@@ -163,7 +241,7 @@ const CommentSection = ({ boardId, isAnonymous, loginUser }) => {
         },
         data: {
           commentId: commentId,
-          userId: loginUser,
+          userId: loginUser.id,
         },
       });
       if (response.status === 200) {
@@ -185,7 +263,6 @@ const CommentSection = ({ boardId, isAnonymous, loginUser }) => {
 
   // likeDown 위한 코드
   const handleUnLike = async (commentId, index) => {
-    // console.log("handleUnLike");
     if (totalLikeCnt[index] > 0) {
       const response = await axios({
         method: "DELETE",
@@ -193,7 +270,7 @@ const CommentSection = ({ boardId, isAnonymous, loginUser }) => {
         headers: {
           "Content-Type": "application/json;",
         },
-        data: { commentId: commentId, userId: loginUser },
+        data: { commentId: commentId, userId: loginUser.id },
       });
       if (response.status === 200) {
         setLikeArray((prevArray) => {
@@ -211,41 +288,38 @@ const CommentSection = ({ boardId, isAnonymous, loginUser }) => {
   };
 
   const handleEdit = (commentId) => {
-    // console.log("handleEdit");
     setEditCommentId(commentId);
     setIsEdits(true);
   };
   const handleUpdateComment = (e) => {
-    // console.log("handleUpdateComment");
     setEditComment(e.target.value);
   };
 
   const handleCreateComment = (e) => {
-    // console.log("handleCreateComment");
     setNewComment(e.target.value);
   };
 
   const handleCancelSave = () => {
-    // console.log("handleCancelSave");
     setIsEdits(false);
   };
 
   const handleRecomments = (commentId) => {
-    // console.log("handleRecomments");
-    setCreateRecomment(true);
-    setCreateCommentId(commentId);
+    setCreateRecomment(!createRecomment);
+    if (createCommentId === 0) {
+      setCreateCommentId(commentId);
+    } else {
+      setCreateCommentId(0);
+    }
   };
 
   useEffect(() => {
-    // console.log("useEffect - fetchComments");
     fetchComments();
-  }, [articleId, newComment, editComment]);
+  }, [articleId, newComment, editComment, reload]);
 
   // 목록가기 위한 navigate
   const navigate = useNavigate();
 
   const navigateToBoardList = () => {
-    // console.log("navigateToBoardList");
     if (boardId === 1) {
       navigate("/Board/FreeBoard");
     } else if (boardId === 2) {
@@ -308,7 +382,7 @@ const CommentSection = ({ boardId, isAnonymous, loginUser }) => {
           댓글
         </span>
         <p style={{ margin: 0, fontSize: "15px" }}>
-          총 {comments.length}개의 댓글이 달림
+          총 {totalRecommentCnt + comments.length}개의 댓글이 달림
         </p>
       </span>
       <hr />
@@ -321,93 +395,64 @@ const CommentSection = ({ boardId, isAnonymous, loginUser }) => {
             actions={[
               comment && comment.deletedAt === null ? (
                 isEdits && editCommentId === comment.commentId ? (
-                  // div 대신 React.Fragment 사용도 가능
-                  // 수정하기 버튼 눌렀을 때 나오는 부분
-                  <div style={{ marginBottom: "90px" }}>
+                  <div>
                     <Button
+                      icon={<ScissorOutlined />}
                       key="edit"
-                      htmlType="submit"
+                      type="text"
                       onClick={updateComment}
-                    >
-                      Modify
-                    </Button>
+                    ></Button>
                     <Button
+                      icon={<CloseOutlined />}
+                      key="delete"
+                      danger
+                      type="text"
+                      onClick={() => handleCancelSave(comment.commentId)}
+                    ></Button>
+                  </div>
+                ) : comment && loginUser.id === comment.writerId ? (
+                  <>
+                    <Button
+                      icon={<FormOutlined />}
+                      key="edit"
+                      htmlType="button"
+                      type="primary"
+                      ghost
+                      onClick={() => handleEdit(comment.commentId)}
+                    ></Button>
+                    <Button
+                      icon={<DeleteOutlined />}
                       key="delete"
                       htmlType="button"
-                      onClick={() => handleCancelSave(comment.commentId)}
-                    >
-                      Cancel
-                    </Button>
-                  </div>
-                ) : comment && loginUser === comment.writerId ? (
-                  comment.recommentCnt > 0 ? (
-                    <div style={{ marginBottom: "130px" }}>
-                      <Button
-                        key="edit"
-                        htmlType="button"
-                        type="primary"
-                        ghost
-                        onClick={() => handleEdit(comment.commentId)}
-                      >
-                        수정
-                      </Button>
-                      <Button
-                        key="delete"
-                        htmlType="button"
-                        danger
-                        onClick={() => deleteComment(comment.commentId)}
-                      >
-                        삭제
-                      </Button>
-                    </div>
-                  ) : (
-                    <div>
-                      <Button
-                        key="edit"
-                        htmlType="button"
-                        type="primary"
-                        ghost
-                        onClick={() => handleEdit(comment.commentId)}
-                      >
-                        수정
-                      </Button>
-                      <Button
-                        key="delete"
-                        htmlType="button"
-                        danger
-                        onClick={() => deleteComment(comment.commentId)}
-                      >
-                        삭제
-                      </Button>
-                    </div>
-                  )
+                      danger
+                      onClick={() => deleteComment(comment.commentId)}
+                    ></Button>
+                  </>
+                ) : loginUser.isAdmin === 1 ? (
+                  <Button
+                    icon={<DeleteOutlined />}
+                    key="delete"
+                    htmlType="button"
+                    danger
+                    onClick={() => deleteComment(comment.commentId)}
+                  ></Button>
                 ) : null
               ) : null,
             ]}
           >
             <List.Item.Meta
               avatar={
-                comment && comment.writerImg === null ? (
+                comment && comment.writerImg && isAnonymous === 0 ? (
+                  <Avatar src={comment.writerImg} />
+                ) : (
                   <Avatar
                     src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`}
                   />
-                ) : (
-                  <Avatar src={comment.writerImg} />
                 )
               }
               title={
                 <div>
                   <span>{isAnonymous === 1 ? "익명" : comment.writerName}</span>
-                  <span
-                    style={{
-                      fontSize: "11px",
-                      fontWeight: 300,
-                      fontStyle: "italic",
-                      marginLeft: "10px",
-                    }}
-                  >
-                    {comment.regDate}
-                  </span>
                   {comment.deletedAt === null ? (
                     comment.isModified === 1 ? (
                       <span
@@ -419,7 +464,18 @@ const CommentSection = ({ boardId, isAnonymous, loginUser }) => {
                       >
                         수정됨
                       </span>
-                    ) : null
+                    ) : (
+                      <span
+                        style={{
+                          fontSize: "11px",
+                          fontWeight: 300,
+                          fontStyle: "italic",
+                          marginLeft: "10px",
+                        }}
+                      >
+                        {comment.regDate}
+                      </span>
+                    )
                   ) : null}
                 </div>
               }
@@ -441,19 +497,21 @@ const CommentSection = ({ boardId, isAnonymous, loginUser }) => {
                           onChange={handleUpdateComment}
                           showCount
                           maxLength={200}
+                          style={{ width: "850px" }}
                         />
                       </Form.Item>
                     </Form>
                     <div>
-                      <p style={{ color: "blue", marginBottom: "5px" }}>
-                        답글 {comment.recommentCnt}개
-                      </p>
+                      {comment.recommentCnt > 0 ? (
+                        <p style={{ color: "blue", marginBottom: "5px" }}>
+                          답글 {comment.recommentCnt}개
+                        </p>
+                      ) : null}
                       <ReCommentSection
                         commentIds={comment.commentId}
                         isAnonymous={comment.isAnonymous}
                         loginUser={loginUser}
-                        clickCreateRecomment={createRecomment}
-                        createRecommentId={createCommentId}
+                        reload={reload}
                       />
                     </div>
                   </>
@@ -481,28 +539,54 @@ const CommentSection = ({ boardId, isAnonymous, loginUser }) => {
                       >
                         좋아요 {totalLikeCnt[index]}
                       </span>
-                      <Button
-                        onClick={() => handleRecomments(comment.commentId)}
-                        style={{
-                          fontWeight: 300,
-                          fontStyle: "italic",
-                          marginLeft: "10px",
-                        }}
-                        size={"small"}
-                      >
-                        답글 작성
-                      </Button>
+                      {createRecomment &&
+                      comment.commentId === createCommentId ? (
+                        <Button
+                          onClick={() => handleRecomments(comment.commentId)}
+                          style={{
+                            fontWeight: 300,
+                            fontStyle: "italic",
+                            marginLeft: "10px",
+                          }}
+                          size={"small"}
+                        >
+                          취소
+                        </Button>
+                      ) : (
+                        <Button
+                          onClick={() => handleRecomments(comment.commentId)}
+                          style={{
+                            fontWeight: 300,
+                            fontStyle: "italic",
+                            marginLeft: "10px",
+                          }}
+                          size={"small"}
+                        >
+                          답글 작성
+                        </Button>
+                      )}
+                      {createRecomment &&
+                      comment.commentId === createCommentId ? (
+                        <ReCommentInput
+                          commentId={comment.commentId}
+                          isAnonymous={isAnonymous}
+                          loginUser={loginUser}
+                          clickCreateRecomment={createRecomment}
+                          createRecommentId={createCommentId}
+                          readyForReload={readyForReload}
+                          handleRecomments={handleRecomments}
+                        />
+                      ) : null}
                       {comment.recommentCnt > 0 ? (
                         <div>
                           <p style={{ color: "blue" }}>
                             답글 {comment.recommentCnt}개
                           </p>
+
                           <ReCommentSection
                             commentIds={comment.commentId}
-                            isAnonymous={comment.isAnonymous}
-                            loginUser={loginUser}
-                            clickCreateRecomment={createRecomment}
-                            createRecommentId={createCommentId}
+                            isAnonymous={isAnonymous}
+                            reload={reload}
                           />
                         </div>
                       ) : null}
