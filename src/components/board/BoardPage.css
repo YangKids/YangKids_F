@@ -131,7 +131,7 @@ Button {
   bottom: 30px !important;
 }
 
-:where(.css-dev-only-do-not-override-yp8pcc).ant-list .ant-list-item {
+:where(.css-yp8pcc).ant-list .ant-list-item {
   display: flex;
   justify-content: space-between;
   align-items: initial !important;
