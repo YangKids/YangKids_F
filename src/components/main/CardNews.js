@@ -21,7 +21,7 @@ return (
       borderRadius : '20px',
       overflow : 'hidden'
     }}
-    cover={<img alt="IMG" src={item? (item.img? item.img : './img/bonobono.png') : './img/bonobono.png'}  style={{borderRadius : '20px 20px 0 0', height:'200px'}}/>}
+    cover={<img alt="IMG" src={item? (item.img? item.img : 'https://yangkidsbucket.s3.ap-northeast-2.amazonaws.com/noimg.png') : 'https://yangkidsbucket.s3.ap-northeast-2.amazonaws.com/noimg.png'}  style={{borderRadius : '20px 20px 0 0', height:'200px'}}/>}
   >
     <Meta title={item? item.title : "로딩중 ..."} description={item? item.content : "로딩중 ..."} />
   </Card>

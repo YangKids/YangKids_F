@@ -10,6 +10,7 @@ import { Avatar, Button, List, Space } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import SearchBar from "../layout/SearchBar";
+import MiniProfile from "../layout/header/MiniProfile";
 
 const IconText = ({ icon, text }) => (
   <Space>

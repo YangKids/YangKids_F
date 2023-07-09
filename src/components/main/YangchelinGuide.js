@@ -38,7 +38,7 @@ const YangchelinGuide = () => {
                         양슐랭 가이드
                     </div>
                     <div className='Articles'>
-                        <ArticleList boardId={1}/>
+                        <ArticleList boardId={4}/>
                     </div>
 
                 </div>

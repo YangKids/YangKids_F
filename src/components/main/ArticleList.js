@@ -26,6 +26,9 @@ const ArticleList = ({ boardId }) => {
         renderItem={(item, index) => (
           <List.Item>
             <List.Item.Meta
+                      style={{
+                        overflow : 'hidden'
+                      }}
               avatar={<Avatar src={`../img/admin.png`} />}
               title={<Link to={`/Board/${item.articleId}`}>{item.title}</Link>}
               description={item.content}

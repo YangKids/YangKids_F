@@ -29,6 +29,13 @@ const MiniProfile = () => {
     // 메인페이지로 이동
     navigate("/Enterance");
   };
+  const myArticle = () => {
+    const userName = loginUser.name;
+    console.log(userName);
+    navigate("/Board/SearchResult", {
+      state: { key: `name`, word: loginUser.name },
+    });
+  };
 
   const content = (
     <div className="ProfileDetail">
@@ -43,7 +50,17 @@ const MiniProfile = () => {
         }
         alt="profileImg"
       ></img>
-      <p>내 글 보기</p>
+      <br />
+      <Button
+        type="link"
+        onClick={myArticle}
+        style={{
+          paddingLeft: 0,
+        }}
+      >
+        내 글 보기
+      </Button>
+      <br />
       <Link to="/MyPage">마이페이지</Link>
       <br />
       <Button
