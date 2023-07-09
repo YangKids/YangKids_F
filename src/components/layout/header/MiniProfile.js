@@ -1,4 +1,4 @@
-import { Popover, Button } from "antd";
+import { Popover, Button, Avatar } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
@@ -39,17 +39,11 @@ const MiniProfile = () => {
 
   const content = (
     <div className="ProfileDetail">
-      <img
+       <Avatar
         className="ProfileImg"
-        src={
-          loginUser == null
-            ? "/img/bonobono.png"
-            : loginUser.img === null
-            ? "/img/bonobono.png"
-            : loginUser.img
-        }
-        alt="profileImg"
-      ></img>
+              src={loginUser.img}
+              style={{ marginRight: "10px" }}
+            />
       <br />
       <Button
         type="link"
@@ -77,17 +71,11 @@ const MiniProfile = () => {
 
   return (
     <Popover placement="bottomLeft" title={name} content={content}>
-      <img
+       <Avatar
         className="ProfileImg"
-        src={
-          loginUser == null
-            ? "/img/bonobono.png"
-            : loginUser.img === null
-            ? "/img/bonobono.png"
-            : loginUser.img
-        }
-        alt="profileImg"
-      ></img>
+              src={loginUser.img}
+              style={{ marginRight: "10px" }}
+            />
     </Popover>
   );
 };
