@@ -1,15 +1,11 @@
-import {
-  HeartOutlined,
-  HeartFilled,
-  EyeOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
+import { HeartOutlined, HeartFilled, EyeOutlined } from "@ant-design/icons";
 import { useNavigate, useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { Button, Avatar, Image } from "antd";
 import "./BoardPage.css";
 import axios from "axios";
 import CommentSection from "./CommentSection";
+import Swal from "sweetalert2";
 
 const ArticleDetail = () => {
   const navigate = useNavigate();
@@ -35,32 +31,61 @@ const ArticleDetail = () => {
 
   // 게시글 삭제하기
   const handleDelete = async (articleId) => {
-    if (window.confirm("정말로 삭제하시겠습니까?")) {
-      try {
-        await axios({
-          method: "DELETE",
-          url: `http://localhost:8080/api-article/delete`,
-          params: { articleId: articleId },
-        })
-          .then(() => {
-            alert("삭제완료");
-            // 게시판 이름 설정
-            if (article.boardId === 1) {
-              navigate("/Board/FreeBoard");
-            } else if (article.boardId === 2) {
-              navigate("/Board/QuestionBoard");
-            } else if (article.boardId === 3) {
-              navigate("/Board/InfoBoard");
-            } else {
-              navigate("/Board/YangchelinBoard");
-            }
+    try {
+      const result = await Swal.fire({
+        title: "게시글을 삭제하시겠습니까?",
+        text: "삭제 후에는 복구할 수 없습니다.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "확인",
+        cancelButtonText: "취소",
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        allowOutsideClick: () => !Swal.isLoading(),
+      });
+      if (result.isConfirmed) {
+        try {
+          await axios({
+            method: "DELETE",
+            url: `http://localhost:8080/api-article/delete`,
+            params: { articleId: articleId },
           })
-          .catch((error) =>
-            console.error("게시글 삭제 중 오류가 발생했습니다: ", error)
-          ); // 서버 API에 삭제 요청을 보냅니다.
-      } catch (error) {
-        console.error("Error fetching article:", error);
+            .then(() => {
+              Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "게시글이 삭제되었습니다.",
+                showConfirmButton: false,
+                timer: 1000,
+              });
+              // 게시판 이름 설정
+              if (article.boardId === 0) {
+                navigate("/Board/NoticeBoard");
+              } else if (article.boardId === 1) {
+                navigate("/Board/FreeBoard");
+              } else if (article.boardId === 2) {
+                navigate("/Board/QuestionBoard");
+              } else if (article.boardId === 3) {
+                navigate("/Board/InfoBoard");
+              } else {
+                navigate("/Board/YangchelinBoard");
+              }
+            })
+            .catch
+            // console.error("게시글 삭제 중 오류가 발생했습니다: ", error)
+            (); // 서버 API에 삭제 요청을 보냅니다.
+        } catch (error) {
+          // console.error("Error fetching article:", error);
+        }
       }
+    } catch (error) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "삭제에 실패했습니다. 다시 시도해보세요.",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     }
   };
 
@@ -112,7 +137,7 @@ const ArticleDetail = () => {
         // 게시판 이름 설정
         if (json.boardId === 0) {
           setBoardName("공지사항");
-        }else if (json.boardId === 1) {
+        } else if (json.boardId === 1) {
           setBoardName("자유게시판");
         } else if (json.boardId === 2) {
           setBoardName("질문게시판");
@@ -120,7 +145,7 @@ const ArticleDetail = () => {
           setBoardName("정보공유게시판");
         } else {
           setBoardName("양슐랭가이드");
-        } 
+        }
       } catch (error) {
         console.error("Error fetching article:", error);
       }
@@ -218,8 +243,6 @@ const ArticleDetail = () => {
         <div style={{ display: "flex", alignItems: "center" }}>
           {article.boardId === 0 ? (
             <Avatar src={`../img/admin.png`} style={{ marginRight: "10px" }} />
-          ) : article.writerImg === null ? (
-            <Avatar icon={<UserOutlined />} style={{ marginRight: "10px" }} />
           ) : article.isAnonymous === 0 ? (
             <Avatar src={article.writerImg} style={{ marginRight: "10px" }} />
           ) : (

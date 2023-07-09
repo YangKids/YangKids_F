@@ -320,7 +320,9 @@ const CommentSection = ({ boardId, isAnonymous, loginUser }) => {
   const navigate = useNavigate();
 
   const navigateToBoardList = () => {
-    if (boardId === 1) {
+    if (boardId === 0) {
+      navigate("/Board/NoticeBoard");
+    } else if (boardId === 1) {
       navigate("/Board/FreeBoard");
     } else if (boardId === 2) {
       navigate("/Board/QuestionBoard");
@@ -593,7 +595,14 @@ const CommentSection = ({ boardId, isAnonymous, loginUser }) => {
                     </div>
                   </React.Fragment>
                 ) : (
-                  <div>삭제된 댓글입니다.</div>
+                  <>
+                    <div>삭제된 댓글입니다.</div>
+                    <ReCommentSection
+                      commentIds={comment.commentId}
+                      isAnonymous={isAnonymous}
+                      reload={reload}
+                    />
+                  </>
                 )
               }
             />
