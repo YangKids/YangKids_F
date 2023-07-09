@@ -10,10 +10,8 @@ import { Button, Avatar, Image } from "antd";
 import "./BoardPage.css";
 import axios from "axios";
 import CommentSection from "./CommentSection";
-import EditArticle from "./EditArticle";
 
 const ArticleDetail = () => {
-  // console.log("여기는 ArticleDetail");
   const navigate = useNavigate();
   const articleId = useParams().articleId;
   const [article, setArticle] = useState([]);
@@ -21,9 +19,7 @@ const ArticleDetail = () => {
   const [hovered, setHovered] = useState(false);
   const [liked, setLiked] = useState(false);
   const [totalLikeCnt, setTotalLikeCnt] = useState(0);
-  // comment가 동적으로 처리 안된다. 하위 컴포넌트에서 commentCnt 가져와야해
   const [visible, setVisible] = useState(false);
-  const [editMode, setEditMode] = useState(false);
 
   // 마우스 hover 적용 함수
   const handleMouseEnter = () => {
@@ -37,7 +33,7 @@ const ArticleDetail = () => {
   // 현재 로그인한 유저 가져오가
   const loginUser = JSON.parse(sessionStorage.getItem("loginUser"));
 
-  // 게시글 삭제하기 댓글 삭제와 방식이 다르다. 어.. 이유가..음? 뭐더라?
+  // 게시글 삭제하기
   const handleDelete = async (articleId) => {
     if (window.confirm("정말로 삭제하시겠습니까?")) {
       try {
@@ -49,7 +45,6 @@ const ArticleDetail = () => {
           .then(() => {
             alert("삭제완료");
             // 게시판 이름 설정
-            // console.log(article.boardId);
             if (article.boardId === 1) {
               navigate("/Board/FreeBoard");
             } else if (article.boardId === 2) {
@@ -105,21 +100,11 @@ const ArticleDetail = () => {
     }
   };
 
-  // article 수정 위한 코드, 모르게써....ㅠㅠ
-  const handleUpdate = (articleId, content) => {
-    // console.log(articleId, content);
-  };
-
-  const handleEdit = () => {
-    setEditMode(true);
-  };
-
   useEffect(() => {
     // 게시글 정보를 가져오는 비동기 함수
     const fetchArticle = async () => {
       try {
-        const json = await // 여기 articleId로 변수 지정 해줘야한다.
-        (
+        const json = await (
           await fetch(`http://localhost:8080/api-article/detail/${articleId}`)
         ).json(); // 서버 API로부터 게시글 정보를 가져옴
         setArticle(json); // 가져온 게시글 정보를 상태 변수에 저장
@@ -196,21 +181,13 @@ const ArticleDetail = () => {
               )}
             </>
           )}
-          {/* <h4
-            style={{
-              width: "550px",
-              fontWeight: "bolder",
-            }}
-          >
-            {article.title}
-          </h4> */}
           {article.writerId === loginUser.id ? (
             <div style={{ marginLeft: "100px" }}>
               <Button
                 type="dashed"
                 onClick={() =>
                   navigate("/Board/Edit", {
-                    state: { article: article},
+                    state: { article: article },
                   })
                 }
               >
@@ -226,27 +203,36 @@ const ArticleDetail = () => {
             </div>
           ) : loginUser.isAdmin === 1 ? (
             <div style={{ marginLeft: "200px" }}>
-            <Button
-              type="primary"
-              danger
-              onClick={() => handleDelete(article.articleId)}
-            >
-              삭제하기
-            </Button>
+              <Button
+                type="primary"
+                danger
+                onClick={() => handleDelete(article.articleId)}
+              >
+                삭제하기
+              </Button>
             </div>
           ) : null}
         </div>
         <div style={{ display: "flex", alignItems: "center" }}>
-          {article.boardId === 0?(
+          {article.boardId === 0 ? (
             <Avatar src={`../img/admin.png`} style={{ marginRight: "10px" }} />
-            ): article.writerImg === null ? (
+          ) : article.writerImg === null ? (
             <Avatar icon={<UserOutlined />} style={{ marginRight: "10px" }} />
-          ) : (
+          ) : article.isAnonymous === 0 ? (
             <Avatar src={article.writerImg} style={{ marginRight: "10px" }} />
+          ) : (
+            <Avatar
+              src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${article.articleId}`}
+              style={{ marginRight: "10px" }}
+            />
           )}
           <div style={{ flexGrow: 1, textAlign: "left" }}>
             <span style={{ fontSize: "18px", fontWeight: 500 }}>
-              {article.boardId === 0? "관리자" : article.isAnonymous === 0 ? article.writerName : "익명"}
+              {article.boardId === 0
+                ? "관리자"
+                : article.isAnonymous === 0
+                ? article.writerName
+                : "익명"}
             </span>
             {article.regDate !== article.updateDate ? (
               <React.Fragment>
@@ -298,10 +284,11 @@ const ArticleDetail = () => {
         {article.img ? (
           <React.Fragment>
             <Image
+              className="imageArea"
               preview={{
                 visible: false,
               }}
-              width={200}
+              width={400}
               src={article.img}
               onClick={() => setVisible(true)}
             />
@@ -321,9 +308,7 @@ const ArticleDetail = () => {
             </div>
           </React.Fragment>
         ) : null}
-        <div className="articleContent" style={{ whiteSpace: "pre-line" }}>
-          {article.content}
-        </div>
+        <div className="articleContent">{article.content}</div>
         <hr />
         <div
           style={{
@@ -348,7 +333,7 @@ const ArticleDetail = () => {
         <CommentSection
           boardId={article.boardId}
           isAnonymous={article.isAnonymous}
-          loginUser={loginUser.id}
+          loginUser={loginUser}
         />
       </div>
     </div>

@@ -101,9 +101,9 @@
 }
 
 .articleContent {
-  margin-top: 100px;
+  margin-top: 80px;
   margin-bottom: 100px;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 100;
   white-space: pre-line;
 }
@@ -118,9 +118,32 @@ Button {
 
 .articleList > .ant-list-header {
   border-block-end: 1px solid #868e96 !important;
-  padding : 0px !important;
+  padding: 0px !important;
 }
 
-.noticeList > .ant-list-header{
+.noticeList > .ant-list-header {
   border-block-end: 2px solid #868e96 !important;
+}
+
+.update-delete-button {
+  position: relative !important;
+  top: -50px !important;
+  bottom: 30px !important;
+}
+
+:where(.css-dev-only-do-not-override-yp8pcc).ant-list .ant-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: initial !important;
+  padding: 12px 0;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+ul.ant-list-item-action {
+  margin-left: 2px !important;
+  margin-top: 7px;
+}
+
+.imageArea {
+  margin-top: 50px;
 }
