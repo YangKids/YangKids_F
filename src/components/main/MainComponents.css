@@ -171,3 +171,9 @@
 .CardLink{
   text-decoration-line: none;
 }
+
+.ant-list-item-meta-description {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
