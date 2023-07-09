@@ -125,7 +125,9 @@ const ArticleDetail = () => {
         setArticle(json); // 가져온 게시글 정보를 상태 변수에 저장
         setTotalLikeCnt(json.likeCnt);
         // 게시판 이름 설정
-        if (json.boardId === 1) {
+        if (json.boardId === 0) {
+          setBoardName("공지사항");
+        }else if (json.boardId === 1) {
           setBoardName("자유게시판");
         } else if (json.boardId === 2) {
           setBoardName("질문게시판");
@@ -133,7 +135,7 @@ const ArticleDetail = () => {
           setBoardName("정보공유게시판");
         } else {
           setBoardName("양슐랭가이드");
-        }
+        } 
       } catch (error) {
         console.error("Error fetching article:", error);
       }
