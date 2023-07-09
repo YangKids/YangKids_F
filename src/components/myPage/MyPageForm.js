@@ -49,9 +49,7 @@ const MyPageForm = () => {
   // },[])
   useEffect(() => {
     setEmailcheck(false);
-    console.log("이메일 인증여부");
-    console.log(emailcheck);
-  }, [email, emailcheck]);
+  }, [email]);
 
   const myBirth = () => {
     const arr = loginUser.birth.split("");
@@ -117,7 +115,7 @@ const MyPageForm = () => {
       });
       return;
     }
-    if (!emailcheck) {
+    if (loginUser.email !== email && !emailcheck) {
       Swal.fire({
         title: "이메일 인증을 진행해 주세요.",
         icon: "warning",
@@ -281,7 +279,7 @@ const MyPageForm = () => {
         }}
         initialValues={{
           id: loginUser.id,
-          password:"",
+          password: "",
           name: loginUser.name,
           age: loginUser.age,
           gender: loginUser.gender,
