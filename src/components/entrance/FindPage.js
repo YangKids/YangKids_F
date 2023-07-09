@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { Space, Card, Button, Input } from "antd";
 import "./EnterancePage.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import axios from "axios";
 const gridStyle = {
@@ -84,7 +84,7 @@ const FindPage = () => {
   };
   return (
     <div className="Enterance">
-      <div className="Ganpan">YangKids</div>
+      <div className="Ganpan"><Link to='/Enterance'>YangKids</Link></div>
       <Card
         bordered={false}
         style={{

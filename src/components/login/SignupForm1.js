@@ -265,6 +265,7 @@ const SignupForm1 = ({
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            style={{borderRadius : "6px"}}
           />
         </Form.Item>
         <Form.Item
@@ -281,6 +282,7 @@ const SignupForm1 = ({
             placeholder="'-'없이 숫자만 입력해 주세요."
             value={phoneNumber}
             onChange={(e) => setPhoneNumber(e.target.value)}
+            style={{borderRadius : "6px"}}
           />
         </Form.Item>
         <Form.Item
@@ -299,7 +301,7 @@ const SignupForm1 = ({
           ]}
         >
           <Space>
-            <Input value={email} onChange={(e) => setEmail(e.target.value)} />
+            <Input value={email} onChange={(e) => setEmail(e.target.value)} style={{borderRadius : "6px"}}/>
             <Button htmlType="button" type="primary" ghost onClick={emailSend}>
               인증
             </Button>

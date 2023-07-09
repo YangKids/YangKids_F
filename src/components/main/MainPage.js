@@ -28,7 +28,7 @@ const MainPage = () => {
         </div>
 
         <div className="CardBox">
-          <FreeBoard boardId={4}/>
+          <FreeBoard boardId={3}/>
           <div style={{ minWidth: "40px", height: "1410px" }}></div>
           <YangchelinGuide />
         </div>

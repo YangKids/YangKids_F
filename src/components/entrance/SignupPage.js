@@ -3,7 +3,7 @@ import SignupForm1 from "../login/SignupForm1";
 import SignupForm2 from "../login/SignupForm2";
 import { Card, Button } from "antd";
 import "./EnterancePage.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { PropTypes } from "prop-types";
 import Swal from "sweetalert2";
 import axios from "axios";
@@ -162,7 +162,7 @@ const SignupPage = () => {
   };
   return (
     <div className="Enterance">
-      <div className="Ganpan">YangKids</div>
+      <div className="Ganpan"><Link to='/Enterance'>YangKids</Link></div>
       <Card
         title="회원가입"
         bordered={false}
@@ -207,7 +207,7 @@ const SignupPage = () => {
             setGeneration={setGeneration}
           ></SignupForm2>
         </Card.Grid>
-        <Button type="primary" className="signupBtn" onClick={signup}>
+        <Button type="primary" className="signupBtn" onClick={signup} style={{marginTop : "15px"}}>
           YangKids 회원가입
         </Button>
       </Card>
