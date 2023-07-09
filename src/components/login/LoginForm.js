@@ -73,7 +73,7 @@ const LoginForm = () => {
           },
         ]}
       >
-        <Input />
+        <Input style={{borderRadius : "6px"}}/>
       </Form.Item>
 
       <Form.Item
