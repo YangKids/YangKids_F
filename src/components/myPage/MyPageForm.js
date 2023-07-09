@@ -38,6 +38,7 @@ const MyPageForm = () => {
   const navigate = useNavigate();
   const [fileList, setFileList] = useState([]);
   const [componentDisabled, setComponentDisabled] = useState(false);
+  const [password, setPassword] = useState("");
   const [passwordCheck, setPasswordCheck] = useState(true);
   const [email, setEmail] = useState(loginUser.email);
   const [emailcheck, setEmailcheck] = useState(true);
@@ -154,6 +155,7 @@ const MyPageForm = () => {
     formData.append("file", fileList[0]);
     formData.append("numId", loginUser.numId);
     formData.append("id", profile.id);
+    formData.append("password", password);
     formData.append("name", profile.name);
     formData.append("age", profile.age);
     formData.append("gender", profile.gender);
@@ -165,6 +167,7 @@ const MyPageForm = () => {
     formData.append("studentId", profile.studentId);
     formData.append("campus", profile.campus);
     console.log(fileList[0]);
+    console.log(password);
     const url =
       fileList.length === 0 ? "/updateUserInfo/noimage" : "/updateUserInfo";
     axios
@@ -341,7 +344,11 @@ const MyPageForm = () => {
             }),
           ]}
         >
-          <Input.Password placeholder="8~16자 영문 대/소문자, 숫자, 특수문자 최소 1개씩 포함" />
+          <Input.Password
+            placeholder="8~16자 영문 대/소문자, 숫자, 특수문자 최소 1개씩 포함"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
         </Form.Item>
         <Form.Item
           name="confirm"
