@@ -7,35 +7,50 @@ import SearchBar from "../layout/SearchBar";
 import YangchelinGuide from "./YangchelinGuide";
 import Header from "../layout/header/Header";
 import Quot from "../layout/Carousel";
+import useDeviceTypeStore from "../../stores/deviceTypeStore";
+import Navbar from "../layout/Navbar";
 
 const MainPage = () => {
-  const MainBox = useRef(null)
-
+  const { deviceType } = useDeviceTypeStore();
+  const MainBox = useRef(null);
 
   return (
     <div ref={MainBox} className="MainPageBackground">
-
       <Header />
       <Quot />
 
-
       <div className="Body">
-        <div className="SearchBox">
+        <div
+          className={deviceType === "web" ? "WebSearchBox" : "MobileSearchBox"}
+        >
           <SearchBar />
         </div>
 
-        <div className="CardBox">
-          <FreeBoardPreview />
-          <div style={{ minWidth: "40px", height: "1410px" }}></div>
-          <HotArticle boardId={1}/>
-        </div>
-
-        <div className="CardBox">
-          <FreeBoard boardId={3}/>
-          <div style={{ minWidth: "40px", height: "1410px" }}></div>
-          <YangchelinGuide />
-        </div>
+        {
+          deviceType === "web" ? (
+            <>
+              <div className="WebCardBox">
+                <FreeBoardPreview />
+                <div style={{ minWidth: "40px", height: "1410px" }}></div>
+                <HotArticle boardId={1} />
+              </div>
+            
+              {/* <div className="CardBox">
+                <FreeBoard boardId={3} />
+                <div style={{ minWidth: "40px", height: "1410px" }}></div>
+                <YangchelinGuide />
+              </div> */}
+            
+            </>
+          ) : (
+            <div className="MobileCardBox">
+              <FreeBoardPreview />
+              <HotArticle boardId={1} />
+            </div>
+          )
+        }
       </div>
+      <Navbar/>
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./EnterancePage.css";
+import "./EntrancePage.css";
 import { Link } from "react-router-dom";
 import LoginCard from "./LoginCard";
 import Footer from "../layout/footer/Footer";
@@ -8,14 +8,14 @@ import Footer from "../layout/footer/Footer";
 
 
 
-const EnterancePage = () => { 
+const EntrancePage = () => { 
 
   return (
-    <div className="Enterance">
-      <div className="Ganpan"><Link to='/Enterance'>YangKids</Link></div>
+    <div className="Entrance">
+      <div className="Ganpan"><Link to='/entrance'>YangKids</Link></div>
       <LoginCard/>
       <Footer />
     </div>
   );
 };
-export default EnterancePage;
+export default EntrancePage;

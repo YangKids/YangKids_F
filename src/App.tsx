@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import "./App.css";
 import Footer from "./components/layout/footer/Footer";
 import { Route, Routes, Navigate } from "react-router-dom";
-import EnterancePage from "./components/entrance/EnterancePage";
+import EntrancePage from "./components/entrance/EntrancePage";
 import MainPage from "./components/main/MainPage";
 import BoardPage from "./components/board/BoardPage";
 import FreeBoard from "./components/board/FreeBoard";
@@ -51,7 +51,7 @@ const App = () => {
         <Routes>
           <Route
             path="/Alarm"
-            element={isLogedin ? <AlarmPage /> : <Navigate to="/Enterance" />}
+            element={isLogedin ? <AlarmPage /> : <Navigate to="/entrance" />}
           />
 
           <Route path="/MyPage" element={<MyPage />}></Route>
@@ -59,12 +59,12 @@ const App = () => {
           <Route path="/Find" element={<FindPage />}></Route>
           <Route path="/MyPage" element={<MyPage />} />
           <Route
-            path="/Enterance"
-            element={isLogedin ? <Navigate to="/" /> : <EnterancePage />}
+            path="/entrance"
+            element={isLogedin ? <Navigate to="/" /> : <EntrancePage />}
           />
           {/* <Route
             path="/"
-            element={isLogedin ? <MainPage /> : <Navigate to="/Enterance" />}
+            element={isLogedin ? <MainPage /> : <Navigate to="/entrance" />}
           /> */}
            <Route
             path="/"
@@ -72,7 +72,8 @@ const App = () => {
           />
           <Route
             path="/Board"
-            element={isLogedin ? <BoardPage /> : <Navigate to="/Enterance" />}
+            // element={isLogedin ? <BoardPage /> : <Navigate to="/entrance" />}
+            element={<BoardPage />}
           >
             <Route path="NoticeBoard" element={<NoticeBoard />} />
             <Route path="Freeboard" element={<FreeBoard />} />

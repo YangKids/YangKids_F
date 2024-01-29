@@ -1,15 +1,17 @@
 
   .MainPageBackground{
-    background: linear-gradient(to bottom, #ffffff 30%, #c7d3ef);
+    /* background: linear-gradient(to bottom, #ffffff 30%, #c7d3ef); */
     /* text-align: center; */
     background-attachment: fixed;
+    display : flex;
+    flex-direction : column;
   }
   .Body {
     display: flex;
     flex-direction: column;
   }
   
-  .SearchBox {
+  .WebSearchBox {
     display: flex;
     width: 500px;
     align-self: center;
@@ -17,10 +19,17 @@
     margin: 40px;
     height: 40px;
   }
-  
-  .CardBox {
+
+  .MobileSearchBox {
     display: flex;
-    flex-direction: row;
+    width: 90%;
+    /* align-self: center; */
+    /* justify-content: center; */
+    height: 40px;
+  }
+  
+  .WebCardBox {
+    display: flex;
     width: 1200px;
     height: 1420px;
     align-self: center;
@@ -28,3 +37,14 @@
     /* border: 1px solid black; */
     margin-bottom: 40px;
   }
+
+  .MobileCardBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* border: 1px solid black; */
+    width : 100%;
+    margin-top: 5%;
+  }
+

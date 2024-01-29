@@ -2,6 +2,7 @@ import { Carousel } from "antd";
 import React, { useEffect, useState } from "react";
 import "./Carousel.css";
 import axios from "axios";
+import useDeviceTypeStore from "../../stores/deviceTypeStore";
 
 const contentStyle = {
   height: "250px",
@@ -18,6 +19,7 @@ const contentStyle = {
 };
 
 const Quot = () => {
+  const {deviceType} = useDeviceTypeStore();
   const [quotation, setQuotation] = useState([]);
   useEffect(() => {
     const getQuotation = async () => {
@@ -36,8 +38,8 @@ const Quot = () => {
 return(
 
   <div className="CarouselBox">
-    <div className="Carousel">
-      <Carousel autoplay>
+    <div className={deviceType === "web"? "WebCarousel" : "MobileCarousel"}>
+      <Carousel autoplay dots = {false}>
         <div>
           <h2 style={contentStyle}>
             {quotation[0]?quotation[0].content: '로딩중'}

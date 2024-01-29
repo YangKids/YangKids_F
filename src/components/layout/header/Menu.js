@@ -52,7 +52,7 @@ const Menu = () => (
         menu={{
           items,
         }}
-        placement="bottomRight"
+        placement="bottomLeft"
         overlayStyle={{width : '200px'}}
       >
         <MenuOutlined style={{fontSize : '25px'}} />

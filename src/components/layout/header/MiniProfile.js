@@ -1,8 +1,10 @@
 import { Popover, Button, Avatar } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import useDeviceTypeStore from "../../../stores/deviceTypeStore";
 
 const MiniProfile = () => {
+  const { deviceType } = useDeviceTypeStore();
   const navigate = useNavigate();
   var loginUser = JSON.parse(sessionStorage.getItem("loginUser"));
   // 로그인 하고나서 새로고침 안해도 loginUser 정보 새로 가져오도록!
@@ -38,11 +40,10 @@ const MiniProfile = () => {
 
   const content = (
     <div className="ProfileDetail">
-       <Avatar
+      <Avatar
         className="ProfileImg"
-              src={loginUser? loginUser.img : "./surprised_cat.png"}
-              style={{ marginRight: "10px" }}
-            />
+        src={loginUser ? loginUser.img : "./surprised_cat.png"}
+      />
       <br />
       <Button
         type="link"
@@ -70,11 +71,10 @@ const MiniProfile = () => {
 
   return (
     <Popover placement="bottomLeft" title={name} content={content}>
-       <Avatar
-        className="ProfileImg"
-              src={loginUser? loginUser.img : "./surprised_cat.png"}
-              style={{ marginRight: "10px" }}
-            />
+      <Avatar
+        className={deviceType === "web" ? "ProfileImg" : "MobileProfileImg"}
+        src={loginUser ? loginUser.img : "./surprised_cat.png"}
+      />
     </Popover>
   );
 };

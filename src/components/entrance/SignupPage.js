@@ -2,7 +2,7 @@ import React from "react";
 import SignupForm1 from "../login/SignupForm1";
 import SignupForm2 from "../login/SignupForm2";
 import { Card, Button } from "antd";
-import "./EnterancePage.css";
+import "./EntrancePage.css";
 import { Link, useNavigate } from "react-router-dom";
 import { PropTypes } from "prop-types";
 import Swal from "sweetalert2";
@@ -161,8 +161,8 @@ const SignupPage = () => {
       });
   };
   return (
-    <div className="Enterance">
-      <div className="Ganpan"><Link to='/Enterance'>YangKids</Link></div>
+    <div className="Entrance">
+      <div className="Ganpan"><Link to='/entrance'>YangKids</Link></div>
       <Card
         title="회원가입"
         bordered={false}

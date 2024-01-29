@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { Space, Card, Button, Input } from "antd";
-import "./EnterancePage.css";
+import "./EntrancePage.css";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import axios from "axios";
@@ -15,7 +15,7 @@ const FindPage = () => {
   const [id, setId] = useState("");
   const [studentId, setStudentId] = useState("");
   const toPrev = () => {
-    navigate("/Enterance"); // 로그인 화면으로 이동
+    navigate("/entrance"); // 로그인 화면으로 이동
   };
   const sendNewPw = () => {
     axios
@@ -46,7 +46,7 @@ const FindPage = () => {
             confirmButtonText: "확인",
             confirmButtonColor: "#148cff",
           });
-          navigate("/Enterance"); // 로그인 화면으로 이동
+          navigate("/entrance"); // 로그인 화면으로 이동
         }
       });
   };
@@ -78,13 +78,13 @@ const FindPage = () => {
             confirmButtonText: "확인",
             confirmButtonColor: "#148cff",
           });
-          navigate("/Enterance"); // 로그인 화면으로 이동
+          navigate("/Entrance"); // 로그인 화면으로 이동
         }
       });
   };
   return (
-    <div className="Enterance">
-      <div className="Ganpan"><Link to='/Enterance'>YangKids</Link></div>
+    <div className="Entrance">
+      <div className="Ganpan"><Link to='/entrance'>YangKids</Link></div>
       <Card
         bordered={false}
         style={{

@@ -9,23 +9,25 @@ import axios from "axios";
 import useDeviceTypeStore from "../../../stores/deviceTypeStore";
 
 const Header = () => {
-  const {deviceType} = useDeviceTypeStore()
+  const { deviceType } = useDeviceTypeStore();
   const [ScrollActive, setScrollActive] = useState(false);
   const [ScrollY, setScrollY] = useState(0); // window 의 pageYOffset값을 저장
-  function handleScroll() {
+  const handleScroll = () => {
+    console.log("핸들 스크롤 실행", window.scrollY);
+    console.log(window);
     if (ScrollY > 35) {
-      setScrollY(window.pageYOffset);
+      setScrollY(window.scrollY);
       setScrollActive(true);
     } else {
-      setScrollY(window.pageYOffset);
+      setScrollY(window.scrollY);
       setScrollActive(false);
     }
-  }
+  };
 
   useEffect(() => {
-    function scrollListener() {
+    const scrollListener = () => {
       window.addEventListener("scroll", handleScroll);
-    } //  window 에서 스크롤을 감시 시작
+    }; //  window 에서 스크롤을 감시 시작
     scrollListener(); // window 에서 스크롤을 감시
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -61,35 +63,60 @@ const Header = () => {
       style={{
         display: "flex",
         justifyContent: "center",
-        alignContent: "center",
         height: "110px",
       }}
     >
-      <div className={deviceType !== "web"?"MobileHeader" : ScrollActive ? "MovingHeader" : "Header"}>
-        <div className="ProfileBox">
-          <MiniProfile />
-        </div>
-
-        <div className="Yangkids">
-          <Link to="/" className="DaeMoon">
-            YangKids
-          </Link>
-          {/* {window.scrollY > 500? <SearchBar/>:<div></div>}  */}
-        </div>
-
+      {deviceType === "web" ? (
         <div
-          style={{ display: "flex", flexDirection: "row", minWidth: "140px" }}
+          className={
+            ScrollActive
+              ? "MovingHeader"
+              : "Header"
+          }
         >
-          <div className="AlarmButtonBox">
-            <Link to="/Alarm">
-              <AlarmButton cnt={uncheckedAlarms} />
+          <div className="ProfileBox">
+            <MiniProfile />
+          </div>
+
+          <div className="Yangkids">
+            <Link to="/" className="DaeMoon">
+              YangKids
+            </Link>
+            {/* {window.scrollY > 500? <SearchBar/>:<div></div>}  */}
+          </div>
+            <div className="AlarmButtonBox">
+              <Link to="/Alarm">
+                <AlarmButton cnt={uncheckedAlarms} />
+              </Link>
+            </div>
+
+        </div>
+      ) : (
+        <div
+          className={
+            ScrollActive
+              ? "MovingHeader"
+              : "MobileHeader"
+          }
+        >
+          <div className="ProfileBox">
+            <MiniProfile />
+          </div>
+
+          <div className="Yangkids">
+            <Link to="/" className="DaeMoon">
+              YangKids
             </Link>
           </div>
-          <div className="MenuBox">
-            <Menu />
-          </div>
+
+
+            <div className="AlarmButtonBox">
+              <Link to="/Alarm">
+                <AlarmButton cnt={uncheckedAlarms} />
+              </Link>
+            </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
