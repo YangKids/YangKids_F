@@ -5,9 +5,13 @@
   }
 
 .Carousel{
-    width: 1200px;
+    width: 75%;
     height: 250px;
     align-self: center;
     margin: 20px;
     border-radius: 20px;
+}
+
+.Carousel {
+
 }

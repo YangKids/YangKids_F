@@ -6,8 +6,10 @@ import { Link } from "react-router-dom";
 import AlarmButton from "./AlarmButton";
 // import SearchBar from "../../main/SearchBar";
 import axios from "axios";
+import useDeviceTypeStore from "../../../stores/deviceTypeStore";
 
 const Header = () => {
+  const {deviceType} = useDeviceTypeStore()
   const [ScrollActive, setScrollActive] = useState(false);
   const [ScrollY, setScrollY] = useState(0); // window 의 pageYOffset값을 저장
   function handleScroll() {
@@ -38,11 +40,12 @@ const Header = () => {
         "http://localhost:8080/api-alarm/alarm",
         {
           params: {
-            userId: JSON.parse(sessionStorage.getItem("loginUser")).id,
+            userId: JSON.parse(sessionStorage.getItem("loginUser")!).id,
           },
         }
       );
       const uncheckedCount = response.data.filter(
+        //@ts-ignore
         (alarm) => alarm.isChecked === 0
       ).length;
       setUncheckedAlarms(uncheckedCount);
@@ -62,7 +65,7 @@ const Header = () => {
         height: "110px",
       }}
     >
-      <div className={ScrollActive ? "MovingHeader" : "Header"}>
+      <div className={deviceType !== "web"?"MobileHeader" : ScrollActive ? "MovingHeader" : "Header"}>
         <div className="ProfileBox">
           <MiniProfile />
         </div>

@@ -314,6 +314,7 @@ const CommentSection = ({ boardId, isAnonymous, loginUser }) => {
 
   useEffect(() => {
     fetchComments();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [articleId, newComment, editComment, reload]);
 
   // 목록가기 위한 navigate

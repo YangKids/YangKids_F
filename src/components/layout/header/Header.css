@@ -1,5 +1,4 @@
 .Header {
-    
     background-color: white;
     margin-top: 40px;
     display: flex;
@@ -12,11 +11,32 @@
     color: white;
     box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
-    width: 1200px;
+    width: 75%;
     min-height : 70px;
     transition: .05s;
     /* padding: 0 10px 0 10px; */
   }
+
+.MobileHeader {
+    position : sticky;
+    top : 0;
+    background-color: white;
+    margin-top: 40px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    font-size: calc(10px + 2vmin);
+    font-weight: bolder;
+    color: white;
+    box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    width: 90%;
+    min-height : 70px;
+    transition: .05s;
+    /* padding: 0 10px 0 10px; */
+}
 
 
 .MovingHeader{

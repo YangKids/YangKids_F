@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./MainPage.css";
 import FreeBoardPreview from "./FreeBoardPreview";
 import FreeBoard from "./FreeBoard";
@@ -9,8 +9,11 @@ import Header from "../layout/header/Header";
 import Quot from "../layout/Carousel";
 
 const MainPage = () => {
+  const MainBox = useRef(null)
+
+
   return (
-    <div>
+    <div ref={MainBox} className="MainPageBackground">
 
       <Header />
       <Quot />

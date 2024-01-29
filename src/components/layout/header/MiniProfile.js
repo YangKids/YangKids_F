@@ -1,15 +1,14 @@
 import { Popover, Button, Avatar } from "antd";
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import Swal from "sweetalert2";
 
 const MiniProfile = () => {
   const navigate = useNavigate();
   var loginUser = JSON.parse(sessionStorage.getItem("loginUser"));
   // 로그인 하고나서 새로고침 안해도 loginUser 정보 새로 가져오도록!
-  useEffect(() => {
-    loginUser = JSON.parse(sessionStorage.getItem("loginUser"));
-  }, [sessionStorage]);
+  // useEffect(() => {
+  //   loginUser = JSON.parse(sessionStorage.getItem("loginUser"));
+  // }, [sessionStorage]);
 
   const name = (
     <span>
@@ -41,7 +40,7 @@ const MiniProfile = () => {
     <div className="ProfileDetail">
        <Avatar
         className="ProfileImg"
-              src={loginUser.img}
+              src={loginUser? loginUser.img : "./surprised_cat.png"}
               style={{ marginRight: "10px" }}
             />
       <br />
@@ -73,7 +72,7 @@ const MiniProfile = () => {
     <Popover placement="bottomLeft" title={name} content={content}>
        <Avatar
         className="ProfileImg"
-              src={loginUser.img}
+              src={loginUser? loginUser.img : "./surprised_cat.png"}
               style={{ marginRight: "10px" }}
             />
     </Popover>

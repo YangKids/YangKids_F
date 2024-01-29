@@ -9,7 +9,6 @@ import {
   Space,
   Switch,
   Upload,
-  message,
 } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { useLocation, useNavigate } from "react-router-dom";

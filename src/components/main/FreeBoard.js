@@ -9,11 +9,14 @@ const HotArticle = ({boardId}) => {
   const [articles, setArticles] = useState([]);
   useEffect(() => {
     const getArticles = async () => {
-      // try {
+      try {
       const res = await axios.get(`http://localhost:8080/api-article/board/${boardId}`);
       setArticles(res.data);
 
-      // } catch (e) {}
+      } catch (e) {
+        console.log(e)
+        setArticles({})
+      }
     };
 
     getArticles();

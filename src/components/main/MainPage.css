@@ -1,7 +1,12 @@
-.Body {
+
+  .MainPageBackground{
+    background: linear-gradient(to bottom, #ffffff 30%, #c7d3ef);
+    /* text-align: center; */
+    background-attachment: fixed;
+  }
+  .Body {
     display: flex;
     flex-direction: column;
-  
   }
   
   .SearchBox {

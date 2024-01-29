@@ -1,5 +1,5 @@
 import "./Footer.css";
-import { Button, Modal } from "antd";
+import { Modal } from "antd";
 import { useState } from "react";
 
 const info = () => {
@@ -21,18 +21,21 @@ const info = () => {
 
 const Footer = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  // eslint-disable-next-line
   const showModal = () => {
     setIsModalOpen(!isModalOpen);
   };
+  // eslint-disable-next-line
   const handleOk = () => {
     setIsModalOpen(false);
   };
+  // eslint-disable-next-line
   const handleCancel = () => {
     setIsModalOpen(false);
   };
 
   return (
-    <div className="Footer" onClick={info}>
+    <div className={window.innerWidth > window.innerHeight ? "Footer" : "FooterMobile"} onClick={info}>
       문의, 제안 : ssafy9yangkids@gmail.com / 개발자 정보 <br />@ Yangkids. All
       rights reserved.
     </div>

@@ -31,6 +31,7 @@ const ReCommentSection = ({ commentIds, isAnonymous, reload }) => {
   };
   useEffect(() => {
     fetchRecomments();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [commentIds, reload]);
 
   // 대댓글 삭제하기

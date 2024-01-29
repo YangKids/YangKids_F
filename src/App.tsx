@@ -20,12 +20,24 @@ import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import EditArticle from "./components/board/EditArticle";
 import NoticeBoard from "./components/board/NoticeBoard";
+import useDeviceTypeStore from "./stores/deviceTypeStore"
 
 const App = () => {
+  const {setDeviceType} = useDeviceTypeStore();
   const [isLogedin, setIsLogedin] = useState(false);
 
   const location = useLocation();
   useEffect(() => {
+
+    if(window.innerWidth > window.innerHeight){
+      setDeviceType("web")
+    }else if(window.innerHeight >850){
+      setDeviceType("mobile")
+    }else{
+      setDeviceType("smallMobile")
+    }
+
+
     if (sessionStorage.getItem("loginUser") !== null) {
       setIsLogedin(true);
     } else {
@@ -35,7 +47,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <div style={{ minHeight: "85vh" }}>
+
         <Routes>
           <Route
             path="/Alarm"
@@ -50,9 +62,13 @@ const App = () => {
             path="/Enterance"
             element={isLogedin ? <Navigate to="/" /> : <EnterancePage />}
           />
-          <Route
+          {/* <Route
             path="/"
             element={isLogedin ? <MainPage /> : <Navigate to="/Enterance" />}
+          /> */}
+           <Route
+            path="/"
+            element={ <MainPage /> }
           />
           <Route
             path="/Board"
@@ -69,8 +85,6 @@ const App = () => {
             <Route path="Edit" element={<EditArticle />}></Route>
           </Route>
         </Routes>
-      </div>
-      <Footer />
     </div>
   );
 };
