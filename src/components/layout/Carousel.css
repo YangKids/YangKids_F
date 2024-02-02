@@ -12,7 +12,13 @@
 }
 
 .WebCarousel {
-    width: 75%;
+    width: 1200px;
+    align-self: center;
+    border-radius: 20px;
+}
+
+.NarrowWebCarousel {
+    width: 90%;
     align-self: center;
     border-radius: 20px;
 }

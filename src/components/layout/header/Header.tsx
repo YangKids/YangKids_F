@@ -71,7 +71,7 @@ const Header = () => {
           className={
             ScrollActive
               ? "MovingHeader"
-              : "Header"
+              : window.innerWidth < 1200? "NarrowHeader": "Header"
           }
         >
           <div className="ProfileBox">

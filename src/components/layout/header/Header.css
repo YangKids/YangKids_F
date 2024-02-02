@@ -10,11 +10,29 @@
     box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
     box-sizing: border-box;
-    width: 75%;
+    width: 1200px;
     min-height : 70px;
     transition: .05s;
     padding : 0 20px 0 20px;
   }
+
+.NarrowHeader {
+  background-color: white;
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  font-weight: bolder;
+  color: white;
+  box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  box-sizing: border-box;
+  width: 90%;
+  min-height : 70px;
+  transition: .05s;
+  padding : 0 20px 0 20px;
+}
 
 .MobileHeader {
     position : sticky;

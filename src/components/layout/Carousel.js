@@ -19,7 +19,7 @@ const contentStyle = {
 };
 
 const Quot = () => {
-  const {deviceType} = useDeviceTypeStore();
+  const { deviceType } = useDeviceTypeStore();
   const [quotation, setQuotation] = useState([]);
   useEffect(() => {
     const getQuotation = async () => {
@@ -35,31 +35,41 @@ const Quot = () => {
   }, []);
   console.log(quotation[0]);
 
-return(
-
-  <div className="CarouselBox">
-    <div className={deviceType === "web"? "WebCarousel" : "MobileCarousel"}>
-      <Carousel autoplay dots = {false}>
-        <div>
-          <h2 style={contentStyle}>
-            {quotation[0]?quotation[0].content: '로딩중'}
-          </h2>
-        </div>
-        <div>
-          <h2 style={contentStyle}>            
-          {quotation[1]?quotation[1].content: '로딩중'}</h2>
-        </div>
-        <div>
-          <h2 style={contentStyle}>            
-          {quotation[2]?quotation[2].content: '로딩중'}</h2>
-        </div>
-        <div>
-          <h2 style={contentStyle}>            
-          {quotation[3]?quotation[3].content: '로딩중'}</h2>
-        </div>
-      </Carousel>
+  return (
+    <div className="CarouselBox">
+      <div
+        className={
+          deviceType === "web"
+            ? window.innerWidth < 1200
+              ? "NarrowWebCarousel"
+              : "WebCarousel"
+            : "MobileCarousel"
+        }
+      >
+        <Carousel autoplay dots={false}>
+          <div>
+            <h2 style={contentStyle}>
+              {quotation[0] ? quotation[0].content : "로딩중"}
+            </h2>
+          </div>
+          <div>
+            <h2 style={contentStyle}>
+              {quotation[1] ? quotation[1].content : "로딩중"}
+            </h2>
+          </div>
+          <div>
+            <h2 style={contentStyle}>
+              {quotation[2] ? quotation[2].content : "로딩중"}
+            </h2>
+          </div>
+          <div>
+            <h2 style={contentStyle}>
+              {quotation[3] ? quotation[3].content : "로딩중"}
+            </h2>
+          </div>
+        </Carousel>
+      </div>
     </div>
-  </div>
-);
+  );
 };
 export default Quot;

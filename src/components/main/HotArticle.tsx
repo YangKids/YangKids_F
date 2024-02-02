@@ -50,31 +50,29 @@ const HotArticle = (props : Props) => {
               <CardNews article={articles[2]} />
               <SmallCard article={articles[3]} />
             </div>
-
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                paddingLeft: "20px",
-              }}
-            >
-              <SmallCard article={articles[4]} />
-              <CardNews article={articles[5]} />
-              <CardNews article={articles[6]} />
-              <CardNews article={articles[7]} />
-            </div>
+            {window.innerWidth > 1200 ? (
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  paddingLeft: "20px",
+                }}
+              >
+                <SmallCard article={articles[4]} />
+                <CardNews article={articles[5]} />
+                <CardNews article={articles[6]} />
+                <CardNews article={articles[7]} />
+              </div>
+            ) : null}
           </div>
         </div>
       ) : (
-
-            <div className="HotArticleBox"
-            >
-              <div className="MobileTitle">인기 게시글</div>
-              <CardNews article={articles[0]} />
-              <CardNews article={articles[1]} />
-              <CardNews article={articles[2]} />
-            </div>
-  
+        <div className="HotArticleBox">
+          <div className="MobileTitle">인기 게시글</div>
+          <CardNews article={articles[0]} />
+          <CardNews article={articles[1]} />
+          <CardNews article={articles[2]} />
+        </div>
       )}
     </>
   );
