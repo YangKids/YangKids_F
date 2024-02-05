@@ -7,7 +7,7 @@ const items = [
   {
     key: '0',
     label: (
-      <Link to='/Board/NoticeBoard'>
+      <Link to='/board/notice'>
         공지사항
       </Link>
     ),
@@ -15,7 +15,7 @@ const items = [
   {
     key: '1',
     label: (
-      <Link to='/Board/FreeBoard'>
+      <Link to='/board/free'>
         자유게시판
       </Link>
     ),
@@ -23,7 +23,7 @@ const items = [
   {
     key: '2',
     label: (
-      <Link to='/Board/QuestionBoard'>
+      <Link to='/board/question'>
         질문게시판
       </Link>
     ),
@@ -31,7 +31,7 @@ const items = [
   {
     key: '3',
     label: (
-      <Link to='/Board/InfoBoard'>
+      <Link to='/board/info'>
         정보공유게시판
       </Link>
     ),
@@ -40,7 +40,7 @@ const items = [
   {
     key: '4',
     label: (
-      <Link to='/Board/YangchelinBoard'>
+      <Link to='/board/yangchelin'>
         양슐랭가이드
       </Link>
     ),

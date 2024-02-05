@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import {useRef} from "react";
 import "./MainPage.css";
-import FreeBoardPreview from "./FreeBoardPreview";
+import NoticeCard from "./NoticeCard";
 import FreeBoard from "./FreeBoard";
 import HotArticle from "./HotArticle";
 import SearchBar from "../layout/SearchBar";
@@ -30,7 +30,7 @@ const MainPage = () => {
           deviceType === "web" ? (
             <>
               <div className="WebCardBox">
-                <FreeBoardPreview />
+                <NoticeCard />
                 <div style={{ minWidth: "40px", height: "1410px" }}></div>
                 <HotArticle boardId={1} />
               </div>
@@ -44,8 +44,8 @@ const MainPage = () => {
             </>
           ) : (
             <div className="MobileCardBox">
-              <FreeBoardPreview />
-              <HotArticle boardId={1} />
+              <NoticeCard />
+              <HotArticle boardId={1} />  
             </div>
           )
         }

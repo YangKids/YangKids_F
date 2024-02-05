@@ -5,6 +5,8 @@ import SmallCard from "./SmallCard";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import useDeviceTypeStore from "../../stores/deviceTypeStore";
+import { Article } from "../../types";
+import { articleDummy, articleListDummy } from "../../dummies";
 
 interface Props {
   boardId : Number
@@ -12,20 +14,23 @@ interface Props {
 
 const HotArticle = (props : Props) => {
   const { deviceType } = useDeviceTypeStore();
-  const [articles, setArticles] = useState([]);
+  const [articleList, setArticleList] = useState<Article[]>([]);
 
   useEffect(() => {
     const getArticles = async () => {
-      // try {
+      try {
       const res = await axios.get(
         `http://localhost:8080/api-article/board/${props.boardId}`
       );
-      setArticles(res.data);
+      setArticleList(res.data);
 
-      // } catch (e) {}
+      } catch (e) {
+        console.log("아티클 상세 못가져옴!")
+        setArticleList(articleListDummy);
+      }
     };
     getArticles();
-    // console.log(articles);
+    // console.log(articleList);
   }, [props.boardId]);
 
   return (
@@ -45,10 +50,10 @@ const HotArticle = (props : Props) => {
                 paddingRight: "20px",
               }}
             >
-              <CardNews article={articles[0]} />
-              <CardNews article={articles[1]} />
-              <CardNews article={articles[2]} />
-              <SmallCard article={articles[3]} />
+              <CardNews article={articleList[0]} />
+              <CardNews article={articleList[1]} />
+              <CardNews article={articleList[2]} />
+              <SmallCard article={articleList[3]} />
             </div>
             {window.innerWidth > 1200 ? (
               <div
@@ -58,10 +63,10 @@ const HotArticle = (props : Props) => {
                   paddingLeft: "20px",
                 }}
               >
-                <SmallCard article={articles[4]} />
-                <CardNews article={articles[5]} />
-                <CardNews article={articles[6]} />
-                <CardNews article={articles[7]} />
+                <SmallCard article={articleList[4]} />
+                <CardNews article={articleList[5]} />
+                <CardNews article={articleList[6]} />
+                <CardNews article={articleList[7]} />
               </div>
             ) : null}
           </div>
@@ -69,9 +74,9 @@ const HotArticle = (props : Props) => {
       ) : (
         <div className="HotArticleBox">
           <div className="MobileTitle">인기 게시글</div>
-          <CardNews article={articles[0]} />
-          <CardNews article={articles[1]} />
-          <CardNews article={articles[2]} />
+          <CardNews article={articleList[0]} />
+          <CardNews article={articleList[1]} />
+          <CardNews article={articleList[2]} />
         </div>
       )}
     </>

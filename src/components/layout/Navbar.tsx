@@ -13,7 +13,7 @@ import "./Navbar.css";
 const items = [
   {
     label: (
-      <Link to="NoticeBoard" className="MenuText">
+      <Link to="/board/notice" className="MenuText">
         공지
       </Link>
     ),
@@ -22,7 +22,7 @@ const items = [
   },
   {
     label: (
-      <Link to="FreeBoard" className="MenuText">
+      <Link to="/board/free" className="MenuText">
         자유
       </Link>
     ),
@@ -31,7 +31,7 @@ const items = [
   },
   {
     label: (
-      <Link to="QuestionBoard" className="MenuText">
+      <Link to="/board/question" className="MenuText">
         질문
       </Link>
     ),
@@ -41,7 +41,7 @@ const items = [
   },
   {
     label: (
-      <Link to="InfoBoard" className="MenuText">
+      <Link to="/board/info" className="MenuText">
         정보
         
       </Link>
@@ -52,7 +52,7 @@ const items = [
 
   {
     label: (
-      <Link to="YangchelinBoard" className="MenuText">
+      <Link to="/board/yangchelin" className="MenuText">
         양슐랭
       </Link>
     ),
@@ -62,18 +62,18 @@ const items = [
 ];
 
 const Navbar = () => {
-  const [current, setCurrent] = useState(1);
+  const [currentKey, setCurrentKey] = useState<number|undefined>(undefined);
   //@ts-ignore
   const onClick = (e) => {
     // console.log('click ', e);
-    setCurrent(e.key);
+    setCurrentKey(e.key);
   };
 
   return (
     <Menu
       className="Navbar"
       onClick={onClick}
-      selectedKeys={[current.toString()]}
+      selectedKeys={currentKey? [currentKey.toString()] : undefined }
       mode="horizontal"
       items={items}
     />

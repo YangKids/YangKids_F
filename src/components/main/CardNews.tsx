@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Article } from "../../types";
 import useDeviceTypeStore from "../../stores/deviceTypeStore";
+import { articleDummy } from "../../dummies";
 const { Meta } = Card;
 
 interface Props {
@@ -12,11 +13,7 @@ interface Props {
 
 const CardNews = (props: Props) => {
   const { deviceType } = useDeviceTypeStore();
-  const [article, setArticle] = useState<Article>({
-    articleId: 0,
-    title: "",
-    content: "",
-  });
+  const [article, setArticle] = useState<Article>(articleDummy);
   useEffect(() => {
     setArticle(props.article);
   }, [props.article]);

@@ -4,6 +4,13 @@
   align-items: center;
 }
 
+.BoardPageBackground{
+  height:100%;
+  background-attachment: fixed;
+  display : flex;
+  flex-direction : column;
+}
+
 .BoardCategory {
   display: flex;
   width: 1200px;
@@ -37,10 +44,32 @@
   padding: 40px;
 }
 
+.MobileBoardBox{
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  align-items: center;
+  justify-content: center;
+  font-size: x-large;
+  font-weight: bolder;
+  background-color: white;
+  box-sizing: border-box;
+  box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  padding: 20px;
+}
+
 .Description {
   text-align: center;
   font-size: large;
   font-weight: 300;
+  margin-bottom: 40px;
+}
+
+.MobileDescription {
+  text-align: center;
+  font-size: medium;
+  font-weight: 200;
   margin-bottom: 40px;
 }
 
@@ -65,7 +94,12 @@
 
 .Search {
   margin-top: 25px;
-  width: 500px;
+  width: 60%;
+}
+
+.MobilesSearch {
+  margin-top: 25px;
+  width: 60%;
 }
 
 .FormBox {

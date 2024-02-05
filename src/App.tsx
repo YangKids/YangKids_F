@@ -50,14 +50,14 @@ const App = () => {
 
         <Routes>
           <Route
-            path="/Alarm"
+            path="/alarm"
             element={isLogedin ? <AlarmPage /> : <Navigate to="/entrance" />}
           />
 
-          <Route path="/MyPage" element={<MyPage />}></Route>
-          <Route path="/Signup" element={<SignupPage />}></Route>
-          <Route path="/Find" element={<FindPage />}></Route>
-          <Route path="/MyPage" element={<MyPage />} />
+          <Route path="/mypage" element={<MyPage />}></Route>
+          <Route path="/signup" element={<SignupPage />}></Route>
+          <Route path="/find" element={<FindPage />}></Route>
+          <Route path="/myPage" element={<MyPage />} />
           <Route
             path="/entrance"
             element={isLogedin ? <Navigate to="/" /> : <EntrancePage />}
@@ -71,19 +71,19 @@ const App = () => {
             element={ <MainPage /> }
           />
           <Route
-            path="/Board"
+            path="/board"
             // element={isLogedin ? <BoardPage /> : <Navigate to="/entrance" />}
             element={<BoardPage />}
           >
-            <Route path="NoticeBoard" element={<NoticeBoard />} />
-            <Route path="Freeboard" element={<FreeBoard />} />
-            <Route path="QuestionBoard" element={<QuestionBoard />}></Route>
-            <Route path="InfoBoard" element={<InfoBoard />}></Route>
-            <Route path="YangchelinBoard" element={<YangchelinBoard />}></Route>
+            <Route path="notice" element={<NoticeBoard />} />
+            <Route path="free" element={<FreeBoard />} />
+            <Route path="question" element={<QuestionBoard />}></Route>
+            <Route path="info" element={<InfoBoard />}></Route>
+            <Route path="yangchelin" element={<YangchelinBoard />}></Route>
             <Route path=":articleId" element={<ArticleDetail />}></Route>
-            <Route path="SearchResult" element={<SearchResult />}></Route>
-            <Route path="Write" element={<ArticleWirteForm />}></Route>
-            <Route path="Edit" element={<EditArticle />}></Route>
+            <Route path="searchresult" element={<SearchResult />}></Route>
+            <Route path="write" element={<ArticleWirteForm />}></Route>
+            <Route path="edit" element={<EditArticle />}></Route>
           </Route>
         </Routes>
     </div>

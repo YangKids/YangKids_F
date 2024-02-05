@@ -3,8 +3,9 @@ import React, { useEffect, useState } from "react";
 import "./Carousel.css";
 import axios from "axios";
 import useDeviceTypeStore from "../../stores/deviceTypeStore";
+import { Quotation } from "../../types";
 
-const contentStyle = {
+const contentStyle : React.CSSProperties = {
   height: "250px",
   color: "white",
   lineHeight: "250px",
@@ -20,20 +21,26 @@ const contentStyle = {
 
 const Quot = () => {
   const { deviceType } = useDeviceTypeStore();
-  const [quotation, setQuotation] = useState([]);
+  const [quotationList, setQuotationList] = useState<Quotation[]>([
+    { content: "캐러셀 컨텐츠" },
+  ]);
   useEffect(() => {
     const getQuotation = async () => {
-      // try {
-      const res = await axios.get(
-        `http://localhost:8080/api-quotation/quotation`
-      );
-      setQuotation(res.data);
-
-      // } catch (e) {}
+      try {
+        const res = await axios.get(
+          `http://localhost:8080/api-quotation/quotation`
+        );
+        setQuotationList(res.data);
+      } catch (e) {
+        setQuotationList([
+          { content: "캐러셀 컨텐츠1" },
+          { content: "캐러셀 컨텐츠2" },
+          { content: "캐러셀 컨텐츠3" },
+        ]);
+      }
     };
     getQuotation();
   }, []);
-  console.log(quotation[0]);
 
   return (
     <div className="CarouselBox">
@@ -47,26 +54,11 @@ const Quot = () => {
         }
       >
         <Carousel autoplay dots={false}>
-          <div>
-            <h2 style={contentStyle}>
-              {quotation[0] ? quotation[0].content : "로딩중"}
-            </h2>
-          </div>
-          <div>
-            <h2 style={contentStyle}>
-              {quotation[1] ? quotation[1].content : "로딩중"}
-            </h2>
-          </div>
-          <div>
-            <h2 style={contentStyle}>
-              {quotation[2] ? quotation[2].content : "로딩중"}
-            </h2>
-          </div>
-          <div>
-            <h2 style={contentStyle}>
-              {quotation[3] ? quotation[3].content : "로딩중"}
-            </h2>
-          </div>
+          {quotationList.map((quotation) => (
+            <div>
+              <h2 style={contentStyle}>{quotation.content}</h2>
+            </div>
+          ))}
         </Carousel>
       </div>
     </div>

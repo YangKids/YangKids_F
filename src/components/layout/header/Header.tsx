@@ -71,7 +71,9 @@ const Header = () => {
           className={
             ScrollActive
               ? "MovingHeader"
-              : window.innerWidth < 1200? "NarrowHeader": "Header"
+              : window.innerWidth < 1200
+              ? "NarrowHeader"
+              : "Header"
           }
         >
           <div className="ProfileBox">
@@ -84,21 +86,14 @@ const Header = () => {
             </Link>
             {/* {window.scrollY > 500? <SearchBar/>:<div></div>}  */}
           </div>
-            <div className="AlarmButtonBox">
-              <Link to="/Alarm">
-                <AlarmButton cnt={uncheckedAlarms} />
-              </Link>
-            </div>
-
+          <div className="AlarmButtonBox">
+            <Link to="/alarm">
+              <AlarmButton cnt={uncheckedAlarms} />
+            </Link>
+          </div>
         </div>
       ) : (
-        <div
-          className={
-            ScrollActive
-              ? "MovingHeader"
-              : "MobileHeader"
-          }
-        >
+        <div className={ScrollActive ? "MovingHeader" : "MobileHeader"}>
           <div className="ProfileBox">
             <MiniProfile />
           </div>
@@ -109,12 +104,11 @@ const Header = () => {
             </Link>
           </div>
 
-
-            <div className="AlarmButtonBox">
-              <Link to="/Alarm">
-                <AlarmButton cnt={uncheckedAlarms} />
-              </Link>
-            </div>
+          <div className="AlarmButtonBox">
+            <Link to="/alarm">
+              <AlarmButton cnt={uncheckedAlarms} />
+            </Link>
+          </div>
         </div>
       )}
     </div>
