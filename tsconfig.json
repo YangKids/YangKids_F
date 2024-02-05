@@ -1,5 +1,15 @@
 {
   "compilerOptions": {
+    // 폴더 경로 관리
+    "baseUrl": "src",
+    "paths": {
+      "@components/*": ["components/*"],
+      "@hooks/*": ["hooks/*"],
+      "@utils/*": ["utils/*"],
+      "@stores/*": ["stores/*"],
+      "@assets/*": ["assets/*"],
+      "@types/*": ["types/*"]
+    },
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
@@ -14,7 +24,8 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
+    "jsx": "react-jsx"
   },
+  // import시 해당 루트를 포함할껀지에 대한 여부
   "include": ["src"]
 }
