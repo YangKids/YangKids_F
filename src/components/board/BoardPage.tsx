@@ -18,18 +18,16 @@ const BoardPage = () => {
         <>
           <Quot />
           <div className="Body">
-            <BoardCategory />
             <Outlet />
+            <Navbar/>
           </div>
         </>
       ) : (
-        <>
           <div className="Body">
             <Outlet />
             <Navbar />
           </div>
           
-        </>
       )}
     </div>
   );

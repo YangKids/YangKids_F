@@ -6,15 +6,15 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import useDeviceTypeStore from "../../stores/deviceTypeStore";
 import { Article } from "../../types";
-import { articleListDummy } from "../../dummies";
+import {  articleListDummy } from "../../dummies";
 import ArticleList from "./ArticleList";
-import { FireFilled } from "@ant-design/icons";
+import {  SunFilled } from "@ant-design/icons";
 
 interface Props {
   boardId: Number;
 }
 
-const HotArticle = (props: Props) => {
+const NewArticle = (props: Props) => {
   const { deviceType } = useDeviceTypeStore();
   const [articleList, setArticleList] = useState<Article[]>([]);
 
@@ -76,7 +76,7 @@ const HotArticle = (props: Props) => {
         <div className="MobileHotArticleBox">
           <div className="MobileListCard">
             <div className="MobileCardContents">
-              <div className="MobileTitle"><FireFilled className="Emogi"/>인기 게시글</div>
+              <div className="MobileTitle"><SunFilled className="Emogi" size={20}/>최신 게시글</div>
               <div className="Articles">
                 <ArticleList boardId={0} />
               </div>
@@ -88,4 +88,4 @@ const HotArticle = (props: Props) => {
   );
 };
 
-export default HotArticle;
+export default NewArticle;

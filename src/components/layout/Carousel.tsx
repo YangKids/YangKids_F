@@ -53,7 +53,7 @@ const Quot = () => {
             : "MobileCarousel"
         }
       >
-        <Carousel autoplay dots={false}>
+        <Carousel autoplay autoplaySpeed={4000} dots={false}>
           {quotationList.map((quotation) => (
             <div>
               <h2 style={contentStyle}>{quotation.content}</h2>

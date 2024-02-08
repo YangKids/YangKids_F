@@ -1,5 +1,8 @@
 export type DeviceType = "web" | "smallMobile" | "mobile";
 
+export interface User {
+    isAdmin : Number
+}
 export interface Article {
     boardId : Number
     articleId : Number;

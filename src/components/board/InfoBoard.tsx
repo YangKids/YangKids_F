@@ -3,30 +3,30 @@ import "./BoardPage.css";
 import BoardArticleList from "./BoardArticleList";
 import useDeviceTypeStore from "../../stores/deviceTypeStore";
 
-const FreeBoard = () => {
+const InfoBoard = () => {
   const { deviceType } = useDeviceTypeStore();
 
   return (
     <div className={deviceType === "web" ? "BoardBox" : "MobileBoardBox"}>
       {deviceType === "web" ? (
         <>
-          <h3 style={{ textAlign: "center" }}>자유게시판</h3>
+          <h3 style={{ textAlign: "center" }}>정보공유게시판</h3>
           <div className="Description">
-            여러분의 진솔한 이야기, 알리고 싶은 이야기를 자유롭게 게시해주세요!
+            꿀팁내놔 꿀팁. 채용정보, 공모전 등등 이것저것 다 내놔
           </div>
-          <BoardArticleList boardId={1} />
+          <BoardArticleList boardId={3} />
         </>
       ) : (
         <>
-          <h5 style={{ marginTop : 10, marginBottom:20}}>자유게시판</h5>
+          <h5 style={{ marginTop: 10, marginBottom: 20 }}>정보공유게시판</h5>
           <div className="MobileDescription">
-            여러분의 진솔한 이야기, 알리고 싶은 이야기를 자유롭게 게시해주세요!
+            채용공고, 공모전, 청년정책 등 유용한 정보를 공유해주세요
           </div>
-          <BoardArticleList boardId={1} />
+          <BoardArticleList boardId={3} />
         </>
       )}
     </div>
   );
 };
 
-export default FreeBoard;
+export default InfoBoard;

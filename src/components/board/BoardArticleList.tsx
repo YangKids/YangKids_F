@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./BoardPage.css";
 import {
+  CaretDownFilled,
+  DownOutlined,
   EditOutlined,
   EyeOutlined,
   LikeOutlined,
+  LoadingOutlined,
   MessageOutlined,
 } from "@ant-design/icons";
 import { Avatar, Button, List, Space } from "antd";
@@ -18,19 +21,6 @@ interface Props {
   boardId: Number;
 }
 
-const IconText = ({
-  icon,
-  text,
-}: {
-  icon: React.ReactElement;
-  text: string;
-}) => (
-  <Space>
-    {icon}
-    {text}
-  </Space>
-);
-
 function regDate(date: string) {
   return (
     new Date(date).getFullYear() +
@@ -44,7 +34,24 @@ function regDate(date: string) {
 const BoardArticleList = (props: Props) => {
   const [articleList, setArticleList] = useState<Article[]>([]);
   const [noticeList, setNoticeList] = useState<Article[]>([]);
+  const [initLoading, setInitLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const { deviceType } = useDeviceTypeStore();
+  const navigate = useNavigate();
+
+
+  const IconText = ({
+    icon,
+    text,
+  }: {
+    icon: React.ReactElement;
+    text: string;
+  }) => (
+    <Space size={deviceType !== "web" ? 2 : "middle"}>
+      {icon}
+      {text}
+    </Space>
+  );
 
   useEffect(() => {
     const getarticleList = async () => {
@@ -53,8 +60,10 @@ const BoardArticleList = (props: Props) => {
           `http://localhost:8080/api-article/board/${props.boardId}`
         );
         setArticleList(res.data);
+        setInitLoading(false);
       } catch (e) {
         setArticleList(articleListDummy);
+        setInitLoading(false);
       }
     };
 
@@ -63,10 +72,18 @@ const BoardArticleList = (props: Props) => {
         const res = await axios.get(
           `http://localhost:8080/api-article/board/0`
         );
-        if (res.data.length > 3) {
-          setNoticeList(res.data.slice(0, 3));
+        if (deviceType === "web") {
+          if (res.data.length > 3) {
+            setNoticeList(res.data.slice(0, 3));
+          } else {
+            setNoticeList(res.data);
+          }
         } else {
-          setNoticeList(res.data);
+          if (res.data.length > 2) {
+            setNoticeList(res.data.slice(0, 2));
+          } else {
+            setNoticeList(res.data);
+          }
         }
       } catch (e) {
         setNoticeList(NoticeListDummy);
@@ -77,7 +94,51 @@ const BoardArticleList = (props: Props) => {
     getNoticeList();
   }, [props.boardId]);
 
-  const navigate = useNavigate();
+  const onLoadMore = async () => {
+    setLoading(true);
+
+    //코드 페이지네이션 찾으면 교체해야함 이거 그냥 보드 전체 게시글 받아오는 코드인듯
+    try {
+      const res = await axios.get(
+        `http://localhost:8080/api-article/board/${props.boardId}`
+      );
+      setArticleList(res.data);
+      setLoading(false);
+    } catch (e) {
+      setArticleList(articleListDummy);
+      setLoading(false);
+    }
+    window.dispatchEvent(new Event("resize"));
+  };
+
+
+  const loadMore =
+    !initLoading && !loading ? (
+      <div
+        style={{
+          textAlign: "center",
+          marginTop: 12,
+          height: 32,
+          lineHeight: "32px",
+        }}
+      >
+        <Button onClick={onLoadMore} style={{padding : "4px 6px"}}>
+          <CaretDownFilled style={{fontSize : "20px"}}/>
+        </Button>
+      </div>
+    ) : (
+      <div
+        style={{
+          textAlign: "center",
+          marginTop: 12,
+          height: 32,
+          lineHeight: "32px",
+        }}
+      >
+        <LoadingOutlined style={{fontSize : "20px"}}/>
+      </div>
+    );
+
   return (
     <>
       {deviceType === "web" ? (
@@ -243,7 +304,6 @@ const BoardArticleList = (props: Props) => {
                           ? `https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`
                           : article.writerImg
                       }
-                      // src={article.writerImg}
                     />
                   }
                   title={
@@ -268,7 +328,7 @@ const BoardArticleList = (props: Props) => {
               marginBottom: "10px",
             }}
             onClick={() =>
-              navigate("/Board/Write", { state: { boardId: props.boardId } })
+              navigate("/board/write", { state: { boardId: props.boardId } })
             }
           ></Button>
           <List
@@ -281,8 +341,10 @@ const BoardArticleList = (props: Props) => {
                   <List.Item
                     actions={[
                       <div style={{ display: "flex", flexDirection: "column" }}>
-                        <div style={{textAlign:"end"}}>{regDate(article.regDate)}</div>
-                        <div style={{ display: "block" }}>
+                        <div style={{ textAlign: "end" }}>
+                          {regDate(article.regDate)}
+                        </div>
+                        <div style={{ display: "flex", gap: "4px" }}>
                           <IconText
                             icon={<EyeOutlined />}
                             text={article.viewCnt.toString()}
@@ -299,7 +361,7 @@ const BoardArticleList = (props: Props) => {
                             key="comment"
                           />
                         </div>
-                      </div>
+                      </div>,
                     ]}
                     style={
                       article.boardId === 0
@@ -327,30 +389,33 @@ const BoardArticleList = (props: Props) => {
               width: "100%",
               borderTop: "2px solid #868e96",
             }}
-            pagination={{
-              position: "bottom",
-              align: "center",
-            }}
+            loadMore={loadMore}
             dataSource={articleList}
             renderItem={(article, index) => (
               <List.Item
                 actions={[
-                  <div>{regDate(article.regDate)}</div>,
-                  <IconText
-                    icon={<EyeOutlined />}
-                    text={article.viewCnt.toString()}
-                    key="view"
-                  />,
-                  <IconText
-                    icon={<LikeOutlined />}
-                    text={article.likeCnt.toString()}
-                    key="like"
-                  />,
-                  <IconText
-                    icon={<MessageOutlined />}
-                    text={article.commentCnt.toString()}
-                    key="comment"
-                  />,
+                  <div style={{ display: "flex", flexDirection: "column" }}>
+                    <div style={{ textAlign: "end" }}>
+                      {regDate(article.regDate)}
+                    </div>
+                    <div style={{ display: "flex", gap: "4px" }}>
+                      <IconText
+                        icon={<EyeOutlined />}
+                        text={article.viewCnt.toString()}
+                        key="view"
+                      />
+                      <IconText
+                        icon={<LikeOutlined />}
+                        text={article.likeCnt.toString()}
+                        key="like"
+                      />
+                      <IconText
+                        icon={<MessageOutlined />}
+                        text={article.commentCnt.toString()}
+                        key="comment"
+                      />
+                    </div>
+                  </div>
                 ]}
                 style={
                   article.boardId === 0

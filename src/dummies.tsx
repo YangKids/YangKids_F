@@ -19,9 +19,9 @@ export const articleListDummy : Article[] = [
         articleId: 0,
         regDate: "Feburary 5, 2024 08:24:00",
         commentCnt: 0,
-        content: "게시글 상세0",
+        content: "로딩중...",
         likeCnt: 0,
-        title: "게시글0",
+        title: "게시글을 가져오는 중입니다...",
         viewCnt: 0,
         isAnonymous : 0,
         writerName : "정재웅"
@@ -31,9 +31,9 @@ export const articleListDummy : Article[] = [
         articleId: 1,
         regDate: "Feburary 5, 2024 08:24:00",
         commentCnt: 0,
-        content: "게시글 상세1",
+        content: "로딩중...",
         likeCnt: 0,
-        title: "게시글1",
+        title: "게시글을 가져오는 중입니다...",
         viewCnt: 0,
         isAnonymous : 0,
         writerName : "정재웅"
@@ -43,9 +43,9 @@ export const articleListDummy : Article[] = [
         articleId: 2,
         regDate: "Feburary 5, 2024 08:24:00",
         commentCnt: 0,
-        content: "게시글 상세2",
+        content: "로딩중...",
         likeCnt: 0,
-        title: "게시글2",
+        title: "게시글을 가져오는 중입니다...",
         viewCnt: 0,
         isAnonymous : 0,
         writerName : "정재웅"
@@ -59,9 +59,9 @@ export const NoticeListDummy : Article[] = [
       articleId: 3,
       regDate: "Feburary 5, 2024 08:24:00",
       commentCnt: 0,
-      content: "공지 상세0",
+      content: "로딩 중...",
       likeCnt: 0,
-      title: "공지0",
+      title: "공지를 가져오는 중입니다...",
       viewCnt: 0,
       isAnonymous : 0,
       writerName : "정재웅"
@@ -71,23 +71,11 @@ export const NoticeListDummy : Article[] = [
       articleId: 4,
       regDate: "Feburary 5, 2024 08:24:00",
       commentCnt: 0,
-      content: "공지 상세1",
+      content: "로딩 중...",
       likeCnt: 0,
-      title: "공지1",
+      title: "공지를 가져오는 중입니다...",
       viewCnt: 0,
       isAnonymous : 0,
       writerName : "정재웅"
     },
-    {
-      boardId : 0,
-      articleId: 5,
-      regDate: "Feburary 5, 2024 08:24:00",
-      commentCnt: 0,
-      content: "공지 상세2",
-      likeCnt: 0,
-      title: "공지2",
-      viewCnt: 0,
-      isAnonymous : 0,
-      writerName : "정재웅"
-    } 
 ]

@@ -1,3 +1,15 @@
+.HeaderBox{
+  display: flex;
+  justify-content: center;
+  min-height : 110px
+}
+
+.MobileHeaderBox{
+  display: flex;
+  justify-content: center;
+  min-height : 90px
+}
+
 .Header {
     background-color: white;
     margin-top: 40px;
@@ -12,7 +24,7 @@
     box-sizing: border-box;
     width: 1200px;
     min-height : 70px;
-    transition: .05s;
+    transition: .2s;
     padding : 0 20px 0 20px;
   }
 
@@ -30,7 +42,7 @@
   box-sizing: border-box;
   width: 90%;
   min-height : 70px;
-  transition: .05s;
+  transition: .2s;
   padding : 0 20px 0 20px;
 }
 
@@ -135,6 +147,21 @@
   }
 
   .DaeMoon{
+    text-decoration-line: none;
+    background: radial-gradient(
+    circle at 30% 107%,
+    #FFFFFF 0%,
+    #F6E7FF 5%,
+    #b9bfff 30%,
+    #82cfed 60%,
+    #84abf9 80%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  }
+
+  .Emogi{
     text-decoration-line: none;
     background: radial-gradient(
     circle at 30% 107%,

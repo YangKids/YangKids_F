@@ -73,23 +73,6 @@ const NoticeCard = () => {
           </div>
         </div>
       ) : (
-        // <div
-        //   className="MobileCard"
-        // >
-        //   <div className="MobileCardContents">
-        //     <div className="MobileTitle">
-        //       <Link
-        //         to="/Board/NoticeBoard"
-        //         style={{ textDecoration: "none", color: "black" }}
-        //       >
-        //         공지사항
-        //       </Link>
-        //     </div>
-        //     <div className="Articles">
-        //       <ArticleList boardId={0} />
-        //     </div>
-        //   </div>
-        // </div>
         <div className="NoticeCarouselBox">
           <Button style={{ height: "100%" }}>
             <Link to="/board/notice">

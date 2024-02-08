@@ -1,6 +1,5 @@
 import "./Header.css";
 import MiniProfile from "./MiniProfile";
-import Menu from "./Menu";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import AlarmButton from "./AlarmButton";
@@ -11,16 +10,22 @@ import useDeviceTypeStore from "../../../stores/deviceTypeStore";
 const Header = () => {
   const { deviceType } = useDeviceTypeStore();
   const [ScrollActive, setScrollActive] = useState(false);
+  const [MobileScrollActive, setMobileScrollActive] = useState(false)
   const [ScrollY, setScrollY] = useState(0); // window 의 pageYOffset값을 저장
   const handleScroll = () => {
     console.log("핸들 스크롤 실행", window.scrollY);
     console.log(window);
-    if (ScrollY > 35) {
-      setScrollY(window.scrollY);
+    setScrollY(window.scrollY);
+    if (ScrollY > 40) {
       setScrollActive(true);
     } else {
-      setScrollY(window.scrollY);
       setScrollActive(false);
+    }
+
+    if(ScrollY >20){
+      setMobileScrollActive(true);
+    }else{
+      setMobileScrollActive(false)
     }
   };
 
@@ -59,12 +64,7 @@ const Header = () => {
   }, []);
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        height: "110px",
-      }}
+    <div className={deviceType ==="web"? "HeaderBox" : "MobileHeaderBox"}
     >
       {deviceType === "web" ? (
         <div
@@ -93,7 +93,7 @@ const Header = () => {
           </div>
         </div>
       ) : (
-        <div className={ScrollActive ? "MovingHeader" : "MobileHeader"}>
+        <div className={MobileScrollActive ? "MovingHeader" : "MobileHeader"}>
           <div className="ProfileBox">
             <MiniProfile />
           </div>

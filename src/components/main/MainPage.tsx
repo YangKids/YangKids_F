@@ -9,6 +9,8 @@ import Header from "../layout/header/Header";
 import Quot from "../layout/Carousel";
 import useDeviceTypeStore from "../../stores/deviceTypeStore";
 import Navbar from "../layout/Navbar";
+import NewArticle from "./NewArticle";
+import Footer from "../layout/footer/Footer";
 
 const MainPage = () => {
   const { deviceType } = useDeviceTypeStore();
@@ -35,20 +37,22 @@ const MainPage = () => {
                 <HotArticle boardId={1} />
               </div>
             
-              {/* <div className="CardBox">
+              <div className="WebCardBox">
                 <FreeBoard boardId={3} />
                 <div style={{ minWidth: "40px", height: "1410px" }}></div>
                 <YangchelinGuide />
-              </div> */}
+              </div>
             
             </>
           ) : (
             <div className="MobileCardBox">
               <NoticeCard />
-              <HotArticle boardId={1} />  
+              <HotArticle boardId={1} />
+              <NewArticle boardId={2} />
             </div>
           )
         }
+        <Footer/>
       </div>
       <Navbar/>
     </div>
