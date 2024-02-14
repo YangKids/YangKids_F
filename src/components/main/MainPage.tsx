@@ -1,4 +1,4 @@
-import {useRef} from "react";
+import {useEffect, useRef} from "react";
 import "./MainPage.css";
 import NoticeCard from "./NoticeCard";
 import FreeBoard from "./FreeBoard";
@@ -11,10 +11,17 @@ import useDeviceTypeStore from "../../stores/deviceTypeStore";
 import Navbar from "../layout/Navbar";
 import NewArticle from "./NewArticle";
 import Footer from "../layout/footer/Footer";
+import useCurrentTabStore from "../../stores/currentTabStore";
 
 const MainPage = () => {
   const { deviceType } = useDeviceTypeStore();
+  const {setCurrentTab} = useCurrentTabStore();
   const MainBox = useRef(null);
+
+  useEffect(() => {
+    setCurrentTab(undefined)
+  }, [])
+  
 
   return (
     <div ref={MainBox} className="MainPageBackground">

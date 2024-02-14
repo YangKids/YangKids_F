@@ -9,11 +9,15 @@ import {
   Space,
   Switch,
   Upload,
+  UploadFile,
+  UploadProps,
 } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { Article, User } from "../../types";
+import useDeviceTypeStore from "../../stores/deviceTypeStore";
 
 const { Option } = Select;
 
@@ -28,14 +32,15 @@ const formItemLayout = {
 
 const ArticleWirteForm = () => {
   const navigate = useNavigate();
-  const [fileList, setFileList] = useState([]);
-  const [loginUser, setLoginUser] = useState({});
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
+  const [loginUser, setLoginUser] = useState<User>();
+  const { deviceType } = useDeviceTypeStore();
 
   useEffect(() => {
-    setLoginUser(JSON.parse(sessionStorage.getItem("loginUser")));
+    setLoginUser(JSON.parse(sessionStorage.getItem("loginUser")!));
   }, []);
 
-  const normFile = (e) => {
+  const normFile = (e: any) => {
     console.log("Upload event:", e);
 
     if (e.fileList.length > 1) {
@@ -56,17 +61,17 @@ const ArticleWirteForm = () => {
     return e && fileList;
   };
 
-  const uploadProps = {
-    onRemove: (file) => {
+  const uploadProps: UploadProps = {
+    onRemove: (file: UploadFile) => {
       const index = fileList.indexOf(file);
-      console.log(index)
+      console.log(index);
       const newFileList = fileList.slice();
       newFileList.splice(index, 1);
       setFileList(newFileList);
-      console.log("onremove", fileList)
+      console.log("onremove", fileList);
     },
 
-    beforeUpload: (file) => {
+    beforeUpload: (file: UploadFile) => {
       setFileList([...fileList, file]);
       console.log(fileList);
       return false;
@@ -76,32 +81,32 @@ const ArticleWirteForm = () => {
     listType: "picture",
   };
 
-  const onFinish = (article) => {
+  const onFinish = (article: Article) => {
     if (fileList.length > 0) {
       const formData = new FormData();
       console.log(fileList);
-      formData.append("file", fileList[fileList.length-1]);
-      formData.append("boardId", article.boardId);
+      formData.append("file", `${fileList[fileList.length - 1]}`);
+      formData.append("boardId", `${article.boardId}`);
       formData.append(
         "writerId",
-        JSON.parse(sessionStorage.getItem("loginUser")).id
+        JSON.parse(sessionStorage.getItem("loginUser")!).id
       );
       formData.append("title", article.title);
       formData.append("content", article.content);
 
       if (article.isAnonymous) {
-        formData.append("isAnonymous", 1);
+        formData.append("isAnonymous", "1");
       } else {
-        formData.append("isAnonymous", 0);
+        formData.append("isAnonymous", "0");
       }
 
       if (article.boardId === 0) {
-        formData.append("isAdmin", 1);
+        formData.append("isAdmin", "1");
       }
 
       axios
         .post("http://localhost:8080/api-article/writewithimg", formData, {
-          header: { "Content-Type": "multipart/form-data" },
+          headers: { "Content-Type": "multipart/form-data" },
         })
         .then(() => {
           setFileList([]);
@@ -135,14 +140,13 @@ const ArticleWirteForm = () => {
           }
         });
     } else {
-
       let isAnonymousData = 0;
-      if(article.isAnonymous){
+      if (article.isAnonymous) {
         isAnonymousData = 1;
       }
       const data = {
         boardId: article.boardId,
-        writerId: JSON.parse(sessionStorage.getItem("loginUser")).id,
+        writerId: JSON.parse(sessionStorage.getItem("loginUser")!).id,
         title: article.title,
         content: article.content,
         isAnonymous: isAnonymousData,
@@ -153,7 +157,7 @@ const ArticleWirteForm = () => {
       axios
         .post(
           "http://localhost:8080/api-article/write",
-          new URLSearchParams(data)
+          new URLSearchParams(JSON.stringify(data))
         )
         .then(() => {
           Swal.fire({
@@ -192,15 +196,20 @@ const ArticleWirteForm = () => {
   const location = useLocation();
 
   return (
-    <div className="FormBox">
-      <h3 style={{ textAlign: "center" }}>게시글 등록</h3>
+    <div className={deviceType === "web" ? "FormBox" : "MobileFormBox"}>
+      {deviceType === "web" ? (
+        <h3 style={{ textAlign: "center" }}>게시글 등록</h3>
+      ) : (
+        <h5 style={{ marginTop: 10, marginBottom: 20, width:"fit-content", margin : "auto" }}>게시글 등록</h5>
+      )}
+
       <Form
         name="validate_other"
         {...formItemLayout}
         onFinish={onFinish}
         initialValues={{
           boardId: location.state.boardId,
-          isAnonymous : 0,
+          isAnonymous: 0,
         }}
         style={{
           maxWidth: 1200,
@@ -260,11 +269,7 @@ const ArticleWirteForm = () => {
           <TextArea rows={10} style={{ borderRadius: "6px" }} />
         </Form.Item>
         {location.state.boardId === 0 ? null : (
-          <Form.Item
-            name="isAnonymous"
-            label="익명"
-            valuePropName="checked"
-          >
+          <Form.Item name="isAnonymous" label="익명" valuePropName="checked">
             <Switch checkedChildren="익명" unCheckedChildren="실명" />
           </Form.Item>
         )}
@@ -282,12 +287,9 @@ const ArticleWirteForm = () => {
         </Form.Item>
 
         <Form.Item
-          wrapperCol={{
-            span: 8,
-            offset: 8,
-          }}
+        style={{display:"flex" , justifyContent: "center", alignItems:"center"}}
         >
-          <Space style={{ marginLeft: "110px" }}>
+          <Space style={deviceType === "web"? { marginLeft: "110px" } : {}}>
             <Button type="primary" htmlType="submit">
               등록
             </Button>

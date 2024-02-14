@@ -1,6 +1,5 @@
 import React from "react";
 import "./BoardPage.css";
-import BoardCategory from "./BoardCategory";
 import { Outlet } from "react-router-dom";
 import Header from "../layout/header/Header";
 import Quot from "../layout/Carousel";
@@ -23,7 +22,7 @@ const BoardPage = () => {
           </div>
         </>
       ) : (
-          <div className="Body">
+          <div className="MobileBody">
             <Outlet />
             <Navbar />
           </div>

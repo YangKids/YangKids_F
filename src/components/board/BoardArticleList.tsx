@@ -16,6 +16,7 @@ import SearchBar from "../layout/SearchBar";
 import { Article } from "../../types";
 import { NoticeListDummy, articleListDummy } from "../../dummies";
 import useDeviceTypeStore from "../../stores/deviceTypeStore";
+import useSearchButtonTypeStore from "../../stores/searchButtonTypeStore";
 
 interface Props {
   boardId: Number;
@@ -37,6 +38,7 @@ const BoardArticleList = (props: Props) => {
   const [initLoading, setInitLoading] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
   const { deviceType } = useDeviceTypeStore();
+  const { searchButtonType, setSearchButtonType } = useSearchButtonTypeStore();
   const navigate = useNavigate();
 
 
@@ -105,9 +107,11 @@ const BoardArticleList = (props: Props) => {
       setArticleList(res.data);
       setLoading(false);
     } catch (e) {
-      setArticleList(articleListDummy);
+      setArticleList(prev => [...prev, ...articleListDummy]);
       setLoading(false);
     }
+
+    setSearchButtonType("button")
     window.dispatchEvent(new Event("resize"));
   };
 
@@ -444,7 +448,7 @@ const BoardArticleList = (props: Props) => {
       )}
 
       <div className={deviceType === "web" ? "Search" : "MobileSearch"}>
-        <SearchBar />
+<SearchBar />
       </div>
     </>
   );
