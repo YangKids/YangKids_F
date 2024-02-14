@@ -5,12 +5,13 @@ import {
   ProfileOutlined,
   QuestionOutlined,
 } from "@ant-design/icons";
-import { Menu } from "antd";
-import { useState } from "react";
+import { Menu, MenuProps } from "antd";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
+import useCurrentTabStore from "../../stores/currentTabStore";
 
-const items = [
+const items: MenuProps['items'] = [
   {
     label: (
       <Link to="/board/notice" className="MenuText">
@@ -62,18 +63,17 @@ const items = [
 ];
 
 const Navbar = () => {
-  const [currentKey, setCurrentKey] = useState<number|undefined>(undefined);
+  const {currentTab, setCurrentTab} = useCurrentTabStore()
   //@ts-ignore
   const onClick = (e) => {
-    // console.log('click ', e);
-    setCurrentKey(e.key);
+    setCurrentTab(e.key);
   };
 
   return (
     <Menu
       className="Navbar"
       onClick={onClick}
-      selectedKeys={currentKey? [currentKey.toString()] : undefined }
+      selectedKeys={currentTab? [currentTab.toString()] : undefined }
       mode="horizontal"
       items={items}
     />
