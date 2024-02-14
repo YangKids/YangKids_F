@@ -110,6 +110,7 @@ const SearchBar = () => {
                 borderRadius: "20px",
                 marginRight: "0px",
                 paddingLeft: "14px",
+                boxShadow: "0 2px 8px 0 rgba(0,0,0,0.2)"
               }
         }
         onClick={onClick}
